@@ -1,0 +1,47 @@
+.home .jumbotron {
+    height: 470px;
+}
+
+.home .jumbotron-frame {
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.home .jumbotron .container {
+    z-index: 10;
+}
+
+.home .layanan .row {
+    background: linear-gradient(180deg, #FFFFFF 0%, #EDEEF2 100%);
+}
+
+.home .layanan img {
+    height: 68px;
+    width: 68px;
+}
+
+.post-item img {
+    max-height: 178px;
+    object-fit: cover;
+}
+
+.post-item--banner img {
+    max-height: 546px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+    .home .layanan img {
+        height: 48px;
+        width: 48px;
+    }
+
+    .post-item--banner img {
+        height: 180px;
+    }
+
+    .post-item img {
+        max-height: 180px;
+    }
+}
