@@ -1,0 +1,29 @@
+.sosial .jumbotron {
+    height: 470px;
+}
+
+.sosial .jumbotron-frame {
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.sosial .jumbotron .container {
+    z-index: 10;
+}
+
+.sosial .layanan .row {
+    background: linear-gradient(180deg, #FFFFFF 0%, #EDEEF2 100%);
+}
+
+.sosial .layanan img {
+    height: 68px;
+    width: 68px;
+}
+
+@media screen and (max-width: 768px) {
+    .sosial .layanan img {
+        height: 48px;
+        width: 48px;
+    }
+}

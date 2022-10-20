@@ -3,9 +3,9 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./Home.css";
 
 // assets
-import JumbotronBg from "src/assets/images/pre-dashboard/jumbotron-bg.png";
+import HomeBg from "src/assets/images/pre-dashboard/home-bg.png";
 import KependudukanIcon from "src/assets/images/pre-dashboard/kependudukan-icon.svg";
-import SocialIcon from "src/assets/images/pre-dashboard/social-icon.svg";
+import SosialIcon from "src/assets/images/pre-dashboard/sosial-icon.svg";
 import KesehatanIcon from "src/assets/images/pre-dashboard/kesehatan-icon.svg";
 import PendidikanIcon from "src/assets/images/pre-dashboard/pendidikan-icon.svg";
 import UmkmIcon from "src/assets/images/pre-dashboard/umkm-icon.svg";
@@ -17,26 +17,32 @@ const layananData = [
   {
     title: "Kependudukan",
     icon: KependudukanIcon,
+    path: "/kependudukan",
   },
   {
-    title: "Social",
-    icon: SocialIcon,
+    title: "Sosial",
+    icon: SosialIcon,
+    path: "/sosial",
   },
   {
     title: "Kesehatan",
     icon: KesehatanIcon,
+    path: "/kesehatan",
   },
   {
     title: "Pendidikan",
     icon: PendidikanIcon,
+    path: "/pendidikan",
   },
   {
     title: "UMKM",
     icon: UmkmIcon,
+    path: "/umkm",
   },
   {
     title: "Perizinan",
     icon: PerizinanIcon,
+    path: "/perizinan",
   },
 ];
 
@@ -47,7 +53,7 @@ const Home = () => {
       <main className="home">
         <div
           className="jumbotron pt-5 px-0 position-relative bg-light px-lg-5"
-          style={{ background: `url(${JumbotronBg})` }}
+          style={{ background: `url(${HomeBg})` }}
         >
           <div
             className="jumbotron-frame w-100 h-100 position-absolute"
@@ -72,8 +78,9 @@ const Home = () => {
               <div className="row mx-0 rounded-3">
                 {layananData.map((item, index) => {
                   return (
-                    <div
-                      className="col-6 p-2 border border-1 border-grey-4"
+                    <a
+                      href={item.path}
+                      className="col-6 p-2 bg-transparent border border-1 border-grey-4"
                       key={index}
                     >
                       <div className="p-2 d-flex flex-column align-items-center flex-md-row">
@@ -86,7 +93,7 @@ const Home = () => {
                           {item.title}
                         </h5>
                       </div>
-                    </div>
+                    </a>
                   );
                 })}
               </div>

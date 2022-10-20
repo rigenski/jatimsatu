@@ -1,0 +1,29 @@
+.kependudukan .jumbotron {
+    height: 470px;
+}
+
+.kependudukan .jumbotron-frame {
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.kependudukan .jumbotron .container {
+    z-index: 10;
+}
+
+.kependudukan .layanan .row {
+    background: linear-gradient(180deg, #FFFFFF 0%, #EDEEF2 100%);
+}
+
+.kependudukan .layanan img {
+    height: 68px;
+    width: 68px;
+}
+
+@media screen and (max-width: 768px) {
+    .kependudukan .layanan img {
+        height: 48px;
+        width: 48px;
+    }
+}
