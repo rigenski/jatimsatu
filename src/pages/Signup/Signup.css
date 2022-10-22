@@ -7,7 +7,7 @@
     min-height: 100vh;
 }
 
-.auth .card {
+.auth.register .card {
     width: 100%;
-    max-width: 648px;
+    max-width: 1140px;
 }
