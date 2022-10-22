@@ -1,0 +1,20 @@
+.bpjs .jumbotron {
+    height: 200px;
+}
+
+.bpjs .jumbotron .container {
+    z-index: 10;
+}
+
+.bpjs .form {
+    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dokumen-terkirim img {
+    width: 100%;
+    max-width: 202px;
+}
+
+.dokumen-terkirim p {
+    max-width: 680px;
+}

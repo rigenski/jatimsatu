@@ -164,10 +164,10 @@ const ResetPassword = () => {
                             />
                           </div>
                         </div>
-                        <div>
+                        <div className="d-flex justify-content-center align-items-center">
                           <button
                             type="button"
-                            className="w-100 px-4 py-3 text-button text-white bg-primary-2 text-center border-0 rounded"
+                            className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                             onClick={() => setSection(sections[1].title)}
                           >
                             Lanjutkan
@@ -206,10 +206,10 @@ const ResetPassword = () => {
                             />
                           </div>
                         </div>
-                        <div>
+                        <div className="d-flex justify-content-center align-items-center">
                           <button
                             type="button"
-                            className="w-100 px-4 py-3 text-button text-white bg-primary-2 text-center border-0 rounded"
+                            className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                             onClick={() => setSection(sections[2].title)}
                           >
                             Lanjutkan
@@ -234,10 +234,10 @@ const ResetPassword = () => {
                             baru untuk masuk ke akun anda
                           </p>
                         </div>
-                        <div>
+                        <div className="d-flex justify-content-center align-items-center">
                           <button
                             type="button"
-                            className="w-100 px-4 py-3 text-button text-white bg-primary-2 text-center border-0 rounded"
+                            className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                           >
                             Kembali ke halaman masuk
                           </button>

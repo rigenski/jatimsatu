@@ -107,10 +107,10 @@ const Signup = () => {
                         </a>
                       </p>
                     </div>
-                    <div>
+                    <div className="d-flex justify-content-center align-items-center">
                       <button
                         type="button"
-                        className="w-100 px-4 py-3 text-button text-white bg-primary-2 text-center border-0 rounded"
+                        className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                       >
                         Daftar
                       </button>

@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Kependudukan from "./pages/Kependudukan/Kependudukan";
 import Sosial from "./pages/Sosial/Sosial";
+import Bpjs from "./pages/Bpjs/Bpjs";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/kependudukan" element={<Kependudukan />} />
         <Route path="/sosial" element={<Sosial />} />
+        <Route path="/bpjs" element={<Bpjs />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
