@@ -53,7 +53,7 @@ const ForgotPassword = () => {
                     <div className="d-flex justify-content-center align-items-center">
                       <button
                         type="button"
-                        className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
+                        className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                       >
                         Lanjutkan
                       </button>

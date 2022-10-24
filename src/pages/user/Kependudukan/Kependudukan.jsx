@@ -1,55 +1,21 @@
 import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import "./Sosial.css";
+import Navbar from "src/components/Navbar/Navbar";
+import "./Kependudukan.css";
 
 // assets
-import JumbotronBg from "src/assets/images/pre-dashboard/sosial/jumbotron-bg.png";
-import BantuanSosialIcon from "src/assets/images/pre-dashboard/sosial/bantuan-sosial-icon.png";
-import BantuanLangsungTunaiIcon from "src/assets/images/pre-dashboard/sosial/bantuan-langsung-tunai-icon.png";
-import BpjsIcon from "src/assets/images/pre-dashboard/sosial/bpjs-icon.png";
-import KartuIndonesiaPintarIcon from "src/assets/images/pre-dashboard/sosial/kartu-indonesia-pintar-icon.png";
-import KartuIndonesiaSehatIcon from "src/assets/images/pre-dashboard/sosial/kartu-indonesia-sehat-icon.png";
-import BantuanBencanaIcon from "src/assets/images/pre-dashboard/sosial/bantuan-bencana-icon.png";
-import DaftarKtpIcon from "src/assets/images/pre-dashboard/sosial/daftar-ktp-icon.png";
-import SuratJalanIcon from "src/assets/images/pre-dashboard/sosial/surat-jalan-icon.png";
-import SuratKeteranganIcon from "src/assets/images/pre-dashboard/sosial/surat-keterangan-icon.png";
-import PenyaluranSubsidiIcon from "src/assets/images/pre-dashboard/sosial/penyaluran-subsidi-icon.png";
+import JumbotronBg from "src/assets/images/pre-dashboard/kependudukan/jumbotron-bg.png";
+import DaftarKtpIcon from "src/assets/images/pre-dashboard/kependudukan/daftar-ktp-icon.png";
+import SuratJalanIcon from "src/assets/images/pre-dashboard/kependudukan/surat-jalan-icon.png";
+import SuratKeteranganIcon from "src/assets/images/pre-dashboard/kependudukan/surat-keterangan-icon.png";
+import PerubahanStatusIcon from "src/assets/images/pre-dashboard/kependudukan/perubahan-status-icon.png";
+import KartuKeluargaIcon from "src/assets/images/pre-dashboard/kependudukan/kartu-keluarga-icon.png";
+import ESignatureIcon from "src/assets/images/pre-dashboard/kependudukan/e-signature-icon.png";
 import { Icon } from "@iconify/react";
 
 // data
 const layananData = [
   {
-    title: "Bantuan Sosial",
-    icon: BantuanSosialIcon,
-    path: "/bantuan-sosial",
-  },
-  {
-    title: "Bantuan Langsung Tunai",
-    icon: BantuanLangsungTunaiIcon,
-    path: "/bantuang-langsung-tunai",
-  },
-  {
-    title: "BPJS",
-    icon: BpjsIcon,
-    path: "/bpjs",
-  },
-  {
-    title: "Kartu Indonesia Pintar",
-    icon: KartuIndonesiaPintarIcon,
-    path: "/kartu-indonesia-pintar",
-  },
-  {
-    title: "Kartu Indonesia Sehat",
-    icon: KartuIndonesiaSehatIcon,
-    path: "/kartu-indonesia-sehat",
-  },
-  {
-    title: "Bantuan Bencana",
-    icon: BantuanBencanaIcon,
-    path: "/bantuan-bencana",
-  },
-  {
-    title: "Daftar Ktp",
+    title: "Daftar KTP",
     icon: DaftarKtpIcon,
     path: "/daftar-ktp",
   },
@@ -59,22 +25,32 @@ const layananData = [
     path: "/surat-jalan",
   },
   {
-    title: "Kartu Keluarga",
+    title: "Surat Keterangan",
     icon: SuratKeteranganIcon,
     path: "/surat-keterangan",
   },
   {
-    title: "bantuan-bencana",
-    icon: PenyaluranSubsidiIcon,
-    path: "/penyaluran-subsidi",
+    title: "Perubahan Status",
+    icon: PerubahanStatusIcon,
+    path: "/perubahan-status",
+  },
+  {
+    title: "Kartu Keluarga",
+    icon: KartuKeluargaIcon,
+    path: "/kartu-keluarga",
+  },
+  {
+    title: "E-Signature",
+    icon: ESignatureIcon,
+    path: "/e-signature",
   },
 ];
 
-const Sosial = () => {
+const Kependudukan = () => {
   return (
     <>
       <Navbar />
-      <main className="sosial">
+      <main className="kependudukan">
         <div
           className="jumbotron pt-2 px-0 position-relative bg-light px-lg-5 pt-lg-4"
           style={{ background: `url(${JumbotronBg})` }}
@@ -83,7 +59,7 @@ const Sosial = () => {
             className="jumbotron-frame w-100 h-100 position-absolute"
             style={{
               background:
-                "linear-gradient(89.94deg, rgba(78, 198, 190, 0.8) 49.13%, rgba(45, 180, 172, 0.2) 99.94%)",
+                "linear-gradient(89.94deg, rgba(15, 151, 194, 0.9) 49.13%, rgba(107, 219, 255, 0.4) 99.94%)",
             }}
           ></div>
           <div className="container py-3 position-relative px-3">
@@ -98,7 +74,7 @@ const Sosial = () => {
                 <h6 className="mb-0 text-heading-7 text-white ms-2">Kembali</h6>
               </a>
               <h1 className="mb-3 text-heading-1 text-white">
-                Pilih Layanan Sosial
+                Pilih Layanan Kependudukan
               </h1>
               <p className="col-md-8 text-body-4 text-white">
                 Kami menyediakan berbagai layanan untuk memenuhi kebutuhan
@@ -138,4 +114,4 @@ const Sosial = () => {
   );
 };
 
-export default Sosial;
+export default Kependudukan;

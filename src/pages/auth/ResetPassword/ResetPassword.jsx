@@ -167,7 +167,7 @@ const ResetPassword = () => {
                         <div className="d-flex justify-content-center align-items-center">
                           <button
                             type="button"
-                            className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
+                            className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                             onClick={() => setSection(sections[1].title)}
                           >
                             Lanjutkan
@@ -209,7 +209,7 @@ const ResetPassword = () => {
                         <div className="d-flex justify-content-center align-items-center">
                           <button
                             type="button"
-                            className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
+                            className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                             onClick={() => setSection(sections[2].title)}
                           >
                             Lanjutkan
@@ -237,7 +237,7 @@ const ResetPassword = () => {
                         <div className="d-flex justify-content-center align-items-center">
                           <button
                             type="button"
-                            className="button btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
+                            className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
                           >
                             Kembali ke halaman masuk
                           </button>

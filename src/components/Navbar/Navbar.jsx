@@ -64,17 +64,49 @@ const Navbar = () => {
               className="mx-4 d-none d-lg-block"
               style={{ height: "24px", borderRight: "1px solid #949494 " }}
             ></div>
-            <p className="mx-3 me-3 mb-0 text-body-3 text-grey-1 mx-lg-0 me-lg-2">
-              Bonyfasius
-            </p>
-            <a href="#" className="d-none d-lg-block">
-              <Icon
-                icon="carbon:user-avatar-filled-alt"
-                width={32}
-                height={32}
-                color="#949494"
-              />
-            </a>
+            <div className="dropdown">
+              <button
+                className="dropdown-toggle d-flex align-items-center bg-transparent border-0 "
+                data-bs-toggle="dropdown"
+              >
+                <p className="me-0 mx-2 mb-0 text-body-3 text-grey-1 me-lg-2">
+                  Bonyfasius
+                </p>
+                <Icon
+                  icon="carbon:user-avatar-filled-alt"
+                  width={32}
+                  height={32}
+                  color="#949494"
+                  className="d-none d-lg-block"
+                />
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item py-2" href="/dokumen">
+                    <Icon
+                      icon="ep:document"
+                      width={24}
+                      height={24}
+                      color="#000000"
+                    />
+                    <span className="ms-2 text-body-4 text-grey-1">
+                      Dokumen saya
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item py-2" href="/logout">
+                    <Icon
+                      icon="charm:sign-out"
+                      width={24}
+                      height={24}
+                      color="#000000"
+                    />
+                    <span className="ms-2 text-body-4 text-grey-1">Keluar</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

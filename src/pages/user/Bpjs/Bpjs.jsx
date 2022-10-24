@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "src/components/Navbar/Navbar";
 import { Icon } from "@iconify/react";
 import "./Bpjs.css";
 
@@ -42,13 +42,13 @@ const Bpjs = () => {
                   <div className="d-none align-items-center d-lg-flex">
                     <button
                       type="button"
-                      className="button me-3 text-button text-grey-1 bg-white text-center border-1 rounded-1"
+                      className="btn me-3 text-button text-grey-1 bg-white text-center border-1 rounded-1"
                     >
                       Batalkan
                     </button>
                     <button
                       type="button"
-                      className="button text-button text-white bg-primary-2 text-center border-0 rounded-1"
+                      className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
                       onClick={() => setComplete(!complete)}
                     >
                       Kirim
@@ -308,13 +308,13 @@ const Bpjs = () => {
                   <div className="mt-4 d-flex justify-content-center align-items-center d-lg-none justify-content-md-end">
                     <button
                       type="button"
-                      className="button me-3 text-button text-grey-1 bg-white text-center border-1 rounded-1"
+                      className="btn me-3 text-button text-grey-1 bg-white text-center border-1 rounded-1"
                     >
                       Batalkan
                     </button>
                     <button
                       type="button"
-                      className="button text-button text-white bg-primary-2 text-center border-0 rounded-1"
+                      className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
                       onClick={() => setComplete(!complete)}
                     >
                       Kirim
@@ -336,7 +336,7 @@ const Bpjs = () => {
                     </p>
                     <button
                       type="button"
-                      className="button text-button text-white bg-primary-2 text-center border-0 rounded-1"
+                      className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
                     >
                       Kembali ke dashboard
                     </button>
