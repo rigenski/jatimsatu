@@ -193,10 +193,10 @@ const Signup = () => {
                             >
                               Desa <span className="text-danger">*</span>
                             </label>
-                            <select class="form-select" id="desa">
-                              <option value="">---pilih salah satu---</option>
-                              <option value="1">Blitar</option>
-                              <option value="2">Malang</option>
+                            <select className="form-select" id="desa">
+                              <option>---pilih salah satu---</option>
+                              <option>Blitar</option>
+                              <option>Malang</option>
                             </select>
                           </div>
                         </div>
@@ -208,10 +208,10 @@ const Signup = () => {
                             >
                               Kecamatan <span className="text-danger">*</span>
                             </label>
-                            <select class="form-select" id="kecamatan">
-                              <option value="">---pilih salah satu---</option>
-                              <option value="1">Blitar</option>
-                              <option value="2">Malang</option>
+                            <select className="form-select" id="kecamatan">
+                              <option>---pilih salah satu---</option>
+                              <option>Blitar</option>
+                              <option>Malang</option>
                             </select>
                           </div>
                         </div>
@@ -223,10 +223,10 @@ const Signup = () => {
                             >
                               Kelurahan <span className="text-danger">*</span>
                             </label>
-                            <select class="form-select" id="kelurahan">
-                              <option value="">---pilih salah satu---</option>
-                              <option value="1">Blitar</option>
-                              <option value="2">Malang</option>
+                            <select className="form-select" id="kelurahan">
+                              <option>---pilih salah satu---</option>
+                              <option>Blitar</option>
+                              <option>Malang</option>
                             </select>
                           </div>
                         </div>

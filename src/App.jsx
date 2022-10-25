@@ -8,9 +8,11 @@ import Kependudukan from "src/pages/user/Kependudukan/Kependudukan";
 import Sosial from "src/pages/user/Sosial/Sosial";
 import Bpjs from "src/pages/user/Bpjs/Bpjs";
 import Dokumen from "src/pages/user/Dokumen/Dokumen";
-import Dashboard from "src/components/Dashboard/Dashboard";
-
-import "@coreui/coreui/scss/coreui.scss";
+import SuperAdminHome from "./pages/super-admin/SuperAdminHome/SuperAdminHome";
+import SuperAdminUser from "./pages/super-admin/SuperAdminUser/SuperAdminUser";
+import SuperAdminUserDetail from "./pages/super-admin/SuperAdminUserDetail/SuperAdminUserDetail";
+import SuperAdminUserEdit from "./pages/super-admin/SuperAdminUserEdit/SuperAdminUserEdit";
+import SuperAdminUserAdd from "./pages/super-admin/SuperAdminUserAdd/SuperAdminUserAdd";
 
 function App() {
   return (
@@ -28,7 +30,17 @@ function App() {
         <Route path="/bpjs" element={<Bpjs />} />
         <Route path="/dokumen" element={<Dokumen />} />
         {/* super admin */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/super-admin/home" element={<SuperAdminHome />} />
+        <Route path="/super-admin/users" element={<SuperAdminUser />} />
+        <Route
+          path="/super-admin/users/detail"
+          element={<SuperAdminUserDetail />}
+        />
+        <Route
+          path="/super-admin/users/edit"
+          element={<SuperAdminUserEdit />}
+        />
+        <Route path="/super-admin/users/add" element={<SuperAdminUserAdd />} />
       </Routes>
     </BrowserRouter>
   );

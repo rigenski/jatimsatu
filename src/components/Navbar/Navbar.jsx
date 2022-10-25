@@ -3,7 +3,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg py-3 bg-white">
+    <nav className="navbar navbar-expand-lg py-2 bg-white">
       <div className="container px-3">
         <a className="navbar-brand text-heading-3 text-primary-2" href="#">
           Jatimsatu
@@ -80,9 +80,9 @@ const Navbar = () => {
                   className="d-none d-lg-block"
                 />
               </button>
-              <ul class="dropdown-menu">
+              <ul className="dropdown-menu">
                 <li>
-                  <a class="dropdown-item py-2" href="/dokumen">
+                  <a className="dropdown-item py-2" href="/dokumen">
                     <Icon
                       icon="ep:document"
                       width={24}
@@ -95,7 +95,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item py-2" href="/logout">
+                  <a className="dropdown-item py-2" href="/logout">
                     <Icon
                       icon="charm:sign-out"
                       width={24}

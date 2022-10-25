@@ -59,10 +59,10 @@ const Dokumen = () => {
                       >
                         Layanan <span className="text-danger">*</span>
                       </label>
-                      <select class="form-select" id="layanan">
-                        <option value="">pilih layanan</option>
-                        <option value="1">Blitar</option>
-                        <option value="2">Malang</option>
+                      <select className="form-select" id="layanan">
+                        <option>pilih layanan</option>
+                        <option>Blitar</option>
+                        <option>Malang</option>
                       </select>
                     </div>
                   </div>
@@ -98,8 +98,8 @@ const Dokumen = () => {
                   </div>
                 </div>
                 <div>
-                  <div class="table-responsive mb-4">
-                    <table class="table rounded-2">
+                  <div className="table-responsive mb-4">
+                    <table className="table rounded-2">
                       <thead>
                         <tr className="bg-background">
                           <th scope="col" className="p-3 text-nowrap">
@@ -151,9 +151,9 @@ const Dokumen = () => {
                   <div className="pagination d-flex flex-column justify-content-between align-items-center flex-md-row">
                     <div className="mb-3 d-flex align-items-center mb-md-0">
                       <span className="text-body-4 text-black">Show</span>
-                      <select class="form-select mx-2">
-                        <option value="4">4</option>
-                        <option value="10">10</option>
+                      <select className="form-select mx-2">
+                        <option>4</option>
+                        <option>10</option>
                       </select>
                       <span className="text-body-4 text-black">entries</span>
                     </div>

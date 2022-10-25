@@ -59,7 +59,7 @@ const Bpjs = () => {
               {!complete ? (
                 <>
                   <div
-                    class="alert alert-warning d-flex align-items-center"
+                    className="alert alert-warning d-flex align-items-center"
                     role="alert"
                   >
                     <Icon
@@ -115,7 +115,7 @@ const Bpjs = () => {
                             type="text"
                             className="form-control"
                             id="nama"
-                            value="Bonyfasius Lumbanraja"
+                            defaultValue="Bonyfasius Lumbanraja"
                             disabled
                           />
                         </div>
@@ -132,7 +132,7 @@ const Bpjs = () => {
                             type="text"
                             className="form-control"
                             id="nik"
-                            value="3312278010000009"
+                            defaultValue="3312278010000009"
                             disabled
                           />
                         </div>
@@ -149,7 +149,7 @@ const Bpjs = () => {
                             type="text"
                             className="form-control"
                             id="alamat"
-                            value="Jalan Alpukat"
+                            defaultValue="Jalan Alpukat"
                             disabled
                           />
                         </div>
@@ -162,11 +162,9 @@ const Bpjs = () => {
                           >
                             Desa <span className="text-danger">*</span>
                           </label>
-                          <select class="form-select" id="desa" disabled>
-                            <option value="1" selected>
-                              Blitar
-                            </option>
-                            <option value="2">Malang</option>
+                          <select className="form-select" id="desa" disabled>
+                            <option>Blitar</option>
+                            <option>Malang</option>
                           </select>
                         </div>
                       </div>
@@ -178,11 +176,13 @@ const Bpjs = () => {
                           >
                             Kecamatan <span className="text-danger">*</span>
                           </label>
-                          <select class="form-select" id="kecamatan" disabled>
-                            <option value="1" selected>
-                              Blitar
-                            </option>
-                            <option value="2">Malang</option>
+                          <select
+                            className="form-select"
+                            id="kecamatan"
+                            disabled
+                          >
+                            <option>Blitar</option>
+                            <option>Malang</option>
                           </select>
                         </div>
                       </div>
@@ -194,11 +194,13 @@ const Bpjs = () => {
                           >
                             Kelurahan <span className="text-danger">*</span>
                           </label>
-                          <select class="form-select" id="kelurahan" disabled>
-                            <option value="1" selected>
-                              Blitar
-                            </option>
-                            <option value="2">Malang</option>
+                          <select
+                            className="form-select"
+                            id="kelurahan"
+                            disabled
+                          >
+                            <option>Blitar</option>
+                            <option>Malang</option>
                           </select>
                         </div>
                       </div>
@@ -214,7 +216,7 @@ const Bpjs = () => {
                             type="text"
                             className="form-control"
                             id="rt"
-                            value="01"
+                            defaultValue="01"
                             disabled
                           />
                         </div>
@@ -231,7 +233,7 @@ const Bpjs = () => {
                             type="text"
                             className="form-control"
                             id="rw"
-                            value="07"
+                            defaultValue="07"
                             disabled
                           />
                         </div>
@@ -248,7 +250,7 @@ const Bpjs = () => {
                             type="text"
                             className="form-control"
                             id="kode-pos"
-                            value="172931"
+                            defaultValue="172931"
                             disabled
                           />
                         </div>
