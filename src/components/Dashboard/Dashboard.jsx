@@ -9,8 +9,6 @@ const Dashboard = (props) => {
   const { pathname } = location;
   const navUrl = pathname.split("/")[2];
 
-  console.log(navUrl);
-
   return (
     <>
       <nav className="navbar navbar-expand-lg py-2 bg-white border-bottom border-grey-5">
@@ -187,30 +185,70 @@ const Dashboard = (props) => {
               )}
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
-                <Icon
-                  icon="clarity:users-line"
-                  width={24}
-                  height={24}
-                  color="#949494"
-                />
-                <span className="ms-2 text-paragraph-1 text-grey-2">
-                  Kependudukan
-                </span>
-              </a>
+              {navUrl === "kependudukan" ? (
+                <a
+                  href="/super-admin/kependudukan"
+                  className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                >
+                  <Icon
+                    icon="clarity:users-line"
+                    width={24}
+                    height={24}
+                    color="#4C9B70"
+                  />
+                  <span className="ms-2 text-paragraph-1 text-primary-2">
+                    Kependudukan
+                  </span>
+                </a>
+              ) : (
+                <a
+                  href="/super-admin/kependudukan"
+                  className="p-2 d-flex align-items-center"
+                >
+                  <Icon
+                    icon="clarity:users-line"
+                    width={24}
+                    height={24}
+                    color="#949494"
+                  />
+                  <span className="ms-2 text-paragraph-1 text-grey-2">
+                    Kependudukan
+                  </span>
+                </a>
+              )}
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
-                <Icon
-                  icon="fluent:handshake-20-regular"
-                  width={24}
-                  height={24}
-                  color="#949494"
-                />
-                <span className="ms-2 text-paragraph-1 text-grey-2">
-                  Sosial
-                </span>
-              </a>
+              {navUrl === "sosial" ? (
+                <a
+                  href="/super-admin/sosial"
+                  className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                >
+                  <Icon
+                    icon="fluent:handshake-20-regular"
+                    width={24}
+                    height={24}
+                    color="#4C9B70"
+                  />
+                  <span className="ms-2 text-paragraph-1 text-primary-2">
+                    Sosial
+                  </span>
+                </a>
+              ) : (
+                <a
+                  href="/super-admin/sosial"
+                  className="p-2 d-flex align-items-center"
+                >
+                  <Icon
+                    icon="fluent:handshake-20-regular"
+                    width={24}
+                    height={24}
+                    color="#949494"
+                  />
+                  <span className="ms-2 text-paragraph-1 text-grey-2">
+                    Sosial
+                  </span>
+                </a>
+              )}
             </li>
             <li className="mb-3">
               <a href="#" className="p-2 d-flex align-items-center">

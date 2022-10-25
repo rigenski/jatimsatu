@@ -13,6 +13,14 @@ import SuperAdminUser from "./pages/super-admin/SuperAdminUser/SuperAdminUser";
 import SuperAdminUserDetail from "./pages/super-admin/SuperAdminUserDetail/SuperAdminUserDetail";
 import SuperAdminUserEdit from "./pages/super-admin/SuperAdminUserEdit/SuperAdminUserEdit";
 import SuperAdminUserAdd from "./pages/super-admin/SuperAdminUserAdd/SuperAdminUserAdd";
+import SuperAdminKependudukan from "./pages/super-admin/SuperAdminKependudukan/SuperAdminKependudukan";
+import SuperAdminKependudukanDetail from "./pages/super-admin/SuperAdminKependudukanDetail/SuperAdminKependudukanDetail";
+import SuperAdminKependudukanEdit from "./pages/super-admin/SuperAdminKependudukanEdit/SuperAdminKependudukanEdit";
+import SuperAdminKependudukanAdd from "./pages/super-admin/SuperAdminKependudukanAdd/SuperAdminKependudukanAdd";
+import SuperAdminSosial from "./pages/super-admin/SuperAdminSosial/SuperAdminSosial";
+import SuperAdminSosialDetail from "./pages/super-admin/SuperAdminSosialDetail/SuperAdminSosialDetail";
+import SuperAdminSosialEdit from "./pages/super-admin/SuperAdminSosialEdit/SuperAdminSosialEdit";
+import SuperAdminSosialAdd from "./pages/super-admin/SuperAdminSosialAdd/SuperAdminSosialAdd";
 
 function App() {
   return (
@@ -41,6 +49,35 @@ function App() {
           element={<SuperAdminUserEdit />}
         />
         <Route path="/super-admin/users/add" element={<SuperAdminUserAdd />} />
+        <Route
+          path="/super-admin/kependudukan"
+          element={<SuperAdminKependudukan />}
+        />
+        <Route
+          path="/super-admin/kependudukan/detail"
+          element={<SuperAdminKependudukanDetail />}
+        />
+        <Route
+          path="/super-admin/kependudukan/edit"
+          element={<SuperAdminKependudukanEdit />}
+        />
+        <Route
+          path="/super-admin/kependudukan/add"
+          element={<SuperAdminKependudukanAdd />}
+        />
+        <Route path="/super-admin/sosial" element={<SuperAdminSosial />} />
+        <Route
+          path="/super-admin/sosial/detail"
+          element={<SuperAdminSosialDetail />}
+        />
+        <Route
+          path="/super-admin/sosial/edit"
+          element={<SuperAdminSosialEdit />}
+        />
+        <Route
+          path="/super-admin/sosial/add"
+          element={<SuperAdminSosialAdd />}
+        />
       </Routes>
     </BrowserRouter>
   );
