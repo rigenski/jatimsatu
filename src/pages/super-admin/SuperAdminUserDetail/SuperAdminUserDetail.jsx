@@ -14,7 +14,7 @@ const SuperAdminUserDetail = () => {
           <div className="d-flex">
             <a
               href="/super-admin/users/edit"
-              className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded"
+              className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
             >
               <Icon
                 icon="la:pen"
@@ -26,7 +26,7 @@ const SuperAdminUserDetail = () => {
               Edit
             </a>
             <button
-              className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded"
+              className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
               data-bs-toggle="modal"
               data-bs-target="#deleteModal"
             >
@@ -116,23 +116,23 @@ const SuperAdminUserDetail = () => {
               <div className="col-12 col-md-6">
                 <div className="mb-3">
                   <label
-                    htmlFor="upload-kk"
+                    htmlFor="kk"
                     className="form-label text-body-3 text-grey-1"
                   >
                     Upload KK <span className="text-danger">*</span>
                   </label>
-                  <input type="file" className="form-control" id="upload-kk" />
+                  <input type="file" className="form-control" id="kk" />
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="mb-3">
                   <label
-                    htmlFor="upload-ktp"
+                    htmlFor="ktp"
                     className="form-label text-body-3 text-grey-1"
                   >
                     Upload KTP <span className="text-danger">*</span>
                   </label>
-                  <input type="file" className="form-control" id="upload-ktp" />
+                  <input type="file" className="form-control" id="ktp" />
                 </div>
               </div>
               <div className="col-12 col-md-6">
@@ -292,44 +292,44 @@ const SuperAdminUserDetail = () => {
             </div>
           </div>
         </div>
-        <div
-          class="modal fade"
-          id="deleteModal"
-          tabindex="-1"
-          aria-labelledby="deleteModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4">
-              <div class="modal-body">
-                <p className="mb-4 text-body-3 text-grey-1 text-center">
-                  Apakah anda yakin untuk hapus dokumen ini?
-                </p>
-                <div className="d-flex justify-content-center align-items-center">
-                  <div className="d-flex">
-                    <button
-                      className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded"
-                      data-bs-dismiss="modal"
-                    >
-                      Batal
-                    </button>
-                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded">
-                      <Icon
-                        icon="akar-icons:trash-can"
-                        width={24}
-                        height={24}
-                        color="#FFFFFF"
-                        className="me-2"
-                      />
-                      Hapus
-                    </button>
-                  </div>
+      </Dashboard>
+      <div
+        class="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-4">
+            <div class="modal-body">
+              <p className="mb-4 text-body-3 text-grey-1 text-center">
+                Apakah anda yakin untuk hapus dokumen ini?
+              </p>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex">
+                  <button
+                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                    data-bs-dismiss="modal"
+                  >
+                    Batal
+                  </button>
+                  <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#FFFFFF"
+                      className="me-2"
+                    />
+                    Hapus
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </Dashboard>
+      </div>
     </>
   );
 };

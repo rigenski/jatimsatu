@@ -11,16 +11,16 @@ const SuperAdminUserEdit = () => {
             <p className="mb-0 text-body-2 text-grey-3">Sosial / Edit user</p>
           </div>
           <div className="d-flex">
-            <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded">
+            <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
               Batal
             </button>
-            <button className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded">
+            <button className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1">
               Simpan
             </button>
           </div>
         </div>
         <div className="card mb-4 w-100">
-          <div className="card-body">
+          <div className="card-body p-lg-4">
             <div className="row">
               <div className="col-12 col-md-6">
                 <div className="mb-3">
@@ -74,23 +74,23 @@ const SuperAdminUserEdit = () => {
               <div className="col-12 col-md-6">
                 <div className="mb-3">
                   <label
-                    htmlFor="upload-kk"
+                    htmlFor="kk"
                     className="form-label text-body-3 text-grey-1"
                   >
                     Upload KK <span className="text-danger">*</span>
                   </label>
-                  <input type="file" className="form-control" id="upload-kk" />
+                  <input type="file" className="form-control" id="kk" />
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="mb-3">
                   <label
-                    htmlFor="upload-ktp"
+                    htmlFor="ktp"
                     className="form-label text-body-3 text-grey-1"
                   >
                     Upload KTP <span className="text-danger">*</span>
                   </label>
-                  <input type="file" className="form-control" id="upload-ktp" />
+                  <input type="file" className="form-control" id="ktp" />
                 </div>
               </div>
               <div className="col-12 col-md-6">

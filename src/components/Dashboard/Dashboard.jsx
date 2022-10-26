@@ -251,17 +251,37 @@ const Dashboard = (props) => {
               )}
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
-                <Icon
-                  icon="healthicons:health-alt-outline"
-                  width={24}
-                  height={24}
-                  color="#949494"
-                />
-                <span className="ms-2 text-paragraph-1 text-grey-2">
-                  Kesehatan
-                </span>
-              </a>
+              {navUrl === "kesehatan" ? (
+                <a
+                  href="/super-admin/kesehatan"
+                  className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                >
+                  <Icon
+                    icon="healthicons:health-alt-outline"
+                    width={24}
+                    height={24}
+                    color="#4C9B70"
+                  />
+                  <span className="ms-2 text-paragraph-1 text-primary-2">
+                    Kesehatan
+                  </span>
+                </a>
+              ) : (
+                <a
+                  href="/super-admin/kesehatan"
+                  className="p-2 d-flex align-items-center"
+                >
+                  <Icon
+                    icon="healthicons:health-alt-outline"
+                    width={24}
+                    height={24}
+                    color="#949494"
+                  />
+                  <span className="ms-2 text-paragraph-1 text-grey-2">
+                    Kesehatan
+                  </span>
+                </a>
+              )}
             </li>
             <li className="mb-3">
               <a href="#" className="p-2 d-flex align-items-center">
@@ -301,22 +321,80 @@ const Dashboard = (props) => {
               </a>
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
-                <Icon
-                  icon="ic:outline-holiday-village"
-                  width={24}
-                  height={24}
-                  color="#949494"
-                />
-                <span className="ms-2 text-paragraph-1 text-grey-2">
-                  Wilayah
-                </span>
-              </a>
+              <div class="accordion">
+                <div class="accordion-item border-0">
+                  <h2 class="accordion-header bg-transparent" id="headingOne">
+                    <a
+                      type="button"
+                      className="accordion-button p-2 d-flex align-items-center bg-transparent border-0 shadow-none"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#wilayahAccordion"
+                      aria-expanded="true"
+                      aria-controls="wilayahAccordion"
+                    >
+                      <Icon
+                        icon="ic:outline-holiday-village"
+                        width={24}
+                        height={24}
+                        color="#949494"
+                      />
+                      <span className="ms-2 text-paragraph-1 text-grey-2">
+                        Wilayah
+                      </span>
+                    </a>
+                  </h2>
+                  <div
+                    id="wilayahAccordion"
+                    class="accordion-collapse collapse "
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#wilayahAccordion"
+                  >
+                    <div class="accordion-body px-0 ps-4">
+                      <ul className="px-2">
+                        <li className="mb-3">
+                          {navUrl === "kecamatan" ? (
+                            <a
+                              href="/super-admin/kecamatan"
+                              className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
+                            >
+                              Kecamatan
+                            </a>
+                          ) : (
+                            <a
+                              href="/super-admin/kecamatan"
+                              className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
+                            >
+                              Kecamatan
+                            </a>
+                          )}
+                        </li>
+                        <li className="mb-3">
+                          {navUrl === "desa" ? (
+                            <a
+                              href="/super-admin/desa"
+                              className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
+                            >
+                              Desa
+                            </a>
+                          ) : (
+                            <a
+                              href="/super-admin/desa"
+                              className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
+                            >
+                              Desa
+                            </a>
+                          )}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
           </ul>
         </aside>
         <main style={{ background: "#FCFCFD" }}>
-          <div className="p-4">{props.children}</div>
+          <div className="p-3 p-lg-4">{props.children}</div>
         </main>
       </div>
     </>

@@ -1,38 +1,61 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
-import Dashboard from "src/components/Dashboard/Dashboard";
 
-const SuperAdminKependudukanEdit = () => {
+// assets
+import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
+
+const Bpjs = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
+  const [complete, setComplete] = useState(false);
 
   return (
     <>
-      <Dashboard>
-        <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
-          <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">Detail user</h3>
-            <p className="mb-0 text-body-2 text-grey-3">Sosial / Detail user</p>
+      <div className="form mb-4 px-3 py-4 bg-white rounded-2 px-md-4">
+        <div className="mb-4 d-flex justify-content-between">
+          <div>
+            <h5 className="mb-1 text-heading-5 text-grey-1">
+              Pengajuan Surat Keterangan BPJS
+            </h5>
+            <p className="mb-0 text-paragraph-2 text-grey-3">
+              Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
+              mendapat surat keterangan
+            </p>
           </div>
+          {!complete ? (
+            <div className="d-none align-items-center d-lg-flex">
+              <button
+                type="button"
+                className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
+              >
+                Batalkan
+              </button>
+              <button
+                type="button"
+                className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
+                onClick={() => setComplete(!complete)}
+              >
+                Kirim
+              </button>
+            </div>
+          ) : null}
         </div>
-        <div className="card mb-4 w-100">
-          <div className="card-body p-lg-4">
-            <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
-              <div className="mb-3 mb-lg-0">
-                <h5 className="mb-1 text-heading-5 text-grey-1">
-                  Pengajuan Surat Keterangan Daftar KTP
-                </h5>
-                <p className="mb-0 text-paragraph-2 text-grey-3">
-                  Sosial / Detail user
-                </p>
-              </div>
-              <div class="d-flex">
-                <button class="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
-                  Batal
-                </button>
-                <button class="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1">
-                  Simpan
-                </button>
-              </div>
+        {!complete ? (
+          <>
+            <div
+              className="alert alert-warning d-flex align-items-center"
+              role="alert"
+            >
+              <Icon
+                icon="akar-icons:triangle-alert"
+                width={24}
+                height={24}
+                color="#C18B00"
+                className="me-2"
+              />
+              <p className="mb-0 text-paragraph-2">
+                Masih ada data yang belum lengkap. Mohon cek ulang formulir
+                pendaftaran dan upload dokumen sebelum mengirim dokumen
+              </p>
             </div>
             <div className="mb-4">
               <div className="d-flex align-items-center border-bottom border-grey-4">
@@ -75,6 +98,7 @@ const SuperAdminKependudukanEdit = () => {
                       className="form-control"
                       id="nama"
                       defaultValue="Bonyfasius Lumbanraja"
+                      disabled
                     />
                   </div>
                 </div>
@@ -91,6 +115,7 @@ const SuperAdminKependudukanEdit = () => {
                       className="form-control"
                       id="nik"
                       defaultValue="3312278010000009"
+                      disabled
                     />
                   </div>
                 </div>
@@ -107,6 +132,7 @@ const SuperAdminKependudukanEdit = () => {
                       className="form-control"
                       id="alamat"
                       defaultValue="Jalan Alpukat"
+                      disabled
                     />
                   </div>
                 </div>
@@ -118,7 +144,7 @@ const SuperAdminKependudukanEdit = () => {
                     >
                       Desa <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="desa">
+                    <select className="form-select" id="desa" disabled>
                       <option>Blitar</option>
                       <option>Malang</option>
                     </select>
@@ -132,7 +158,7 @@ const SuperAdminKependudukanEdit = () => {
                     >
                       Kecamatan <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="kecamatan">
+                    <select className="form-select" id="kecamatan" disabled>
                       <option>Blitar</option>
                       <option>Malang</option>
                     </select>
@@ -146,7 +172,7 @@ const SuperAdminKependudukanEdit = () => {
                     >
                       Kelurahan <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="kelurahan">
+                    <select className="form-select" id="kelurahan" disabled>
                       <option>Blitar</option>
                       <option>Malang</option>
                     </select>
@@ -165,6 +191,7 @@ const SuperAdminKependudukanEdit = () => {
                       className="form-control"
                       id="rt"
                       defaultValue="01"
+                      disabled
                     />
                   </div>
                 </div>
@@ -181,6 +208,7 @@ const SuperAdminKependudukanEdit = () => {
                       className="form-control"
                       id="rw"
                       defaultValue="07"
+                      disabled
                     />
                   </div>
                 </div>
@@ -197,6 +225,7 @@ const SuperAdminKependudukanEdit = () => {
                       className="form-control"
                       id="kode-pos"
                       defaultValue="172931"
+                      disabled
                     />
                   </div>
                 </div>
@@ -212,7 +241,7 @@ const SuperAdminKependudukanEdit = () => {
                       type="text"
                       className="form-control"
                       id="deskripsi"
-                      defaultValue="Pembuatan BPJS pribadi"
+                      placeholder="Berikan keterangan detail mengenai pengajuan anda"
                     />
                   </div>
                 </div>
@@ -241,65 +270,50 @@ const SuperAdminKependudukanEdit = () => {
                     <input type="file" className="form-control" id="ktp" />
                   </div>
                 </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="surat-hilang"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Surat keterangan hilang (jika hilang)
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="surat-hilang"
-                    />
-                  </div>
-                </div>
               </div>
             )}
-          </div>
-        </div>
-        <div
-          class="modal fade"
-          id="deleteModal"
-          tabindex="-1"
-          aria-labelledby="deleteModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4">
-              <div class="modal-body">
-                <p className="mb-4 text-body-3 text-grey-1 text-center">
-                  Apakah anda yakin untuk hapus dokumen ini?
-                </p>
-                <div className="d-flex justify-content-center align-items-center">
-                  <div className="d-flex">
-                    <button
-                      className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
-                      data-bs-dismiss="modal"
-                    >
-                      Batal
-                    </button>
-                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
-                      <Icon
-                        icon="akar-icons:trash-can"
-                        width={24}
-                        height={24}
-                        color="#FFFFFF"
-                        className="me-2"
-                      />
-                      Hapus
-                    </button>
-                  </div>
-                </div>
-              </div>
+
+            <div className="mt-4 d-flex justify-content-center align-items-center d-lg-none justify-content-md-end">
+              <button
+                type="button"
+                className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
+              >
+                Batalkan
+              </button>
+              <button
+                type="button"
+                className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
+                onClick={() => setComplete(!complete)}
+              >
+                Kirim
+              </button>
             </div>
-          </div>
-        </div>
-      </Dashboard>
+          </>
+        ) : (
+          <>
+            <div className="mb-4 border-bottom border-grey-4"></div>
+            <div className="dokumen-terkirim d-flex flex-column justify-content-center align-items-center">
+              <img src={DokumentTerkirimIllust} alt="" className="mb-4" />
+              <h5 className="mb-2 text-heading-5 text-black text-center">
+                Dokumen telah terkirim
+              </h5>
+              <p className="mb-4 text-paragraph-2 text-black text-center">
+                Dokumen akan selesai setelah mendapat persetujuan dari admin.
+                Anda akan mendapatkan informasi jika dokumen telah selesai
+                melalui notifkasi
+              </p>
+              <button
+                type="button"
+                className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
+              >
+                Kembali ke dashboard
+              </button>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };
 
-export default SuperAdminKependudukanEdit;
+export default Bpjs;

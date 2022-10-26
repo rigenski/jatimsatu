@@ -32,7 +32,7 @@ const SuperAdminHome = () => {
         <div className="row">
           <div className="col-12 col-xl-4 mb-4">
             <div className="card">
-              <div className="card-body">
+              <div className="card-body p-lg-4">
                 <div className="mb-4 d-flex justify-content-between align-items-center">
                   <p className="mb-0 text-body-1 text-grey-1">Profesi</p>
                   <a type="button">
@@ -60,7 +60,7 @@ const SuperAdminHome = () => {
           </div>
           <div className="col-12 col-xl-4 mb-4">
             <div className="card">
-              <div className="card-body">
+              <div className="card-body p-lg-4">
                 <div className="mb-4 d-flex justify-content-between align-items-center">
                   <p className="mb-0 text-body-1 text-grey-1">Umur</p>
                   <a type="button">
@@ -88,7 +88,7 @@ const SuperAdminHome = () => {
           </div>
           <div className="col-12 col-xl-4 mb-4">
             <div className="card">
-              <div className="card-body">
+              <div className="card-body p-lg-4">
                 <div className="mb-4 d-flex justify-content-between align-items-center">
                   <p className="mb-0 text-body-1 text-grey-1">
                     Jumlah Penduduk
@@ -120,7 +120,7 @@ const SuperAdminHome = () => {
         <div className="row">
           <div className="col-12 mb-4">
             <div className="card">
-              <div className="card-body">
+              <div className="card-body p-lg-4">
                 <div className="mb-4 d-flex justify-content-between align-items-center">
                   <p className="mb-0 text-body-1 text-grey-1">
                     Layanan Kependudukan
@@ -141,7 +141,7 @@ const SuperAdminHome = () => {
         <div className="row">
           <div className="col-12 mb-4">
             <div className="card">
-              <div className="card-body">
+              <div className="card-body p-lg-4">
                 <div className="mb-4 d-flex justify-content-between align-items-center">
                   <p className="mb-0 text-body-1 text-grey-1">Layanan Sosial</p>
                   <a type="button">

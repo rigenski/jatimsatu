@@ -27,7 +27,7 @@ const SuperAdminSosialDetail = () => {
           </div>
         </div>
         <div className="card mb-4 w-100">
-          <div className="card-body">
+          <div className="card-body p-lg-4">
             <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
               <div className="mb-3 mb-lg-0">
                 <h5 className="mb-1 text-heading-5 text-grey-1">
@@ -41,7 +41,7 @@ const SuperAdminSosialDetail = () => {
               <div className="d-flex">
                 <a
                   href="/super-admin/sosial/edit"
-                  className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded"
+                  className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
                 >
                   <Icon
                     icon="la:pen"
@@ -53,7 +53,7 @@ const SuperAdminSosialDetail = () => {
                   Edit
                 </a>
                 <button
-                  className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded"
+                  className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
                   data-bs-toggle="modal"
                   data-bs-target="#deleteModal"
                 >
@@ -263,7 +263,7 @@ const SuperAdminSosialDetail = () => {
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="upload-kk"
+                      htmlFor="kk"
                       className="form-label text-body-3 text-grey-1"
                     >
                       Upload KK <span className="text-danger">*</span>
@@ -271,7 +271,7 @@ const SuperAdminSosialDetail = () => {
                     <input
                       type="file"
                       className="form-control"
-                      id="upload-kk"
+                      id="kk"
                       disabled
                     />
                   </div>
@@ -279,7 +279,7 @@ const SuperAdminSosialDetail = () => {
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="upload-ktp"
+                      htmlFor="ktp"
                       className="form-label text-body-3 text-grey-1"
                     >
                       Upload KTP <span className="text-danger">*</span>
@@ -287,7 +287,7 @@ const SuperAdminSosialDetail = () => {
                     <input
                       type="file"
                       className="form-control"
-                      id="upload-ktp"
+                      id="ktp"
                       disabled
                     />
                   </div>
@@ -312,12 +312,12 @@ const SuperAdminSosialDetail = () => {
                 <div className="d-flex justify-content-center align-items-center">
                   <div className="d-flex">
                     <button
-                      className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded"
+                      className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
                       data-bs-dismiss="modal"
                     >
                       Batal
                     </button>
-                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded">
+                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
                       <Icon
                         icon="akar-icons:trash-can"
                         width={24}

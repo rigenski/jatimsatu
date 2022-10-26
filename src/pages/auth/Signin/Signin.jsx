@@ -19,8 +19,8 @@ const Signin = () => {
                         Masuk
                       </h3>
                       <p className="text-body-2 text-grey-3 text-center">
-                        Masukkan email dan password yang sudah terdaftar. Belum
-                        punya akun?{" "}
+                        Masukkan email dan password yang sudah terdaftar.
+                        <br /> Belum punya akun?{" "}
                         <a
                           href="/signup"
                           className="text-primary-2 fw-semibold"
@@ -68,7 +68,7 @@ const Signin = () => {
                     <div className="d-flex justify-content-center align-items-center">
                       <button
                         type="button"
-                        className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded"
+                        className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded-1"
                       >
                         Masuk
                       </button>
