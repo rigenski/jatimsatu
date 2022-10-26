@@ -14,7 +14,7 @@ const SuratJalan = () => {
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Surat Keterangan Surat Jalan
+              Pengajuan Surat Jalan
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk

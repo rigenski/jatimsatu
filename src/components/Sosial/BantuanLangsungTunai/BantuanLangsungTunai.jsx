@@ -4,7 +4,7 @@ import React, { useState } from "react";
 // assets
 import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
 
-const DaftarKTP = () => {
+const BantuanLangsungTunai = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
   const [complete, setComplete] = useState(false);
 
@@ -14,7 +14,7 @@ const DaftarKTP = () => {
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Surat Keterangan Daftar KTP
+              Pengajuan Bantuan Langsung Tunai
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
@@ -262,30 +262,27 @@ const DaftarKTP = () => {
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="akta-lahir"
+                      htmlFor="ktp"
                       className="form-label text-body-3 text-grey-1"
                     >
-                      Upload Akta Lahir <span className="text-danger">*</span>
+                      Upload KTP <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="akta-lahir"
-                    />
+                    <input type="file" className="form-control" id="ktp" />
                   </div>
                 </div>
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="surat-hilang"
+                      htmlFor="rekomendasi-rt-rw"
                       className="form-label text-body-3 text-grey-1"
                     >
-                      Surat keterangan hilang (jika hilang)
+                      Surat Rekomendasi RT/RW{" "}
+                      <span className="text-danger">*</span>
                     </label>
                     <input
                       type="file"
                       className="form-control"
-                      id="surat-hilang"
+                      id="rekomendasi-rt-rw"
                     />
                   </div>
                 </div>
@@ -335,4 +332,4 @@ const DaftarKTP = () => {
   );
 };
 
-export default DaftarKTP;
+export default BantuanLangsungTunai;

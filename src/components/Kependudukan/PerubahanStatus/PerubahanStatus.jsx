@@ -1,12 +1,33 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // assets
 import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
 
-const SKPerubahanStatusKependudukan = () => {
+const typeDocuments = [
+  {
+    type: 1,
+    name: "Perubahan Status Pendidikan",
+  },
+  {
+    type: 2,
+    name: "Perubahan Status Pekerjaan",
+  },
+  {
+    type: 3,
+    name: "Perubahan Status Kependudukan",
+  },
+];
+
+const PerubahanStatus = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
   const [complete, setComplete] = useState(false);
+
+  const [typeSelected, setTypeSelected] = useState(1);
+
+  useEffect(() => {
+    console.log(typeDocuments.find((e) => e.type === typeSelected));
+  }, [typeSelected]);
 
   return (
     <>
@@ -14,7 +35,7 @@ const SKPerubahanStatusKependudukan = () => {
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Surat Keterangan Perubahan Status Kependudukan
+              Pengajuan Perubahan Status
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
@@ -85,6 +106,31 @@ const SKPerubahanStatusKependudukan = () => {
             </div>
             {section === "formulir-pendaftaran" ? (
               <div className="row">
+                <div className="col-12 col-md-6">
+                  <div className="mb-3">
+                    <label
+                      htmlFor="jenis-dokumen"
+                      className="form-label text-body-3 text-grey-1"
+                    >
+                      Jenis Dokumen <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      className="form-select"
+                      id="jenis-dokumen"
+                      onChange={(e) =>
+                        setTypeSelected(parseInt(e.target.value))
+                      }
+                    >
+                      {typeDocuments.map((item, index) => {
+                        return (
+                          <option value={item.type} key={index}>
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
@@ -246,32 +292,88 @@ const SKPerubahanStatusKependudukan = () => {
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className="row">
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="kk"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Upload KK <span className="text-danger">*</span>
-                    </label>
-                    <input type="file" className="form-control" id="kk" />
+            ) : typeSelected === 1 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="kk"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="kk" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTP <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="ktp" />
+                    </div>
                   </div>
                 </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="ktp"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Upload KTP <span className="text-danger">*</span>
-                    </label>
-                    <input type="file" className="form-control" id="ktp" />
+              </>
+            ) : typeSelected === 2 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="kk"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="kk" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTPss <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="ktp" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              </>
+            ) : typeSelected === 3 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="kk"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="kk" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTP <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="ktp" />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : null}
 
             <div className="mt-4 d-flex justify-content-center align-items-center d-lg-none justify-content-md-end">
               <button
@@ -316,4 +418,4 @@ const SKPerubahanStatusKependudukan = () => {
   );
 };
 
-export default SKPerubahanStatusKependudukan;
+export default PerubahanStatus;

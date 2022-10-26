@@ -21,12 +21,12 @@ const layananData = [
   {
     title: "Bantuan Sosial",
     icon: BantuanSosialIcon,
-    path: "/bantuan-sosial",
+    path: "/bansos",
   },
   {
     title: "Bantuan Langsung Tunai",
     icon: BantuanLangsungTunaiIcon,
-    path: "/bantuang-langsung-tunai",
+    path: "/bantuan-langsung-tunai",
   },
   {
     title: "BPJS",
@@ -61,10 +61,10 @@ const layananData = [
   {
     title: "Kartu Keluarga",
     icon: SuratKeteranganIcon,
-    path: "/surat-keterangan",
+    path: "/kartu-keluarga",
   },
   {
-    title: "bantuan-bencana",
+    title: "Penyaluran Subsidi",
     icon: PenyaluranSubsidiIcon,
     path: "/penyaluran-subsidi",
   },

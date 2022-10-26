@@ -6,38 +6,44 @@ import Home from "src/pages/user/Home/Home";
 import Kependudukan from "src/pages/user/Kependudukan/Kependudukan";
 import Sosial from "src/pages/user/Sosial/Sosial";
 import Dokumen from "src/pages/user/Dokumen/Dokumen";
-import SuperAdminHome from "./pages/super-admin/SuperAdminHome/SuperAdminHome";
-import SuperAdminUser from "./pages/super-admin/SuperAdminUser/SuperAdminUser";
-import SuperAdminUserDetail from "./pages/super-admin/SuperAdminUserDetail/SuperAdminUserDetail";
-import SuperAdminUserEdit from "./pages/super-admin/SuperAdminUserEdit/SuperAdminUserEdit";
-import SuperAdminUserAdd from "./pages/super-admin/SuperAdminUserAdd/SuperAdminUserAdd";
-import SuperAdminKependudukan from "./pages/super-admin/SuperAdminKependudukan/SuperAdminKependudukan";
-import SuperAdminKependudukanDetail from "./pages/super-admin/SuperAdminKependudukanDetail/SuperAdminKependudukanDetail";
-import SuperAdminKependudukanEdit from "./pages/super-admin/SuperAdminKependudukanEdit/SuperAdminKependudukanEdit";
-import SuperAdminSosial from "./pages/super-admin/SuperAdminSosial/SuperAdminSosial";
-import SuperAdminSosialDetail from "./pages/super-admin/SuperAdminSosialDetail/SuperAdminSosialDetail";
-import SuperAdminSosialEdit from "./pages/super-admin/SuperAdminSosialEdit/SuperAdminSosialEdit";
-import SuperAdminKesehatan from "./pages/super-admin/SuperAdminKesehatan/SuperAdminKesehatan";
-import SuperAdminDesaAdd from "./pages/super-admin/SuperAdminDesaAdd/SuperAdminDesaAdd";
-import SuperAdminKecamatanAdd from "./pages/super-admin/SuperAdminKecamatanAdd/SuperAdminKecamatanAdd";
-import SuperAdminDesa from "./pages/super-admin/SuperAdminDesa/SuperAdminDesa";
-import SuperAdminKecamatan from "./pages/super-admin/SuperAdminKecamatan/SuperAdminKecamatan";
-import LayananDetail from "./pages/user/LayananDetail/LayananDetail";
-import Bpjs from "./components/LayananDetail/Bpjs/Bpjs";
-import DaftarKTP from "./components/LayananDetail/DaftarKTP/DaftarKTP";
-import SKDomisili from "./components/LayananDetail/SKDomisili/SKDomisili";
-import SuratJalan from "./components/LayananDetail/SuratJalan/SuratJalan";
-import SKLahir from "./components/LayananDetail/SKLahir/SKLahir";
-import SKMeninggal from "./components/LayananDetail/SKMeninggal/SKMeninggal";
-import SKPindahDatang from "./components/LayananDetail/SKPindahDatang/SKPindahDatang";
-import SKDudaJanda from "./components/LayananDetail/SKDudaJanda/SKDudaJanda";
-import KartuKeluarga from "./components/LayananDetail/KartuKeluarga/KartuKeluarga";
-import SKMenikah from "./components/LayananDetail/SKMenikah/SKMenikah";
-import SKPerubahanStatusPendidikan from "./components/LayananDetail/SKPerubahanStatusPendidikan/SKPerubahanStatusPendidikan";
-import SKPerubahanStatusPekerjaan from "./components/LayananDetail/SKPerubahanStatusPendidikan/SKPerubahanStatusPendidikan";
-import SKPerubahanStatusKependudukan from "./components/LayananDetail/SKPerubahanStatusKependudukan/SKPerubahanStatusKependudukan";
-import ESignature from "./components/LayananDetail/ESignature/ESignature";
-import SKCerai from "./components/LayananDetail/SKCerai/SKCerai";
+import SuperAdminHome from "src/pages/super-admin/SuperAdminHome/SuperAdminHome";
+import SuperAdminUser from "src/pages/super-admin/SuperAdminUser/SuperAdminUser";
+import SuperAdminUserDetail from "src/pages/super-admin/SuperAdminUserDetail/SuperAdminUserDetail";
+import SuperAdminUserEdit from "src/pages/super-admin/SuperAdminUserEdit/SuperAdminUserEdit";
+import SuperAdminUserAdd from "src/pages/super-admin/SuperAdminUserAdd/SuperAdminUserAdd";
+import SuperAdminKependudukan from "src/pages/super-admin/SuperAdminKependudukan/SuperAdminKependudukan";
+import SuperAdminKependudukanDetail from "src/pages/super-admin/SuperAdminKependudukanDetail/SuperAdminKependudukanDetail";
+import SuperAdminKependudukanEdit from "src/pages/super-admin/SuperAdminKependudukanEdit/SuperAdminKependudukanEdit";
+import SuperAdminSosial from "src/pages/super-admin/SuperAdminSosial/SuperAdminSosial";
+import SuperAdminSosialDetail from "src/pages/super-admin/SuperAdminSosialDetail/SuperAdminSosialDetail";
+import SuperAdminSosialEdit from "src/pages/super-admin/SuperAdminSosialEdit/SuperAdminSosialEdit";
+import SuperAdminKesehatan from "src/pages/super-admin/SuperAdminKesehatan/SuperAdminKesehatan";
+import SuperAdminDesaAdd from "src/pages/super-admin/SuperAdminDesaAdd/SuperAdminDesaAdd";
+import SuperAdminKecamatanAdd from "src/pages/super-admin/SuperAdminKecamatanAdd/SuperAdminKecamatanAdd";
+import SuperAdminDesa from "src/pages/super-admin/SuperAdminDesa/SuperAdminDesa";
+import SuperAdminKecamatan from "src/pages/super-admin/SuperAdminKecamatan/SuperAdminKecamatan";
+import LayananDetail from "src/pages/user/LayananDetail/LayananDetail";
+import Bpjs from "src/components/Sosial/Bpjs/Bpjs";
+import DaftarKTP from "src/components/Kependudukan/DaftarKTP/DaftarKTP";
+import SKDomisili from "src/components/Kependudukan/SKDomisili/SKDomisili";
+import SuratJalan from "src/components/Kependudukan/SuratJalan/SuratJalan";
+import SKLahir from "src/components/Kependudukan/SKLahir/SKLahir";
+import SKMeninggal from "src/components/Kependudukan/SKMeninggal/SKMeninggal";
+import SKPindahDatang from "src/components/Kependudukan/SKPindahDatang/SKPindahDatang";
+import SKDudaJanda from "src/components/Kependudukan/SKDudaJanda/SKDudaJanda";
+import KartuKeluarga from "src/components/Kependudukan/KartuKeluarga/KartuKeluarga";
+import SKMenikah from "src/components/Kependudukan/SKMenikah/SKMenikah";
+import ESignature from "src/components/Kependudukan/ESignature/ESignature";
+import SKCerai from "src/components/Kependudukan/SKCerai/SKCerai";
+import Bansos from "./components/Sosial/Bansos/Bansos";
+import BantuanLangsungTunai from "./components/Sosial/BantuanLangsungTunai/BantuanLangsungTunai";
+import KartuIndonesiaPintar from "./components/Sosial/KartuIndonesiaPintar/KartuIndonesiaPintar";
+import KartuIndonesiaSehat from "./components/Sosial/KartuIndonesiaSehat/KartuIndonesiaSehat";
+import KartuPrakerja from "./components/Sosial/KartuPrakerja/KartuPrakerja";
+import BantuanBencana from "./components/Sosial/BantuanBencana/BantuanBencana";
+import PenyaluranSubsidi from "./components/Sosial/PenyaluranSubsidi/PenyaluranSubsidi";
+import Pengaduan from "./components/Sosial/Pengaduan/KartuPrakerja";
+import PerubahanStatus from "./components/Kependudukan/PerubahanStatus/PerubahanStatus";
 
 function App() {
   return (
@@ -58,6 +64,14 @@ function App() {
           element={
             <LayananDetail>
               <DaftarKTP />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/surat-keterangan"
+          element={
+            <LayananDetail>
+              <SKDomisili />
             </LayananDetail>
           }
         />
@@ -134,29 +148,37 @@ function App() {
           }
         />
         <Route
-          path="/sk-status-pendidikan"
+          path="/perubahan-status"
           element={
             <LayananDetail>
-              <SKPerubahanStatusPendidikan />
+              <PerubahanStatus />
+            </LayananDetail>
+          }
+        />
+        {/* <Route
+          path="/perubahan-status-pendidikan"
+          element={
+            <LayananDetail>
+              <PerubahanStatusPendidikan />
             </LayananDetail>
           }
         />
         <Route
-          path="/sk-status-pekerjaan"
+          path="/perubahan-status-pekerjaan"
           element={
             <LayananDetail>
-              <SKPerubahanStatusPekerjaan />
+              <PerubahanStatusPekerjaan />
             </LayananDetail>
           }
         />
         <Route
-          path="/sk-status-kependudukan"
+          path="/perubahan-status-kependudukan"
           element={
             <LayananDetail>
-              <SKPerubahanStatusKependudukan />
+              <PerubahanStatusKependudukan />
             </LayananDetail>
           }
-        />
+        /> */}
         <Route
           path="/e-signature"
           element={
@@ -167,10 +189,74 @@ function App() {
         />
         {/* sosial */}
         <Route
+          path="/bansos"
+          element={
+            <LayananDetail>
+              <Bansos />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/bantuan-langsung-tunai"
+          element={
+            <LayananDetail>
+              <BantuanLangsungTunai />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/kartu-indonesia-pintar"
+          element={
+            <LayananDetail>
+              <KartuIndonesiaPintar />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/kartu-indonesia-sehat"
+          element={
+            <LayananDetail>
+              <KartuIndonesiaSehat />
+            </LayananDetail>
+          }
+        />
+        <Route
           path="/bpjs"
           element={
             <LayananDetail>
               <Bpjs />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/kartu-prakerja"
+          element={
+            <LayananDetail>
+              <KartuPrakerja />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/bantuan-bencana"
+          element={
+            <LayananDetail>
+              <BantuanBencana />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/penyaluran-subsidi"
+          element={
+            <LayananDetail>
+              <PenyaluranSubsidi />
+            </LayananDetail>
+          }
+        />
+        <Route
+          path="/pengaduan"
+          element={
+            <LayananDetail>
+              <Pengaduan />
             </LayananDetail>
           }
         />
