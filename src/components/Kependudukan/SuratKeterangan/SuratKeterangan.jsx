@@ -7,19 +7,35 @@ import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokum
 const typeDocuments = [
   {
     type: 1,
-    name: "Perubahan Status Pendidikan",
+    name: "Surat Keterangan Domisili",
   },
   {
     type: 2,
-    name: "Perubahan Status Pekerjaan",
+    name: "Surat Keterangan Lahir",
   },
   {
     type: 3,
-    name: "Perubahan Status Kependudukan",
+    name: "Surat Keterangan Meninggal",
+  },
+  {
+    type: 4,
+    name: "Surat Keterangan Pindah/Datang",
+  },
+  {
+    type: 5,
+    name: "Surat Keterangan Duda/Janda",
+  },
+  {
+    type: 6,
+    name: "Surat Keterangan Menikah",
+  },
+  {
+    type: 7,
+    name: "Surat Keterangan Cerai",
   },
 ];
 
-const PerubahanStatus = () => {
+const SuratKeterangan = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
   const [complete, setComplete] = useState(false);
 
@@ -31,7 +47,7 @@ const PerubahanStatus = () => {
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Surat Keterangan
+              Pengajuan Perubahan Status
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
@@ -321,6 +337,22 @@ const PerubahanStatus = () => {
                       <input type="file" className="form-control" id="ktp" />
                     </div>
                   </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="rekomendasi-rt-rw"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Surat Rekomendasi RT/RW{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="rekomendasi-rt-rw"
+                      />
+                    </div>
+                  </div>
                 </div>
               </>
             ) : typeSelected === 2 ? (
@@ -329,10 +361,90 @@ const PerubahanStatus = () => {
                   <div className="col-12 col-md-6">
                     <div className="mb-3">
                       <label
+                        htmlFor="kk-ortu"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK Ortu <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk-ortu"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp-ortu"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTP Ortu <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp-ortu"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="sk-kelahiran-bayi"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        SK Kelahiran Bayi <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="sk-kelahiran-bayi"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="buku-nikah"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Buku Nikah <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="buku-nikah"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ijazah-ortu"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Ijazah Ortu <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ijazah-ortu"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : typeSelected === 3 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
                         htmlFor="kk"
                         className="form-label text-body-3 text-grey-1"
                       >
-                        Upload KK <span className="text-danger">*</span>
+                        Upload KK<span className="text-danger">*</span>
                       </label>
                       <input type="file" className="form-control" id="kk" />
                     </div>
@@ -343,14 +455,42 @@ const PerubahanStatus = () => {
                         htmlFor="ktp"
                         className="form-label text-body-3 text-grey-1"
                       >
-                        Upload KTPss <span className="text-danger">*</span>
+                        Upload KT <span className="text-danger">*</span>
                       </label>
                       <input type="file" className="form-control" id="ktp" />
                     </div>
                   </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="sk-kematian-rs"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        SK Kematian dari RS/Bidan{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="sk-kematian-rs"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="sk-rt"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Surat Keterangan dari RT{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="sk-rt" />
+                    </div>
+                  </div>
                 </div>
               </>
-            ) : typeSelected === 3 ? (
+            ) : typeSelected === 4 ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -373,6 +513,172 @@ const PerubahanStatus = () => {
                         Upload KTP <span className="text-danger">*</span>
                       </label>
                       <input type="file" className="form-control" id="ktp" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="rekomendasi-rt-rw"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Surat Rekomendasi RT/RW{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="rekomendasi-rt-rw"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : typeSelected === 5 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="kk"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="kk" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTP <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="ktp" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="rekomendasi-rt-rw"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Surat Rekomendasi RT/RW{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="rekomendasi-rt-rw"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="sk-kematian-pasangan"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        SK Kematian Pasangan{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="sk-kematian-pasangan"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : typeSelected === 6 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="kk-keluarga-asal"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK Keluarga Asal{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk-keluarga-asal"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTP <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="ktp" />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : typeSelected === 7 ? (
+              <>
+                <div className="row">
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="kk"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KK <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="kk" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="ktp"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Upload KTP <span className="text-danger">*</span>
+                      </label>
+                      <input type="file" className="form-control" id="ktp" />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="rekomendasi-rt-rw"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        Surat Rekomendasi RT/RW{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="rekomendasi-rt-rw"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="sk-cerai"
+                        className="form-label text-body-3 text-grey-1"
+                      >
+                        SK Cerai dari Pengadilan{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="sk-cerai"
+                      />
                     </div>
                   </div>
                 </div>
@@ -422,4 +728,4 @@ const PerubahanStatus = () => {
   );
 };
 
-export default PerubahanStatus;
+export default SuratKeterangan;

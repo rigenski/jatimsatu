@@ -44,6 +44,7 @@ import BantuanBencana from "./components/Sosial/BantuanBencana/BantuanBencana";
 import PenyaluranSubsidi from "./components/Sosial/PenyaluranSubsidi/PenyaluranSubsidi";
 import Pengaduan from "./components/Sosial/Pengaduan/KartuPrakerja";
 import PerubahanStatus from "./components/Kependudukan/PerubahanStatus/PerubahanStatus";
+import SuratKeterangan from "./components/Kependudukan/SuratKeterangan/SuratKeterangan";
 
 function App() {
   return (
@@ -68,6 +69,14 @@ function App() {
           }
         />
         <Route
+          path="/surat-keterangan"
+          element={
+            <LayananDetail>
+              <SuratKeterangan />
+            </LayananDetail>
+          }
+        />
+        {/* <Route
           path="/surat-keterangan"
           element={
             <LayananDetail>
@@ -146,7 +155,7 @@ function App() {
               <SKCerai />
             </LayananDetail>
           }
-        />
+        /> */}
         <Route
           path="/perubahan-status"
           element={
@@ -155,30 +164,6 @@ function App() {
             </LayananDetail>
           }
         />
-        {/* <Route
-          path="/perubahan-status-pendidikan"
-          element={
-            <LayananDetail>
-              <PerubahanStatusPendidikan />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/perubahan-status-pekerjaan"
-          element={
-            <LayananDetail>
-              <PerubahanStatusPekerjaan />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/perubahan-status-kependudukan"
-          element={
-            <LayananDetail>
-              <PerubahanStatusKependudukan />
-            </LayananDetail>
-          }
-        /> */}
         <Route
           path="/e-signature"
           element={
