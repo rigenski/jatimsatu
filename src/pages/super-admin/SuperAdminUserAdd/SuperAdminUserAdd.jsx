@@ -1,14 +1,14 @@
 import React from "react";
-import Dashboard from "src/components/Dashboard/Dashboard";
+import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 const SuperAdminUserAdd = () => {
   return (
     <>
-      <Dashboard>
+      <SuperAdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Tambah user</h3>
-            <p className="mb-0 text-body-2 text-grey-3">Sosial / Tambah user</p>
+            <p className="mb-0 text-body-2 text-grey-3">User / Tambah user</p>
           </div>
           <div className="d-flex">
             <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
@@ -270,7 +270,7 @@ const SuperAdminUserAdd = () => {
             </div>
           </div>
         </div>
-      </Dashboard>
+      </SuperAdminDashboard>
     </>
   );
 };

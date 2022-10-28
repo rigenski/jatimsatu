@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
 import { useTheme } from "@table-library/react-table-library/theme";
 import { getTheme } from "@table-library/react-table-library/baseline";
@@ -19,25 +19,31 @@ import {
   Table,
 } from "@table-library/react-table-library";
 
-const userData = [
+const kependudukanData = [
   {
     id: 1,
-    nama: "Bonyfasius  Lumbanraja",
-    deskripsi: "08123459010",
-    tipe_user: "User",
+    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
+    deskripsi: "Bonyfasius Lumbanraja",
+    layanan: "Kependudukan",
+    tanggal: "15-10-2022",
+    waktu: "21:00",
     status: 1,
+    keterangan: "Dokumen KK tidak jelas, upload ulang.",
   },
   {
     id: 2,
-    nama: "Bonyfasius  Lumbanraja",
-    deskripsi: "08123459010",
-    tipe_user: "User",
+    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
+    deskripsi: "Bonyfasius Lumbanraja",
+    layanan: "Kependudukan",
+    tanggal: "15-10-2022",
+    waktu: "21:00",
     status: 1,
+    keterangan: "Dokumen KK tidak jelas, upload ulang.",
   },
 ];
 
-const SuperAdminUser = () => {
-  const nodes = userData;
+const AdminKependudukan = () => {
+  const nodes = kependudukanData;
 
   const select = useRowSelect({ nodes });
 
@@ -45,19 +51,19 @@ const SuperAdminUser = () => {
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  5% 16% 16% 16% 16% minmax(300px, 1fr);
+      --data-table-library_grid-template-columns:  5% 16% 16% 16% 16% 16% 16% minmax(300px, 1fr);
       `,
     },
   ]);
 
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">User management</h3>
+            <h3 className="mb-2 text-heading-3 text-grey-1">Kependudukan</h3>
             <p className="mb-0 text-body-2 text-grey-3">
-              Kelola data pengguna aplikasi jatimsatu
+              Kelola data layanan kependudukan
             </p>
           </div>
           <div className="d-flex">
@@ -75,9 +81,16 @@ const SuperAdminUser = () => {
               </select>
             </div>
             <a
-              href="/super-admin/users/add"
-              className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
+              href="/super-admin/kependudukan/add"
+              className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
             >
+              <Icon
+                icon="akar-icons:circle-plus"
+                width={24}
+                height={24}
+                color="#FFFFFF"
+                className="me-2"
+              />
               Tambah
             </a>
           </div>
@@ -150,16 +163,22 @@ const SuperAdminUser = () => {
                       <HeaderRow>
                         <HeaderCellSelect />
                         <HeaderCell className="px-2 py-3 text-grey-1">
-                          Name
+                          Dokumen
                         </HeaderCell>
                         <HeaderCell className="px-2 py-3 text-grey-1">
-                          No. HP
+                          Nama
                         </HeaderCell>
                         <HeaderCell className="px-2 py-3 text-grey-1">
-                          Tipe User
+                          Layanan
+                        </HeaderCell>
+                        <HeaderCell className="px-2 py-3 text-grey-1">
+                          Tanggal
                         </HeaderCell>
                         <HeaderCell className="px-2 py-3 text-grey-1">
                           Status
+                        </HeaderCell>
+                        <HeaderCell className="px-2 py-3 text-grey-1">
+                          Keterangan
                         </HeaderCell>
                         <HeaderCell className="px-2 py-3 text-grey-1">
                           Aksi
@@ -172,13 +191,18 @@ const SuperAdminUser = () => {
                         <Row key={item.id} item={item}>
                           <CellSelect item={item} />
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.nama}
+                            {item.dokumen}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
                             {item.deskripsi}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.tipe_user}
+                            {item.layanan}
+                          </Cell>
+                          <Cell className="px-2 py-3 text-grey-1">
+                            {item.tanggal}
+                            <br />
+                            {item.waktu}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
                             {item.status === 1 ? (
@@ -186,6 +210,9 @@ const SuperAdminUser = () => {
                                 Disetujui
                               </div>
                             ) : null}
+                          </Cell>
+                          <Cell className="px-2 py-3 text-grey-1">
+                            {item.keterangan}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
                             <div>
@@ -224,7 +251,7 @@ const SuperAdminUser = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
       <div
         className="modal fade"
         id="filterModal"
@@ -466,4 +493,4 @@ const SuperAdminUser = () => {
   );
 };
 
-export default SuperAdminUser;
+export default AdminKependudukan;

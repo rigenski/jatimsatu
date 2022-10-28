@@ -1,11 +1,11 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
-const SuperAdminUserDetail = () => {
+const AdminUserDetail = () => {
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Detail user</h3>
@@ -272,7 +272,7 @@ const SuperAdminUserDetail = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
       <div
         className="modal fade"
         id="deleteModal"
@@ -314,4 +314,4 @@ const SuperAdminUserDetail = () => {
   );
 };
 
-export default SuperAdminUserDetail;
+export default AdminUserDetail;

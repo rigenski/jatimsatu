@@ -1,11 +1,11 @@
 import React from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 import KesehatanEx from "src/assets/images/dashboard/kesehatan-ex.png";
 
-const SuperAdminKesehatan = () => {
+const AdminKesehatan = () => {
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Kesehatan</h3>
@@ -40,9 +40,9 @@ const SuperAdminKesehatan = () => {
             </button>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
     </>
   );
 };
 
-export default SuperAdminKesehatan;
+export default AdminKesehatan;

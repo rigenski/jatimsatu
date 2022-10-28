@@ -118,7 +118,7 @@ const PerubahanStatus = () => {
                       }
                     >
                       {typeDocuments.map((item, index) => {
-                        if (item.type === 1) {
+                        if (item.type === typeSelected) {
                           return (
                             <option value={item.type} key={index} selected>
                               {item.name}

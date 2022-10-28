@@ -3,7 +3,56 @@ import Navbar from "src/components/Navbar/Navbar";
 import { Icon } from "@iconify/react";
 import "./Dokumen.css";
 
+import { useTheme } from "@table-library/react-table-library/theme";
+import { getTheme } from "@table-library/react-table-library/baseline";
+import {
+  CellSelect,
+  HeaderCellSelect,
+  useRowSelect,
+} from "@table-library/react-table-library/select";
+import {
+  Body,
+  Cell,
+  Header,
+  HeaderCell,
+  HeaderRow,
+  Row,
+  Table,
+} from "@table-library/react-table-library";
+
+const sosialData = [
+  {
+    id: 1,
+    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
+    layanan: "Sosial",
+    tanggal: "15-10-2022",
+    waktu: "21:00",
+    status: 1,
+    keterangan: "Dokumen KK tidak jelas, upload ulang.",
+  },
+  {
+    id: 2,
+    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
+    layanan: "Sosial",
+    tanggal: "15-10-2022",
+    waktu: "21:00",
+    status: 1,
+    keterangan: "Dokumen KK tidak jelas, upload ulang.",
+  },
+];
+
 const Dokumen = () => {
+  const nodes = sosialData;
+
+  const theme = useTheme([
+    getTheme(),
+    {
+      Table: `
+      --data-table-library_grid-template-columns:  16% 16% 16% 16% 16% minmax(300px, 1fr);
+      `,
+    },
+  ]);
+
   return (
     <>
       <Navbar />
@@ -98,55 +147,78 @@ const Dokumen = () => {
                   </div>
                 </div>
                 <div>
-                  <div className="table-responsive mb-4">
-                    <table className="table rounded-2">
-                      <thead>
-                        <tr className="bg-background">
-                          <th scope="col" className="p-3 text-nowrap">
-                            Nama Dokumen
-                          </th>
-                          <th scope="col" className="p-3 text-nowrap">
-                            Layanan
-                          </th>
-                          <th scope="col" className="p-3 text-nowrap">
-                            Tanggal Submit
-                          </th>
-                          <th scope="col" className="p-3 text-nowrap">
-                            Status
-                          </th>
-                          <th scope="col" className="p-3 text-nowrap">
-                            Aksi
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="text-paragraph-2">
-                            Pengajuan Surat Keterangan Daftar KTP
-                          </td>
-                          <td className="text-paragraph-2">Kependudukan</td>
-                          <td className="text-paragraph-2">
-                            15-10-2022
-                            <br />
-                            21:00
-                          </td>
-                          <td className="text-paragraph-2">
-                            <div className="badge bg-primary-2">Selesai</div>
-                            <p className="mb-0 text-paragraph-4 text-grey-1">
-                              Lorem Ipsum
-                            </p>
-                          </td>
-                          <td className="text-paragraph-2">
-                            <button className="btn w-100 px-3 py-1 mb-2 text-white text-nowrap bg-primary-2 rounded-1">
-                              Lihat Dokumen
-                            </button>
-                            <button className="btn w-100 px-3 py-1 text-white text-nowrap bg-blue-2 rounded-1">
-                              Export PDF
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div className="mb-4">
+                    <Table
+                      data={{ nodes }}
+                      theme={theme}
+                      layout={{ custom: true, horizontalScroll: true }}
+                      className="border border-grey-2 rounded-2 table-select"
+                    >
+                      {(tableList) => (
+                        <>
+                          <Header>
+                            <HeaderRow>
+                              <HeaderCell className="px-2 py-3 text-grey-1">
+                                Nama Dokumen
+                              </HeaderCell>
+                              <HeaderCell className="px-2 py-3 text-grey-1">
+                                Layanan
+                              </HeaderCell>
+                              <HeaderCell className="px-2 py-3 text-grey-1">
+                                Tanggal
+                              </HeaderCell>
+                              <HeaderCell className="px-2 py-3 text-grey-1">
+                                Status
+                              </HeaderCell>
+                              <HeaderCell className="px-2 py-3 text-grey-1">
+                                Keterangan
+                              </HeaderCell>
+                              <HeaderCell className="px-2 py-3 text-grey-1">
+                                Aksi
+                              </HeaderCell>
+                            </HeaderRow>
+                          </Header>
+
+                          <Body>
+                            {tableList.map((item) => (
+                              <Row key={item.id} item={item}>
+                                <Cell className="px-2 py-3 text-grey-1">
+                                  {item.dokumen}
+                                </Cell>
+                                <Cell className="px-2 py-3 text-grey-1">
+                                  {item.layanan}
+                                </Cell>
+                                <Cell className="px-2 py-3 text-grey-1">
+                                  {item.tanggal}
+                                  <br />
+                                  {item.waktu}
+                                </Cell>
+                                <Cell className="px-2 py-3 text-grey-1">
+                                  {item.status === 1 ? (
+                                    <div className="badge px-4 text-paragraph-1 text-primary-2 bg-primary-6 rounded-1">
+                                      Disetujui
+                                    </div>
+                                  ) : null}
+                                </Cell>
+                                <Cell className="px-2 py-3 text-grey-1">
+                                  {item.keterangan}
+                                </Cell>
+                                <Cell className="px-2 py-3 text-grey-1">
+                                  <div className="d-flex flex-column">
+                                    <button className="btn mb-2 me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
+                                      Lihat Dokumen
+                                    </button>
+                                    <button className="btn px-3 py-1 text-white text-nowrap bg-info rounded-1">
+                                      Export PDF
+                                    </button>
+                                  </div>
+                                </Cell>
+                              </Row>
+                            ))}
+                          </Body>
+                        </>
+                      )}
+                    </Table>
                   </div>
                   <div className="pagination d-flex flex-column justify-content-between align-items-center flex-md-row">
                     <div className="mb-3 d-flex align-items-center mb-md-0">

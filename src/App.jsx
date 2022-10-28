@@ -25,16 +25,7 @@ import SuperAdminKecamatan from "src/pages/super-admin/SuperAdminKecamatan/Super
 import LayananDetail from "src/pages/user/LayananDetail/LayananDetail";
 import Bpjs from "src/components/Sosial/Bpjs/Bpjs";
 import DaftarKTP from "src/components/Kependudukan/DaftarKTP/DaftarKTP";
-import SKDomisili from "src/components/Kependudukan/SKDomisili/SKDomisili";
-import SuratJalan from "src/components/Kependudukan/SuratJalan/SuratJalan";
-import SKLahir from "src/components/Kependudukan/SKLahir/SKLahir";
-import SKMeninggal from "src/components/Kependudukan/SKMeninggal/SKMeninggal";
-import SKPindahDatang from "src/components/Kependudukan/SKPindahDatang/SKPindahDatang";
-import SKDudaJanda from "src/components/Kependudukan/SKDudaJanda/SKDudaJanda";
-import KartuKeluarga from "src/components/Kependudukan/KartuKeluarga/KartuKeluarga";
-import SKMenikah from "src/components/Kependudukan/SKMenikah/SKMenikah";
 import ESignature from "src/components/Kependudukan/ESignature/ESignature";
-import SKCerai from "src/components/Kependudukan/SKCerai/SKCerai";
 import Bansos from "./components/Sosial/Bansos/Bansos";
 import BantuanLangsungTunai from "./components/Sosial/BantuanLangsungTunai/BantuanLangsungTunai";
 import KartuIndonesiaPintar from "./components/Sosial/KartuIndonesiaPintar/KartuIndonesiaPintar";
@@ -45,6 +36,24 @@ import PenyaluranSubsidi from "./components/Sosial/PenyaluranSubsidi/PenyaluranS
 import Pengaduan from "./components/Sosial/Pengaduan/KartuPrakerja";
 import PerubahanStatus from "./components/Kependudukan/PerubahanStatus/PerubahanStatus";
 import SuratKeterangan from "./components/Kependudukan/SuratKeterangan/SuratKeterangan";
+import AdminHome from "./pages/admin/AdminHome/AdminHome";
+import AdminUser from "./pages/admin/AdminUser/AdminUser";
+import AdminUserDetail from "./pages/admin/AdminUserDetail/AdminUserDetail";
+import AdminKependudukanDetail from "./pages/admin/AdminKependudukanDetail/AdminKependudukanDetail";
+import AdminKependudukanEdit from "./pages/admin/AdminKependudukanEdit/AdminKependudukanEdit";
+import AdminSosial from "./pages/admin/AdminSosial/AdminSosial";
+import AdminSosialDetail from "./pages/admin/AdminSosialDetail/AdminSosialDetail";
+import AdminSosialEdit from "./pages/admin/AdminSosialEdit/AdminSosialEdit";
+import AdminKesehatan from "./pages/admin/AdminKesehatan/AdminKesehatan";
+import AdminKecamatan from "./pages/admin/AdminKecamatan/AdminKecamatan";
+import AdminKecamatanAdd from "./pages/admin/AdminKecamatanAdd/AdminKecamatanAdd";
+import AdminDesa from "./pages/admin/AdminDesa/AdminDesa";
+import AdminDesaAdd from "./pages/admin/AdminDesaAdd/AdminDesaAdd";
+import AdminUserEdit from "./pages/admin/AdminUserEdit/AdminUserEdit";
+import AdminUserAdd from "./pages/admin/AdminUserAdd/AdminUserAdd";
+import AdminKependudukan from "./pages/admin/AdminKependudukan/AdminKependudukan";
+import SuratJalan from "./components/Kependudukan/SuratJalan/SuratJalan";
+import KartuKeluarga from "./components/Kependudukan/KartuKeluarga/KartuKeluarga";
 
 function App() {
   return (
@@ -69,30 +78,6 @@ function App() {
           }
         />
         <Route
-          path="/surat-keterangan"
-          element={
-            <LayananDetail>
-              <SuratKeterangan />
-            </LayananDetail>
-          }
-        />
-        {/* <Route
-          path="/surat-keterangan"
-          element={
-            <LayananDetail>
-              <SKDomisili />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/sk-domisili"
-          element={
-            <LayananDetail>
-              <SKDomisili />
-            </LayananDetail>
-          }
-        />
-        <Route
           path="/surat-jalan"
           element={
             <LayananDetail>
@@ -101,34 +86,10 @@ function App() {
           }
         />
         <Route
-          path="/sk-lahir"
+          path="/surat-keterangan"
           element={
             <LayananDetail>
-              <SKLahir />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/sk-meninggal"
-          element={
-            <LayananDetail>
-              <SKMeninggal />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/sk-pindah-datang"
-          element={
-            <LayananDetail>
-              <SKPindahDatang />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/sk-duda-janda"
-          element={
-            <LayananDetail>
-              <SKDudaJanda />
+              <SuratKeterangan />
             </LayananDetail>
           }
         />
@@ -140,22 +101,6 @@ function App() {
             </LayananDetail>
           }
         />
-        <Route
-          path="/sk-menikah"
-          element={
-            <LayananDetail>
-              <SKMenikah />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/sk-cerai"
-          element={
-            <LayananDetail>
-              <SKCerai />
-            </LayananDetail>
-          }
-        /> */}
         <Route
           path="/perubahan-status"
           element={
@@ -247,7 +192,7 @@ function App() {
         />
 
         {/* super admin */}
-        <Route path="/super-admin/home" element={<SuperAdminHome />} />
+        <Route path="/super-admin" element={<SuperAdminHome />} />
         <Route path="/super-admin/users" element={<SuperAdminUser />} />
         <Route
           path="/super-admin/users/detail"
@@ -293,6 +238,30 @@ function App() {
         />
         <Route path="/super-admin/desa" element={<SuperAdminDesa />} />
         <Route path="/super-admin/desa/add" element={<SuperAdminDesaAdd />} />
+
+        {/* super admin */}
+        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin/users" element={<AdminUser />} />
+        <Route path="/admin/users/detail" element={<AdminUserDetail />} />
+        <Route path="/admin/users/edit" element={<AdminUserEdit />} />
+        <Route path="/admin/users/add" element={<AdminUserAdd />} />
+        <Route path="/admin/kependudukan" element={<AdminKependudukan />} />
+        <Route
+          path="/admin/kependudukan/detail"
+          element={<AdminKependudukanDetail />}
+        />
+        <Route
+          path="/admin/kependudukan/edit"
+          element={<AdminKependudukanEdit />}
+        />
+        <Route path="/admin/sosial" element={<AdminSosial />} />
+        <Route path="/admin/sosial/detail" element={<AdminSosialDetail />} />
+        <Route path="/admin/sosial/edit" element={<AdminSosialEdit />} />
+        <Route path="/admin/kesehatan" element={<AdminKesehatan />} />
+        <Route path="/admin/kecamatan" element={<AdminKecamatan />} />
+        <Route path="/admin/kecamatan/add" element={<AdminKecamatanAdd />} />
+        <Route path="/admin/desa" element={<AdminDesa />} />
+        <Route path="/admin/desa/add" element={<AdminDesaAdd />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,29 +1,54 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import React, { useEffect, useState } from "react";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
-const SuperAdminKependudukanDetail = () => {
+const AdminKependudukanEdit = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
+  const [status, setStatus] = useState(1);
+
+  const [alasanModal, setAlasanModal] = useState(false);
+
+  useEffect(() => {
+    if (status === 2) {
+      setAlasanModal(true);
+    } else {
+      setAlasanModal(false);
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (alasanModal) {
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = "0";
+      document.querySelector(".modal").style =
+        "display: block;background: rgba(0, 0, 0, 0.5)";
+    } else {
+      document.body.style.overflow = "auto";
+      document.body.style.paddingRight = "0";
+      document.querySelector(".modal").style = "display: none;background: none";
+    }
+  }, [alasanModal]);
 
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">Detail dokumen</h3>
+            <h3 className="mb-2 text-heading-3 text-grey-1">Edit dokumen</h3>
             <p className="mb-0 text-body-2 text-grey-3">
-              Kependudukan / Detail dokumen
+              Kependudukan / Edit dokumen
             </p>
           </div>
-          <div className="p-3 text-white bg-black">
-            Dokumen berhasil disimpan
-            <Icon
-              icon="akar-icons:circle-x"
-              width={24}
-              height={24}
-              color="#FFFFFF"
-              className="ms-2"
-            />
+          <div>
+            <select
+              className="form-select pe-5 w-auto"
+              id="status"
+              onChange={(e) => setStatus(parseInt(e.target.value))}
+            >
+              <option value="">Pilih Status</option>
+              <option value="1">Disetujui</option>
+              <option value="2">Ditolak</option>
+            </select>
           </div>
         </div>
         <div className="card mb-4 w-100">
@@ -38,32 +63,11 @@ const SuperAdminKependudukanDetail = () => {
                 </p>
               </div>
               <div className="d-flex">
-                <a
-                  href="/super-admin/kependudukan/edit"
-                  className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
-                >
-                  <Icon
-                    icon="la:pen"
-                    width={24}
-                    height={24}
-                    color="#FFFFFF"
-                    className="me-2"
-                  />
-                  Edit
-                </a>
-                <button
-                  className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteModal"
-                >
-                  <Icon
-                    icon="akar-icons:trash-can"
-                    width={24}
-                    height={24}
-                    color="#FFFFFF"
-                    className="me-2"
-                  />
-                  Hapus
+                <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
+                  Batal
+                </button>
+                <button className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1">
+                  Simpan
                 </button>
               </div>
             </div>
@@ -108,7 +112,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="nama"
                       defaultValue="Bonyfasius Lumbanraja"
-                      disabled
                     />
                   </div>
                 </div>
@@ -125,7 +128,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="nik"
                       defaultValue="3312278010000009"
-                      disabled
                     />
                   </div>
                 </div>
@@ -142,7 +144,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="alamat"
                       defaultValue="Jalan Alpukat"
-                      disabled
                     />
                   </div>
                 </div>
@@ -154,7 +155,7 @@ const SuperAdminKependudukanDetail = () => {
                     >
                       Desa <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="desa" disabled>
+                    <select className="form-select" id="desa">
                       <option>Blitar</option>
                       <option>Malang</option>
                     </select>
@@ -168,7 +169,7 @@ const SuperAdminKependudukanDetail = () => {
                     >
                       Kecamatan <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="kecamatan" disabled>
+                    <select className="form-select" id="kecamatan">
                       <option>Blitar</option>
                       <option>Malang</option>
                     </select>
@@ -182,7 +183,7 @@ const SuperAdminKependudukanDetail = () => {
                     >
                       Kelurahan <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="kelurahan" disabled>
+                    <select className="form-select" id="kelurahan">
                       <option>Blitar</option>
                       <option>Malang</option>
                     </select>
@@ -201,7 +202,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="rt"
                       defaultValue="01"
-                      disabled
                     />
                   </div>
                 </div>
@@ -218,7 +218,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="rw"
                       defaultValue="07"
-                      disabled
                     />
                   </div>
                 </div>
@@ -235,7 +234,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="kode-pos"
                       defaultValue="172931"
-                      disabled
                     />
                   </div>
                 </div>
@@ -252,7 +250,6 @@ const SuperAdminKependudukanDetail = () => {
                       className="form-control"
                       id="deskripsi"
                       defaultValue="Pembuatan BPJS pribadi"
-                      disabled
                     />
                   </div>
                 </div>
@@ -267,12 +264,7 @@ const SuperAdminKependudukanDetail = () => {
                     >
                       Upload KK <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="kk"
-                      disabled
-                    />
+                    <input type="file" className="form-control" id="kk" />
                   </div>
                 </div>
                 <div className="col-12 col-md-6">
@@ -283,12 +275,7 @@ const SuperAdminKependudukanDetail = () => {
                     >
                       Upload KTP <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="ktp"
-                      disabled
-                    />
+                    <input type="file" className="form-control" id="ktp" />
                   </div>
                 </div>
                 <div className="col-12 col-md-6">
@@ -303,7 +290,6 @@ const SuperAdminKependudukanDetail = () => {
                       type="file"
                       className="form-control"
                       id="surat-hilang"
-                      disabled
                     />
                   </div>
                 </div>
@@ -312,11 +298,11 @@ const SuperAdminKependudukanDetail = () => {
           </div>
         </div>
         <div
-          className="modal fade"
-          id="deleteModal"
+          className={`modal fade ${alasanModal ? "show" : null}`}
+          id="alasanModal"
           tabIndex="-1"
-          aria-labelledby="deleteModalLabel"
-          aria-hidden="true"
+          aria-labelledby="alasanModalLabel"
+          aria-modal="true"
         >
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content p-4">
@@ -324,11 +310,18 @@ const SuperAdminKependudukanDetail = () => {
                 <p className="mb-4 text-body-3 text-grey-1 text-center">
                   Apakah anda yakin untuk hapus dokumen ini?
                 </p>
+                <input
+                  type="text"
+                  className="form-control mb-4"
+                  id="nama"
+                  placeholder="Dokumen tidak jelas"
+                />
                 <div className="d-flex justify-content-center align-items-center">
                   <div className="d-flex">
                     <button
-                      className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                      className="btn me-3 w-auto px-2 text-button bg-white text-center border-1 border-grey-1 rounded-1"
                       data-bs-dismiss="modal"
+                      onClick={() => setAlasanModal(false)}
                     >
                       Batal
                     </button>
@@ -348,9 +341,9 @@ const SuperAdminKependudukanDetail = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
     </>
   );
 };
 
-export default SuperAdminKependudukanDetail;
+export default AdminKependudukanEdit;

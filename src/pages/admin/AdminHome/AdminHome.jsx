@@ -306,7 +306,7 @@ const sosialChart = {
   },
 };
 
-const SuperAdminHome = () => {
+const AdminHome = () => {
   return (
     <>
       <SuperAdminDashboard>
@@ -451,4 +451,4 @@ const SuperAdminHome = () => {
   );
 };
 
-export default SuperAdminHome;
+export default AdminHome;

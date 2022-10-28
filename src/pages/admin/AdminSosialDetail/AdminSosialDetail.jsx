@@ -1,29 +1,34 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
-const SuperAdminKependudukanDetail = () => {
+const AdminSosialDetail = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
 
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Detail dokumen</h3>
             <p className="mb-0 text-body-2 text-grey-3">
-              Kependudukan / Detail dokumen
+              Sosial / Detail dokumen
             </p>
           </div>
-          <div className="p-3 text-white bg-black">
-            Dokumen berhasil disimpan
-            <Icon
-              icon="akar-icons:circle-x"
-              width={24}
-              height={24}
-              color="#FFFFFF"
-              className="ms-2"
-            />
+          <div className="d-flex align-items-center">
+            <div className="p-3 text-white bg-black">
+              Dokumen berhasil disimpan
+              <Icon
+                icon="akar-icons:circle-x"
+                width={24}
+                height={24}
+                color="#FFFFFF"
+                className="ms-2"
+              />
+            </div>
+            <div className="px-4 bg-primary-6">
+              <p className="mb-0 text-paragraph-1 text-primary-2">Disetujui</p>
+            </div>
           </div>
         </div>
         <div className="card mb-4 w-100">
@@ -31,15 +36,16 @@ const SuperAdminKependudukanDetail = () => {
             <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
               <div className="mb-3 mb-lg-0">
                 <h5 className="mb-1 text-heading-5 text-grey-1">
-                  Pengajuan Surat Keterangan Daftar KTP
+                  Pengajuan Surat Keterangan BPJS
                 </h5>
                 <p className="mb-0 text-paragraph-2 text-grey-3">
-                  Sosial / Detail user
+                  Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
+                  mendapat surat keterangan
                 </p>
               </div>
               <div className="d-flex">
                 <a
-                  href="/super-admin/kependudukan/edit"
+                  href="/super-admin/sosial/edit"
                   className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
                 >
                   <Icon
@@ -291,22 +297,6 @@ const SuperAdminKependudukanDetail = () => {
                     />
                   </div>
                 </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="surat-hilang"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Surat keterangan hilang (jika hilang)
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="surat-hilang"
-                      disabled
-                    />
-                  </div>
-                </div>
               </div>
             )}
           </div>
@@ -348,9 +338,9 @@ const SuperAdminKependudukanDetail = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
     </>
   );
 };
 
-export default SuperAdminKependudukanDetail;
+export default AdminSosialDetail;

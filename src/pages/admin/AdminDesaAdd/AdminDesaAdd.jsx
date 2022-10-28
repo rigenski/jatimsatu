@@ -1,18 +1,14 @@
 import React from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
-const SuperAdminKecamatanAdd = () => {
+const AdminDesaAdd = () => {
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">
-              Tambah Kecamatan
-            </h3>
-            <p className="mb-0 text-body-2 text-grey-3">
-              Tambah data kecamatan
-            </p>
+            <h3 className="mb-2 text-heading-3 text-grey-1">Tambah Desa</h3>
+            <p className="mb-0 text-body-2 text-grey-3">Tambah data desa</p>
           </div>
           <div className="d-flex">
             <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
@@ -29,17 +25,32 @@ const SuperAdminKecamatanAdd = () => {
               <div className="col-12">
                 <div className="mb-3">
                   <label
+                    htmlFor="desa"
+                    className="form-label text-body-3 text-grey-1"
+                  >
+                    Desa <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="desa"
+                    defaultValue="Bakung"
+                  />
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="mb-3">
+                  <label
                     htmlFor="kecamatan"
                     className="form-label text-body-3 text-grey-1"
                   >
                     Kecamatan <span className="text-danger">*</span>
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="kecamatan"
-                    defaultValue="Bakung"
-                  />
+                  <select className="form-select" id="kecamatan">
+                    <option>---pilih salah satu---</option>
+                    <option>Blitar</option>
+                    <option>Malang</option>
+                  </select>
                 </div>
               </div>
               <div className="col-12">
@@ -75,9 +86,9 @@ const SuperAdminKecamatanAdd = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
     </>
   );
 };
 
-export default SuperAdminKecamatanAdd;
+export default AdminDesaAdd;

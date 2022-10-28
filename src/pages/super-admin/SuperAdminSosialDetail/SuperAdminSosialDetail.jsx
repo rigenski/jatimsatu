@@ -1,13 +1,13 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
-import Dashboard from "src/components/Dashboard/Dashboard";
+import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 const SuperAdminSosialDetail = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
 
   return (
     <>
-      <Dashboard>
+      <SuperAdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Detail dokumen</h3>
@@ -297,15 +297,15 @@ const SuperAdminSosialDetail = () => {
           </div>
         </div>
         <div
-          class="modal fade"
+          className="modal fade"
           id="deleteModal"
-          tabindex="-1"
+          tabIndex="-1"
           aria-labelledby="deleteModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4">
-              <div class="modal-body">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content p-4">
+              <div className="modal-body">
                 <p className="mb-4 text-body-3 text-grey-1 text-center">
                   Apakah anda yakin untuk hapus dokumen ini?
                 </p>
@@ -333,7 +333,7 @@ const SuperAdminSosialDetail = () => {
             </div>
           </div>
         </div>
-      </Dashboard>
+      </SuperAdminDashboard>
     </>
   );
 };

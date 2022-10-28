@@ -101,7 +101,7 @@ const Home = () => {
             <div className="mb-4 mb-md-5">
               <div className="row mx-0">
                 <div className="col-12 col-md-8 col-xl-9 px-0">
-                  <div className="post-item--banner mb-4 mb-md-0 ">
+                  <div className="post-item--banner mb-3 mb-md-0 ">
                     <img
                       src={PostItem}
                       alt=""
@@ -111,15 +111,19 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-3 text-grey-1">
+                      <h3 className="mb-0 text-heading-3 text-grey-1 d-none d-md-block">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
                       </h3>
+                      <h6 className="mb-0 text-heading-6 text-grey-1 d-block d-md-none">
+                        7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
+                        Rp 10.000
+                      </h6>
                     </div>
                   </div>
                 </div>
                 <div className="col-12 col-md-4 col-xl-3 px-0 ps-0 ps-md-4">
-                  <div className="post-item mb-4">
+                  <div className="post-item mb-3">
                     <img
                       src={PostItem}
                       alt=""
@@ -129,13 +133,13 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-6 text-grey-1">
+                      <h6 className="mb-0 text-heading-6 text-grey-1">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
-                      </h3>
+                      </h6>
                     </div>
                   </div>
-                  <div className="post-item mb-4">
+                  <div className="post-item mb-3">
                     <img
                       src={PostItem}
                       alt=""
@@ -145,10 +149,10 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-6 text-grey-1">
+                      <h6 className="mb-0 text-heading-6 text-grey-1">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
-                      </h3>
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -168,10 +172,10 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-6 text-grey-1">
+                      <h6 className="mb-0 text-heading-6 text-grey-1">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
-                      </h3>
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -186,10 +190,10 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-6 text-grey-1">
+                      <h6 className="mb-0 text-heading-6 text-grey-1">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
-                      </h3>
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -204,10 +208,10 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-6 text-grey-1">
+                      <h6 className="mb-0 text-heading-6 text-grey-1">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
-                      </h3>
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -222,10 +226,10 @@ const Home = () => {
                       <p className="mb-1 text-body-3 text-grey-4">
                         24 Juli 2022
                       </p>
-                      <h3 className="mb-0 text-heading-6 text-grey-1">
+                      <h6 className="mb-0 text-heading-6 text-grey-1">
                         7 Rekomendasi Tempat Makan di Blitar, Harga Mulai dari
                         Rp 10.000
-                      </h3>
+                      </h6>
                     </div>
                   </div>
                 </div>

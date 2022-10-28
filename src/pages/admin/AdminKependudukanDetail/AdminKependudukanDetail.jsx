@@ -1,13 +1,13 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
-const SuperAdminKependudukanDetail = () => {
+const AdminKependudukanDetail = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
 
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Detail dokumen</h3>
@@ -15,15 +15,20 @@ const SuperAdminKependudukanDetail = () => {
               Kependudukan / Detail dokumen
             </p>
           </div>
-          <div className="p-3 text-white bg-black">
-            Dokumen berhasil disimpan
-            <Icon
-              icon="akar-icons:circle-x"
-              width={24}
-              height={24}
-              color="#FFFFFF"
-              className="ms-2"
-            />
+          <div className="d-flex align-items-center">
+            <div className="p-3 text-white bg-black">
+              Dokumen berhasil disimpan
+              <Icon
+                icon="akar-icons:circle-x"
+                width={24}
+                height={24}
+                color="#FFFFFF"
+                className="ms-2"
+              />
+            </div>
+            <div className="px-4 bg-primary-6">
+              <p className="mb-0 text-paragraph-1 text-primary-2">Disetujui</p>
+            </div>
           </div>
         </div>
         <div className="card mb-4 w-100">
@@ -348,9 +353,9 @@ const SuperAdminKependudukanDetail = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
     </>
   );
 };
 
-export default SuperAdminKependudukanDetail;
+export default AdminKependudukanDetail;

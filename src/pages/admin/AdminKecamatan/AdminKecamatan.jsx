@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import React from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
 import { useTheme } from "@table-library/react-table-library/theme";
 import { getTheme } from "@table-library/react-table-library/baseline";
@@ -19,25 +19,23 @@ import {
   Table,
 } from "@table-library/react-table-library";
 
-const userData = [
+const sosialData = [
   {
     id: 1,
-    nama: "Bonyfasius  Lumbanraja",
-    deskripsi: "08123459010",
-    tipe_user: "User",
-    status: 1,
+    kecamatan: "Blitar",
+    kabupaten: "Kependudukan",
+    provinsi: "Jawa Timur",
   },
   {
     id: 2,
-    nama: "Bonyfasius  Lumbanraja",
-    deskripsi: "08123459010",
-    tipe_user: "User",
-    status: 1,
+    kecamatan: "Blitar",
+    kabupaten: "Kependudukan",
+    provinsi: "Jawa Timur",
   },
 ];
 
-const SuperAdminUser = () => {
-  const nodes = userData;
+const AdminKecamatan = () => {
+  const nodes = sosialData;
 
   const select = useRowSelect({ nodes });
 
@@ -45,186 +43,172 @@ const SuperAdminUser = () => {
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  5% 16% 16% 16% 16% minmax(300px, 1fr);
+      --data-table-library_grid-template-columns:  5% 16% 16% 16% minmax(300px, 1fr);
       `,
     },
   ]);
 
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">User management</h3>
+            <h3 className="mb-2 text-heading-3 text-grey-1">Kecamatan</h3>
             <p className="mb-0 text-body-2 text-grey-3">
-              Kelola data pengguna aplikasi jatimsatu
+              Kelola data kecamatan
             </p>
           </div>
           <div className="d-flex">
-            <div className="form-icon me-3 position-relative">
-              <Icon
-                icon="ic:outline-holiday-village"
-                width={24}
-                height={24}
-                color="#474747"
-                className="position-absolute"
-              />
-              <select className="form-select ps-5 w-auto" id="desa">
-                <option>Blitar</option>
-                <option>Malang</option>
-              </select>
-            </div>
             <a
-              href="/super-admin/users/add"
+              href="/admin/desa/add"
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
             >
+              <Icon
+                icon="akar-icons:circle-plus"
+                width={24}
+                height={24}
+                color="#FFFFFF"
+                className="me-2"
+              />
               Tambah
             </a>
           </div>
         </div>
         <div className="card w-100">
-          <div className="card-body p-lg-4">
-            <div className="mb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-end">
-              <div className="mb-3 mb-lg-0 d-flex align-items-center">
-                <p className="mb-0 text-body-4">
-                  {select.state.ids.length} dipilih
-                </p>
-                <button className="ms-4 px-2 bg-transparent border-0">
-                  <Icon
-                    icon="akar-icons:trash-can"
-                    width={24}
-                    height={24}
-                    color="#E61A1A"
-                    className="me-2"
-                  />
-                  <span className="mb-0 text-body-3 text-danger">
-                    Hapus Data
-                  </span>
-                </button>
+          <div className="card w-100">
+            <div className="card-body p-lg-4">
+              <div className="mb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-end">
+                <div className="mb-3 mb-lg-0 d-flex align-items-center">
+                  <p className="mb-0 text-body-4">
+                    {select.state.ids.length} dipilih
+                  </p>
+                  <button className="ms-4 px-2 bg-transparent border-0">
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#E61A1A"
+                      className="me-2"
+                    />
+                    <span className="mb-0 text-body-3 text-danger">
+                      Hapus Data
+                    </span>
+                  </button>
+                </div>
+                <div className="d-flex align-items-center">
+                  <button
+                    className="btn me-3 w-auto px-2 d-flex justify-content-center align-items-center text-button bg-white text-center border-1 border-grey-5 rounded-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#filterModal"
+                  >
+                    <Icon
+                      icon="clarity:filter-line"
+                      width={24}
+                      height={24}
+                      color="#474747"
+                      className="me-2"
+                    />
+                    Filter
+                  </button>
+                  <div className="position-relative">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="cari"
+                      placeholder="Cari dokumen"
+                      style={{ paddingLeft: "48px" }}
+                    />
+                    <Icon
+                      icon="charm:search"
+                      width={24}
+                      height={24}
+                      color="#000000"
+                      className="position-absolute ms-3"
+                      style={{ top: "50%", transform: "translateY(-50%)" }}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="d-flex align-items-center">
-                <button
-                  className="btn me-3 w-auto px-2 d-flex justify-content-center align-items-center text-button bg-white text-center border-1 border-grey-5 rounded-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#filterModal"
+              <div className="mb-4">
+                <Table
+                  data={{ nodes }}
+                  select={select}
+                  theme={theme}
+                  layout={{ custom: true, horizontalScroll: true }}
+                  className="border border-grey-2 rounded-2 table-select"
                 >
+                  {(tableList) => (
+                    <>
+                      <Header>
+                        <HeaderRow>
+                          <HeaderCellSelect />
+                          <HeaderCell className="px-2 py-3 text-grey-1">
+                            Kecamatan
+                          </HeaderCell>
+                          <HeaderCell className="px-2 py-3 text-grey-1">
+                            Kabupaten
+                          </HeaderCell>
+                          <HeaderCell className="px-2 py-3 text-grey-1">
+                            Provinsi
+                          </HeaderCell>
+                          <HeaderCell className="px-2 py-3 text-grey-1">
+                            Aksi
+                          </HeaderCell>
+                        </HeaderRow>
+                      </Header>
+
+                      <Body>
+                        {tableList.map((item) => (
+                          <Row key={item.id} item={item}>
+                            <CellSelect item={item} />
+                            <Cell className="px-2 py-3 text-grey-1">
+                              {item.kecamatan}
+                            </Cell>
+                            <Cell className="px-2 py-3 text-grey-1">
+                              {item.kabupaten}
+                            </Cell>
+                            <Cell className="px-2 py-3 text-grey-1">
+                              {item.provinsi}
+                            </Cell>
+                            <Cell className="px-2 py-3 text-grey-1">
+                              <div>
+                                <button className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
+                                  Edit
+                                </button>
+                                <button className="btn px-3 py-1 text-white text-nowrap bg-danger rounded-1">
+                                  Hapus
+                                </button>
+                              </div>
+                            </Cell>
+                          </Row>
+                        ))}
+                      </Body>
+                    </>
+                  )}
+                </Table>
+              </div>
+              <div className="d-flex justify-content-center">
+                <button className="bg-transparent border-0">
                   <Icon
-                    icon="clarity:filter-line"
+                    icon="dashicons:arrow-left-alt2"
                     width={24}
                     height={24}
                     color="#474747"
-                    className="me-2"
                   />
-                  Filter
                 </button>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cari"
-                    placeholder="Cari dokumen"
-                    style={{ paddingLeft: "48px" }}
-                  />
+                <button className="bg-transparent border-0">
                   <Icon
-                    icon="charm:search"
+                    icon="dashicons:arrow-right-alt2"
                     width={24}
                     height={24}
-                    color="#000000"
-                    className="position-absolute ms-3"
-                    style={{ top: "50%", transform: "translateY(-50%)" }}
+                    color="#474747"
                   />
-                </div>
+                </button>
               </div>
-            </div>
-            <div className="mb-4">
-              <Table
-                data={{ nodes }}
-                select={select}
-                theme={theme}
-                layout={{ custom: true, horizontalScroll: true }}
-                className="border border-grey-2 rounded-2 table-select"
-              >
-                {(tableList) => (
-                  <>
-                    <Header>
-                      <HeaderRow>
-                        <HeaderCellSelect />
-                        <HeaderCell className="px-2 py-3 text-grey-1">
-                          Name
-                        </HeaderCell>
-                        <HeaderCell className="px-2 py-3 text-grey-1">
-                          No. HP
-                        </HeaderCell>
-                        <HeaderCell className="px-2 py-3 text-grey-1">
-                          Tipe User
-                        </HeaderCell>
-                        <HeaderCell className="px-2 py-3 text-grey-1">
-                          Status
-                        </HeaderCell>
-                        <HeaderCell className="px-2 py-3 text-grey-1">
-                          Aksi
-                        </HeaderCell>
-                      </HeaderRow>
-                    </Header>
-
-                    <Body>
-                      {tableList.map((item) => (
-                        <Row key={item.id} item={item}>
-                          <CellSelect item={item} />
-                          <Cell className="px-2 py-3 text-grey-1">
-                            {item.nama}
-                          </Cell>
-                          <Cell className="px-2 py-3 text-grey-1">
-                            {item.deskripsi}
-                          </Cell>
-                          <Cell className="px-2 py-3 text-grey-1">
-                            {item.tipe_user}
-                          </Cell>
-                          <Cell className="px-2 py-3 text-grey-1">
-                            {item.status === 1 ? (
-                              <div className="badge px-4 text-paragraph-1 text-primary-2 bg-primary-6 rounded-1">
-                                Disetujui
-                              </div>
-                            ) : null}
-                          </Cell>
-                          <Cell className="px-2 py-3 text-grey-1">
-                            <div>
-                              <button className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
-                                Lihat
-                              </button>
-                              <button className="btn px-3 py-1 text-white text-nowrap bg-danger rounded-1">
-                                Hapus
-                              </button>
-                            </div>
-                          </Cell>
-                        </Row>
-                      ))}
-                    </Body>
-                  </>
-                )}
-              </Table>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-left-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-right-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
+      </AdminDashboard>
       <div
         className="modal fade"
         id="filterModal"
@@ -466,4 +450,4 @@ const SuperAdminUser = () => {
   );
 };
 
-export default SuperAdminUser;
+export default AdminKecamatan;

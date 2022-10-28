@@ -1,48 +1,26 @@
-import { Icon } from "@iconify/react";
 import React from "react";
-import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
-const SuperAdminUserDetail = () => {
+const AdminUserEdit = () => {
   return (
     <>
-      <SuperAdminDashboard>
+      <AdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">Detail user</h3>
-            <p className="mb-0 text-body-2 text-grey-3">User / Detail user</p>
+            <h3 className="mb-2 text-heading-3 text-grey-1">Edit user</h3>
+            <p className="mb-0 text-body-2 text-grey-3">User / Edit user</p>
           </div>
           <div className="d-flex">
-            <a
-              href="/super-admin/users/edit"
-              className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
-            >
-              <Icon
-                icon="la:pen"
-                width={24}
-                height={24}
-                color="#FFFFFF"
-                className="me-2"
-              />
-              Edit
-            </a>
-            <button
-              className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
-              data-bs-toggle="modal"
-              data-bs-target="#deleteModal"
-            >
-              <Icon
-                icon="akar-icons:trash-can"
-                width={24}
-                height={24}
-                color="#FFFFFF"
-                className="me-2"
-              />
-              Hapus
+            <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
+              Batal
+            </button>
+            <button className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1">
+              Simpan
             </button>
           </div>
         </div>
         <div className="card mb-4 w-100">
-          <div className="card-body">
+          <div className="card-body p-lg-4">
             <div className="row">
               <div className="col-12 col-md-6">
                 <div className="mb-3">
@@ -272,46 +250,9 @@ const SuperAdminUserDetail = () => {
             </div>
           </div>
         </div>
-      </SuperAdminDashboard>
-      <div
-        className="modal fade"
-        id="deleteModal"
-        tabIndex="-1"
-        aria-labelledby="deleteModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content p-4">
-            <div className="modal-body">
-              <p className="mb-4 text-body-3 text-grey-1 text-center">
-                Apakah anda yakin untuk hapus dokumen ini?
-              </p>
-              <div className="d-flex justify-content-center align-items-center">
-                <div className="d-flex">
-                  <button
-                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
-                    data-bs-dismiss="modal"
-                  >
-                    Batal
-                  </button>
-                  <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
-                    <Icon
-                      icon="akar-icons:trash-can"
-                      width={24}
-                      height={24}
-                      color="#FFFFFF"
-                      className="me-2"
-                    />
-                    Hapus
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </AdminDashboard>
     </>
   );
 };
 
-export default SuperAdminUserDetail;
+export default AdminUserEdit;

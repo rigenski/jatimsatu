@@ -494,3 +494,11 @@ button:hover {
     border: 1px solid #FAB400;
     border-radius: 8px;
 }
+
+/* TABLE */
+
+.table-select thead tr {
+    background: #EFF0F5;
+}
+
+/* BADGE */

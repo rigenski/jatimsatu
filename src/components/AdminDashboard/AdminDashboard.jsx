@@ -1,9 +1,9 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import "./Dashboard.css";
+import "./AdminDashboard.css";
 import { useLocation } from "react-router-dom";
 
-const Dashboard = (props) => {
+const AdminDashboard = (props) => {
   const location = useLocation();
 
   const { pathname } = location;
@@ -119,9 +119,9 @@ const Dashboard = (props) => {
         <aside className="border-end border-grey-5">
           <ul className="mb-0 ps-4 py-4 d-flex flex-column">
             <li className="mb-3">
-              {navUrl === "home" ? (
+              {navUrl === undefined ? (
                 <a
-                  href="/super-admin/home"
+                  href="/admin"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -135,10 +135,7 @@ const Dashboard = (props) => {
                   </span>
                 </a>
               ) : (
-                <a
-                  href="/super-admin/home"
-                  className="p-2 d-flex align-items-center"
-                >
+                <a href="/admin" className="p-2 d-flex align-items-center">
                   <Icon
                     icon="ic:outline-dashboard"
                     width={24}
@@ -154,7 +151,7 @@ const Dashboard = (props) => {
             <li className="mb-3">
               {navUrl === "users" ? (
                 <a
-                  href="/super-admin/users"
+                  href="/admin/users"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -169,7 +166,7 @@ const Dashboard = (props) => {
                 </a>
               ) : (
                 <a
-                  href="/super-admin/users"
+                  href="/admin/users"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -187,7 +184,7 @@ const Dashboard = (props) => {
             <li className="mb-3">
               {navUrl === "kependudukan" ? (
                 <a
-                  href="/super-admin/kependudukan"
+                  href="/admin/kependudukan"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -202,7 +199,7 @@ const Dashboard = (props) => {
                 </a>
               ) : (
                 <a
-                  href="/super-admin/kependudukan"
+                  href="/admin/kependudukan"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -220,7 +217,7 @@ const Dashboard = (props) => {
             <li className="mb-3">
               {navUrl === "sosial" ? (
                 <a
-                  href="/super-admin/sosial"
+                  href="/admin/sosial"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -235,7 +232,7 @@ const Dashboard = (props) => {
                 </a>
               ) : (
                 <a
-                  href="/super-admin/sosial"
+                  href="/admin/sosial"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -253,7 +250,7 @@ const Dashboard = (props) => {
             <li className="mb-3">
               {navUrl === "kesehatan" ? (
                 <a
-                  href="/super-admin/kesehatan"
+                  href="/admin/kesehatan"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -268,7 +265,7 @@ const Dashboard = (props) => {
                 </a>
               ) : (
                 <a
-                  href="/super-admin/kesehatan"
+                  href="/admin/kesehatan"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -321,15 +318,18 @@ const Dashboard = (props) => {
               </a>
             </li>
             <li className="mb-3">
-              <div class="accordion">
-                <div class="accordion-item border-0">
-                  <h2 class="accordion-header bg-transparent" id="headingOne">
+              <div className="accordion">
+                <div className="accordion-item border-0">
+                  <h2
+                    className="accordion-header bg-transparent"
+                    id="headingOne"
+                  >
                     <a
                       type="button"
-                      className="accordion-button p-2 d-flex align-items-center bg-transparent border-0 shadow-none"
+                      className="accordion-button p-2 d-flex align-items-center bg-transparent border-0 shadow-none collapsed"
                       data-bs-toggle="collapse"
                       data-bs-target="#wilayahAccordion"
-                      aria-expanded="true"
+                      aria-expanded="false"
                       aria-controls="wilayahAccordion"
                     >
                       <Icon
@@ -345,23 +345,23 @@ const Dashboard = (props) => {
                   </h2>
                   <div
                     id="wilayahAccordion"
-                    class="accordion-collapse collapse "
+                    className="accordion-collapse collapse "
                     aria-labelledby="headingOne"
                     data-bs-parent="#wilayahAccordion"
                   >
-                    <div class="accordion-body px-0 ps-4">
+                    <div className="accordion-body px-0 ps-4">
                       <ul className="px-2">
                         <li className="mb-3">
                           {navUrl === "kecamatan" ? (
                             <a
-                              href="/super-admin/kecamatan"
+                              href="/admin/kecamatan"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
                             >
                               Kecamatan
                             </a>
                           ) : (
                             <a
-                              href="/super-admin/kecamatan"
+                              href="/admin/kecamatan"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
                             >
                               Kecamatan
@@ -371,14 +371,14 @@ const Dashboard = (props) => {
                         <li className="mb-3">
                           {navUrl === "desa" ? (
                             <a
-                              href="/super-admin/desa"
+                              href="/admin/desa"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
                             >
                               Desa
                             </a>
                           ) : (
                             <a
-                              href="/super-admin/desa"
+                              href="/admin/desa"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
                             >
                               Desa
@@ -401,4 +401,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

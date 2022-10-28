@@ -1,10 +1,10 @@
 import React from "react";
-import Dashboard from "src/components/Dashboard/Dashboard";
+import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 const SuperAdminDesaAdd = () => {
   return (
     <>
-      <Dashboard>
+      <SuperAdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
             <h3 className="mb-2 text-heading-3 text-grey-1">Tambah Desa</h3>
@@ -86,7 +86,7 @@ const SuperAdminDesaAdd = () => {
             </div>
           </div>
         </div>
-      </Dashboard>
+      </SuperAdminDashboard>
     </>
   );
 };

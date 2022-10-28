@@ -1,17 +1,19 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
-import Dashboard from "src/components/Dashboard/Dashboard";
+import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 const SuperAdminKependudukanEdit = () => {
   const [section, setSection] = useState("formulir-pendaftaran");
 
   return (
     <>
-      <Dashboard>
+      <SuperAdminDashboard>
         <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
           <div className="mb-3 mb-lg-0">
-            <h3 className="mb-2 text-heading-3 text-grey-1">Detail user</h3>
-            <p className="mb-0 text-body-2 text-grey-3">Sosial / Detail user</p>
+            <h3 className="mb-2 text-heading-3 text-grey-1">Edit dokumen</h3>
+            <p className="mb-0 text-body-2 text-grey-3">
+              Kependudukan / Edit dokumen
+            </p>
           </div>
         </div>
         <div className="card mb-4 w-100">
@@ -25,11 +27,11 @@ const SuperAdminKependudukanEdit = () => {
                   Sosial / Detail user
                 </p>
               </div>
-              <div class="d-flex">
-                <button class="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
+              <div className="d-flex">
+                <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1">
                   Batal
                 </button>
-                <button class="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1">
+                <button className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1">
                   Simpan
                 </button>
               </div>
@@ -260,44 +262,7 @@ const SuperAdminKependudukanEdit = () => {
             )}
           </div>
         </div>
-        <div
-          class="modal fade"
-          id="deleteModal"
-          tabindex="-1"
-          aria-labelledby="deleteModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4">
-              <div class="modal-body">
-                <p className="mb-4 text-body-3 text-grey-1 text-center">
-                  Apakah anda yakin untuk hapus dokumen ini?
-                </p>
-                <div className="d-flex justify-content-center align-items-center">
-                  <div className="d-flex">
-                    <button
-                      className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
-                      data-bs-dismiss="modal"
-                    >
-                      Batal
-                    </button>
-                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
-                      <Icon
-                        icon="akar-icons:trash-can"
-                        width={24}
-                        height={24}
-                        color="#FFFFFF"
-                        className="me-2"
-                      />
-                      Hapus
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Dashboard>
+      </SuperAdminDashboard>
     </>
   );
 };
