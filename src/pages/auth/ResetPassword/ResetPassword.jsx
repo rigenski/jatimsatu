@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // library
 import { Icon } from "@iconify/react";
@@ -9,9 +9,107 @@ import "./ResetPassword.css";
 // asset
 import SucessIcon from "src/assets/images/auth/success-icon.svg";
 import SendIcon from "src/assets/images/auth/send-icon.png";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import {
+  checkResetPasswordToken,
+  requestResetPassword,
+  resetPasswod,
+} from "../../../store/auth/authAction";
+import { Link, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, reset } = useForm();
+
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(1);
+
+  const handleRequestResetPassword = async (data) => {
+    setLoading(true);
+
+    const loader = toast.loading("Mohon Tunggu...");
+
+    await dispatch(requestResetPassword(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        setLoading(false);
+        setStatus(2);
+
+        toast.success(res.payload.message);
+      } else {
+        setLoading(false);
+
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  const handleCheckResetPasswordToken = async () => {
+    setLoading(true);
+
+    const loader = toast.loading("Mohon Tunggu...");
+
+    const data = {
+      token: params.token,
+    };
+
+    await dispatch(checkResetPasswordToken(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        setLoading(false);
+        setStatus(3);
+
+        toast.success(res.payload.message);
+      } else {
+        setLoading(false);
+
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  const handleResetPassword = async (data) => {
+    setLoading(true);
+
+    const loader = toast.loading("Mohon Tunggu...");
+
+    if (data.password === data.confirmPassword) {
+      data.token = params.token;
+
+      await dispatch(resetPasswod(data)).then((res) => {
+        toast.dismiss(loader);
+
+        if (res.meta.requestStatus === "fulfilled") {
+          setLoading(false);
+          setStatus(4);
+
+          toast.success(res.payload.message);
+
+          reset({ password: "", confirmPassword: "" });
+        } else {
+          setLoading(false);
+
+          toast.error(res.payload.response.data.message);
+        }
+      });
+    } else {
+      setLoading(false);
+
+      toast.dismiss(loader);
+      toast.error("Konfirm Password tidak sama!");
+    }
+  };
+
+  useEffect(() => {
+    if (params.token) {
+      handleCheckResetPasswordToken();
+    }
+  }, []);
 
   if (status === 1) {
     return (
@@ -23,15 +121,18 @@ const ResetPassword = () => {
                 <h1 className="mb-4 text-heading-1 text-white">Jatimsatu</h1>
                 <div className="card rounded-4">
                   <div className="card-body px-3 py-5 p-md-5">
-                    <form action="">
+                    <form onSubmit={handleSubmit(handleRequestResetPassword)}>
                       <div className="mb-4">
                         <div className="mb-3 d-flex align-items-center">
-                          <Icon
-                            icon="ep:back"
-                            width={48}
-                            height={48}
-                            className="me-3"
-                          />
+                          <Link to="/signin">
+                            <Icon
+                              icon="ep:back"
+                              width={48}
+                              height={48}
+                              className="me-3"
+                              color="#000000"
+                            />
+                          </Link>
                           <h3 className="mb-0 text-heading-4 text-grey-1">
                             Lupa password
                           </h3>
@@ -54,14 +155,15 @@ const ResetPassword = () => {
                             className="form-control"
                             id="phone"
                             placeholder="Masukkan nomor hp anda disini..."
+                            {...register("phoneNumber", { required: true })}
                           />
                         </div>
                       </div>
                       <div className="d-flex justify-content-center align-items-center">
                         <button
-                          type="button"
+                          type="submit"
                           className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                          onClick={() => setStatus(2)}
+                          disabled={loading}
                         >
                           Lanjutkan
                         </button>
@@ -136,7 +238,7 @@ const ResetPassword = () => {
                 <h1 className="mb-4 text-heading-1 text-white">Jatimsatu</h1>
                 <div className="card rounded-4">
                   <div className="card-body px-3 py-5 p-md-5">
-                    <form action="">
+                    <form onSubmit={handleSubmit(handleResetPassword)}>
                       <div className="mb-4">
                         <div className="mb-3 d-flex align-items-center">
                           <Icon
@@ -166,6 +268,7 @@ const ResetPassword = () => {
                             className="form-control"
                             id="phone"
                             placeholder="Masukkan password baru anda disini..."
+                            {...register("password", { required: true })}
                           />
                         </div>
                         <div className="mb-3">
@@ -180,14 +283,15 @@ const ResetPassword = () => {
                             className="form-control"
                             id="phone"
                             placeholder="Masukkan ulang password baru anda disini..."
+                            {...register("confirmPassword", { required: true })}
                           />
                         </div>
                       </div>
                       <div className="d-flex justify-content-center align-items-center">
                         <button
-                          type="button"
+                          type="submit"
                           className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                          onClick={() => setStatus(4)}
+                          disabled={loading}
                         >
                           Lanjutkan
                         </button>
@@ -231,12 +335,12 @@ const ResetPassword = () => {
                             </p>
                           </div>
                           <div className="d-flex justify-content-center align-items-center">
-                            <button
-                              type="button"
+                            <Link
+                              to="/signin"
                               className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded-1"
                             >
                               Kembali ke halaman masuk
-                            </button>
+                            </Link>
                           </div>
                         </div>
                       </div>

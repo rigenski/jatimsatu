@@ -1,125 +1,133 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import uuid from "react-uuid";
 // style
 import "./Signup.css";
 
 // asset
 import SendIcon from "src/assets/images/auth/send-icon.png";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import {
+  getDesaByKecamatan,
+  getKabupaten,
+  getKecamatan,
+  getProvinsi,
+} from "../../../store/region/regionAction";
+import { storage } from "src/config/firebase/firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import { authRegister } from "../../../store/auth/authAction";
+import { Link } from "react-router-dom";
+
+const pekerjaanAll = [
+  "PNS",
+  "Wirausaha",
+  "Wiraswasta",
+  "Guru",
+  "Petani",
+  "Dokter",
+  "Pelajar",
+  "Lainya",
+];
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const { register, handleSubmit, reset, getValues } = useForm();
+
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(1);
 
+  const [kecamatanId, setKecamatanId] = useState(null);
+  const [KK, setKK] = useState(null);
+  const [KTP, setKTP] = useState(null);
+
+  const { provinsiAll, kabupatenAll, kecamatanAll, desaAll } = useSelector(
+    (state) => state.region
+  );
+
+  const handleAuthRegister = async (data) => {
+    setLoading(true);
+
+    const loader = toast.loading("Mohon Tunggu...");
+
+    if (data.password === data.confirmPassword) {
+      const KKSelected = KK.files[0];
+      const KTPSelected = KTP.files[0];
+
+      if (KKSelected) {
+        const storageRef = ref(storage, `documents/kk/${KKSelected.name}`);
+
+        uploadBytes(storageRef, KKSelected).then(() => {
+          KKSelected.value = "";
+        });
+      }
+
+      if (KTPSelected) {
+        const storageRef = ref(storage, `documents/ktp/${KTPSelected.name}`);
+
+        uploadBytes(storageRef, KTPSelected).then(() => {
+          KTPSelected.value = "";
+        });
+      }
+
+      data.kartuKeluargaURL = `${uuid()}-${KKSelected.name}`;
+      data.ktpURL = `${uuid()}-${KTPSelected.name}`;
+
+      await dispatch(authRegister(data)).then((res) => {
+        toast.dismiss(loader);
+
+        if (res.meta.requestStatus === "fulfilled") {
+          setLoading(false);
+
+          toast.success(res.payload.message);
+
+          setStatus(2);
+        } else {
+          setLoading(false);
+
+          toast.error(res.payload.response.data.message);
+        }
+      });
+    } else {
+      setLoading(false);
+
+      toast.dismiss(loader);
+      toast.error("Konfirm Password tidak sama!");
+    }
+  };
+
+  const handleGetProvinsi = async () => {
+    await dispatch(getProvinsi());
+  };
+
+  const handleGetKabupaten = async () => {
+    await dispatch(getKabupaten());
+  };
+
+  const handleGetKecamatan = async () => {
+    await dispatch(getKecamatan());
+  };
+
+  const handleGetDesaByKecamatan = async () => {
+    const data = {
+      kecamatanId: kecamatanId,
+    };
+
+    await dispatch(getDesaByKecamatan(data));
+  };
+
+  useEffect(() => {
+    handleGetProvinsi();
+    handleGetKabupaten();
+    handleGetKecamatan();
+  }, []);
+
+  useEffect(() => {
+    handleGetDesaByKecamatan();
+  }, [kecamatanId]);
+
   if (status === 1) {
-    return (
-      <main>
-        <section className="auth bg-primary-2">
-          <div className="container h-100">
-            <div className="auth-wrapper h-100 py-5 d-flex flex-column justify-content-center align-items-center">
-              <h1 className="mb-4 text-heading-1 text-white">Jatimsatu</h1>
-              <div className="card">
-                <div className="card-body px-3 py-5 p-md-5">
-                  <form action="">
-                    <div className="mb-4">
-                      <h3 className="mb-3 text-heading-3 text-grey-1 text-center">
-                        Register
-                      </h3>
-                      <p className="text-body-2 text-grey-3 text-center">
-                        Masukkan no hp anda untuk mendaftar.
-                        <br /> Sudah punya akun?{" "}
-                        <a
-                          href="/signin"
-                          className="text-primary-2 fw-semibold"
-                        >
-                          Masuk sekarang!
-                        </a>
-                      </p>
-                    </div>
-                    <div className="mb-4">
-                      <div className="mb-3">
-                        <label
-                          htmlFor="phone"
-                          className="form-label text-body-3 text-grey-1"
-                        >
-                          Nomor HP
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="phone"
-                          placeholder="Masukkan nomor hp anda disini..."
-                        />
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <button
-                        type="button"
-                        className="btn btn-lg w-100 text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                        onClick={() => setStatus(2)}
-                      >
-                        Register
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    );
-  } else if (status === 2) {
-    return (
-      <>
-        <main>
-          <section className="auth bg-primary-2">
-            <div className="container h-100">
-              <div className="auth-wrapper h-100 py-5 d-flex flex-column justify-content-center align-items-center">
-                <h1 className="mb-4 text-heading-1 text-white">Jatimsatu</h1>
-                <div className="card rounded-4">
-                  <div className="card-body px-3 py-5 p-md-5">
-                    <form action="">
-                      <div className="mb-4">
-                        <div className="mb-3 d-flex align-items-center">
-                          <Icon
-                            icon="ep:back"
-                            width={48}
-                            height={48}
-                            className="me-3"
-                          />
-                          <h3 className="mb-0 text-heading-4 text-grey-1">
-                            Register
-                          </h3>
-                        </div>
-                        <div>
-                          <div className="mb-4 d-flex flex-column align-items-center">
-                            <img
-                              src={SendIcon}
-                              alt=""
-                              className="mb-4"
-                              height={80}
-                              width={80}
-                            />
-                            <h3 className="mb-2 text-heading-5 text-grey-1 text-center">
-                              Link register terkirim
-                            </h3>
-                            <p className="mb-0 text-paragraph-2 text-grey-2 text-center">
-                              Mohon cek whatsapp nomor hp 081234567890, dan klik
-                              tautan untuk membuat akun baru.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-      </>
-    );
-  } else if (status === 3) {
     return (
       <>
         <main>
@@ -129,7 +137,7 @@ const Signup = () => {
                 <h1 className="mb-4 text-heading-1 text-white">Jatimsatu</h1>
                 <div className="card">
                   <div className="register card-body px-3 py-5 p-md-5">
-                    <form action="">
+                    <form onSubmit={handleSubmit(handleAuthRegister)}>
                       <div className="mb-4">
                         <h3 className="mb-3 text-heading-3 text-grey-1 text-center">
                           Register
@@ -154,6 +162,8 @@ const Signup = () => {
                                 className="form-control"
                                 id="nama"
                                 placeholder="Masukkan nama lengkap Anda"
+                                required
+                                {...register("name", { required: true })}
                               />
                             </div>
                           </div>
@@ -170,6 +180,8 @@ const Signup = () => {
                                 className="form-control"
                                 id="no-hp"
                                 placeholder="Masukkan nomor hp"
+                                required
+                                {...register("phoneNumber", { required: true })}
                               />
                             </div>
                           </div>
@@ -182,10 +194,12 @@ const Signup = () => {
                                 Password <span className="text-danger">*</span>
                               </label>
                               <input
-                                type="text"
+                                type="password"
                                 className="form-control"
                                 id="password"
                                 placeholder="Masukkan password"
+                                required
+                                {...register("password", { required: true })}
                               />
                             </div>
                           </div>
@@ -199,41 +213,13 @@ const Signup = () => {
                                 <span className="text-danger">*</span>
                               </label>
                               <input
-                                type="text"
+                                type="password"
                                 className="form-control"
                                 id="password"
                                 placeholder="Masukkan ulang password"
-                              />
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6">
-                            <div className="mb-3">
-                              <label
-                                htmlFor="nik"
-                                className="form-label text-body-3 text-grey-1"
-                              >
-                                NIK <span className="text-danger">*</span>
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="nik"
-                                placeholder="Masukkan nomor induk keluarga"
-                              />
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6">
-                            <div className="mb-3">
-                              <label
-                                htmlFor="kk"
-                                className="form-label text-body-3 text-grey-1"
-                              >
-                                Upload KK <span className="text-danger">*</span>
-                              </label>
-                              <input
-                                type="file"
-                                className="form-control"
-                                id="kk"
+                                {...register("confirmPassword", {
+                                  required: true,
+                                })}
                               />
                             </div>
                           </div>
@@ -250,6 +236,26 @@ const Signup = () => {
                                 type="file"
                                 className="form-control"
                                 id="ktp"
+                                required
+                                onChange={(e) => setKTP(e.target)}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-12 col-md-6">
+                            <div className="mb-3">
+                              <label
+                                htmlFor="nik"
+                                className="form-label text-body-3 text-grey-1"
+                              >
+                                NIK <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="nik"
+                                placeholder="Masukkan nomor induk keluar
+                                requiredga"
+                                {...register("nik", { required: true })}
                               />
                             </div>
                           </div>
@@ -267,22 +273,25 @@ const Signup = () => {
                                 className="form-control"
                                 id="tempat-lahir"
                                 placeholder="Masukkan tempat lahir sesuai KTP"
+                                required
+                                {...register("birthPlace", { required: true })}
                               />
                             </div>
                           </div>
                           <div className="col-12 col-md-6">
                             <div className="mb-3">
                               <label
-                                htmlFor="tanggal-lahir"
+                                htmlFor="kk"
                                 className="form-label text-body-3 text-grey-1"
                               >
-                                Tanggal Lahir{" "}
-                                <span className="text-danger">*</span>
+                                Upload KK <span className="text-danger">*</span>
                               </label>
                               <input
-                                type="date"
+                                type="file"
                                 className="form-control"
-                                id="tanggal-lahir"
+                                id="kk"
+                                required
+                                onChange={(e) => setKK(e.target)}
                               />
                             </div>
                           </div>
@@ -299,21 +308,100 @@ const Signup = () => {
                                 className="form-control"
                                 id="alamat"
                                 placeholder="Masukkan alamat sesuai KTP"
+                                required
+                                {...register("address", { required: true })}
                               />
                             </div>
                           </div>
                           <div className="col-12 col-md-6">
                             <div className="mb-3">
                               <label
-                                htmlFor="desa"
+                                htmlFor="tanggal-lahir"
                                 className="form-label text-body-3 text-grey-1"
                               >
-                                Desa <span className="text-danger">*</span>
+                                Tanggal Lahir{" "}
+                                <span className="text-danger">*</span>
                               </label>
-                              <select className="form-select" id="desa">
-                                <option>---pilih salah satu---</option>
-                                <option>Blitar</option>
-                                <option>Malang</option>
+                              <input
+                                type="date"
+                                className="form-control"
+                                id="tanggal-lahir"
+                                required
+                                {...register("birthDate", { required: true })}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-12 col-md-6">
+                            <div className="mb-3">
+                              <label
+                                htmlFor="provinsi"
+                                className="form-label text-body-3 text-grey-1"
+                              >
+                                Provinsi <span className="text-danger">*</span>
+                              </label>
+                              <select
+                                className="form-select"
+                                id="provinsi"
+                                required
+                                {...register("provinsiId", { required: true })}
+                              >
+                                <option value="">---pilih salah satu---</option>
+                                {provinsiAll.map((item, index) => {
+                                  if (getValues("kabupatenId") === item.id) {
+                                    return (
+                                      <option
+                                        value={item.id}
+                                        key={index}
+                                        selected
+                                      >
+                                        {item.name}
+                                      </option>
+                                    );
+                                  } else {
+                                    return (
+                                      <option value={item.id} key={index}>
+                                        {item.name}
+                                      </option>
+                                    );
+                                  }
+                                })}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-12 col-md-6">
+                            <div className="mb-3">
+                              <label
+                                htmlFor="kabupaten"
+                                className="form-label text-body-3 text-grey-1"
+                              >
+                                Kabupaten <span className="text-danger">*</span>
+                              </label>
+                              <select
+                                className="form-select"
+                                id="kabupaten"
+                                required
+                                {...register("kabupatenId", { required: true })}
+                              >
+                                <option value="">---pilih salah satu---</option>
+                                {kabupatenAll.map((item, index) => {
+                                  if (getValues("kabupatenId") === item.id) {
+                                    return (
+                                      <option
+                                        value={item.id}
+                                        key={index}
+                                        selected
+                                      >
+                                        {item.name}
+                                      </option>
+                                    );
+                                  } else {
+                                    return (
+                                      <option value={item.id} key={index}>
+                                        {item.name}
+                                      </option>
+                                    );
+                                  }
+                                })}
                               </select>
                             </div>
                           </div>
@@ -325,44 +413,76 @@ const Signup = () => {
                               >
                                 Kecamatan <span className="text-danger">*</span>
                               </label>
-                              <select className="form-select" id="kecamatan">
-                                <option>---pilih salah satu---</option>
-                                <option>Blitar</option>
-                                <option>Malang</option>
+                              <select
+                                className="form-select"
+                                id="kecamatan"
+                                required
+                                {...register("kecamatanId", { required: true })}
+                                onChange={(e) => {
+                                  setKecamatanId(e.target.value);
+                                }}
+                              >
+                                <option value="">---pilih salah satu---</option>
+                                {kecamatanAll.map((item, index) => {
+                                  if (getValues("kecamatanId") === item.id) {
+                                    return (
+                                      <option
+                                        value={item.id}
+                                        key={index}
+                                        selected
+                                      >
+                                        {item.name}
+                                      </option>
+                                    );
+                                  } else {
+                                    return (
+                                      <option value={item.id} key={index}>
+                                        {item.name}
+                                      </option>
+                                    );
+                                  }
+                                })}
                               </select>
                             </div>
                           </div>
                           <div className="col-12 col-md-6">
                             <div className="mb-3">
                               <label
-                                htmlFor="kelurahan"
+                                htmlFor="desa"
                                 className="form-label text-body-3 text-grey-1"
                               >
-                                Kelurahan <span className="text-danger">*</span>
+                                Desa <span className="text-danger">*</span>
                               </label>
-                              <select className="form-select" id="kelurahan">
-                                <option>---pilih salah satu---</option>
-                                <option>Blitar</option>
-                                <option>Malang</option>
+                              <select
+                                className="form-select"
+                                id="desa"
+                                required
+                                {...register("desaId", { required: true })}
+                              >
+                                <option value="">---pilih salah satu---</option>
+                                {desaAll.map((item, index) => {
+                                  if (getValues("desaId") === item.id) {
+                                    return (
+                                      <option
+                                        value={item.id}
+                                        key={index}
+                                        selected
+                                      >
+                                        {item.name}
+                                      </option>
+                                    );
+                                  } else {
+                                    return (
+                                      <option value={item.id} key={index}>
+                                        {item.name}
+                                      </option>
+                                    );
+                                  }
+                                })}
                               </select>
                             </div>
                           </div>
-                          <div className="col-12 col-md-6">
-                            <div className="mb-3 mb-md-0">
-                              <label
-                                htmlFor="kode-pos"
-                                className="form-label text-body-3 text-grey-1"
-                              >
-                                Kode Pos <span className="text-danger">*</span>
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="kode-pos"
-                                placeholder="Masukkan kode pos "
-                              />
-                            </div>
-                          </div>
+
                           <div className="col-12 col-md-6">
                             <div className="mb-3">
                               <label
@@ -376,6 +496,8 @@ const Signup = () => {
                                 className="form-control"
                                 id="rt"
                                 placeholder="Masukkan RT sesuai KTP"
+                                required
+                                {...register("rt", { required: true })}
                               />
                             </div>
                           </div>
@@ -392,34 +514,119 @@ const Signup = () => {
                                 className="form-control"
                                 id="rw"
                                 placeholder="Masukkan RW sesuai KTP"
+                                required
+                                {...register("rw", { required: true })}
                               />
                             </div>
                           </div>
                           <div className="col-12 col-md-6">
-                            <div>
+                            <div className="mb-3 mb-md-0">
+                              <label
+                                htmlFor="kode-pos"
+                                className="form-label text-body-3 text-grey-1"
+                              >
+                                Kode Pos <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="kode-pos"
+                                placeholder="Masukkan kode pos "
+                                required
+                                {...register("postalCode", { required: true })}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-12 col-md-6">
+                            <div className="mb-3">
                               <label
                                 htmlFor="pekerjaan"
                                 className="form-label text-body-3 text-grey-1"
                               >
                                 Pekerjaan <span className="text-danger">*</span>
                               </label>
-                              <input
-                                type="text"
-                                className="form-control"
+                              <select
+                                className="form-select"
                                 id="pekerjaan"
-                                placeholder="Masukkan pekerjaan anda"
-                              />
+                                required
+                                {...register("occupation", { required: true })}
+                              >
+                                <option value="">---pilih salah satu---</option>
+                                {pekerjaanAll.map((item, index) => {
+                                  return (
+                                    <option value={item} key={index}>
+                                      {item}
+                                    </option>
+                                  );
+                                })}
+                              </select>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="d-flex justify-content-center align-items-center">
                         <button
-                          type="button"
+                          type="submit"
                           className="btn btn-lg text-button text-white bg-primary-2 text-center border-0 rounded-1"
+                          disabled={loading}
                         >
                           Register
                         </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </>
+    );
+  } else if (status === 2) {
+    return (
+      <>
+        <main>
+          <section className="auth bg-primary-2">
+            <div className="container h-100">
+              <div className="auth-wrapper h-100 py-5 d-flex flex-column justify-content-center align-items-center">
+                <h1 className="mb-4 text-heading-1 text-white">Jatimsatu</h1>
+                <div className="card rounded-4">
+                  <div className="card-body px-3 py-5 p-md-5">
+                    <form action="">
+                      <div className="mb-4">
+                        <div className="mb-3 d-flex align-items-center">
+                          <Link to="/signin">
+                            <Icon
+                              icon="ep:back"
+                              width={48}
+                              height={48}
+                              className="me-3"
+                              color="#000000"
+                            />
+                          </Link>
+                          <h3 className="mb-0 text-heading-4 text-grey-1">
+                            Register
+                          </h3>
+                        </div>
+                        <div>
+                          <div className="mb-4 d-flex flex-column align-items-center">
+                            <img
+                              src={SendIcon}
+                              alt=""
+                              className="mb-4"
+                              height={80}
+                              width={80}
+                            />
+                            <h3 className="mb-2 text-heading-5 text-grey-1 text-center">
+                              Link register terkirim
+                            </h3>
+                            <p className="mb-0 text-paragraph-2 text-grey-2 text-center">
+                              Mohon cek whatsapp nomor hp{" "}
+                              {getValues("phoneNumber")}, dan klik tautan untuk
+                              membuat akun baru.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </form>
                   </div>

@@ -11,6 +11,7 @@ import PendidikanIcon from "src/assets/images/pre-dashboard/pendidikan-icon.svg"
 import UmkmIcon from "src/assets/images/pre-dashboard/umkm-icon.svg";
 import PerizinanIcon from "src/assets/images/pre-dashboard/perizinan-icon.svg";
 import PostItem from "src/assets/images/pre-dashboard/post-item.png";
+import { Link } from "react-router-dom";
 
 // data
 const layananData = [
@@ -78,8 +79,8 @@ const Home = () => {
               <div className="row mx-0 rounded-3">
                 {layananData.map((item, index) => {
                   return (
-                    <a
-                      href={item.path}
+                    <Link
+                      to={item.path}
                       className="col-6 p-2 bg-transparent border border-1 border-grey-4"
                       key={index}
                     >
@@ -93,7 +94,7 @@ const Home = () => {
                           {item.title}
                         </h5>
                       </div>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

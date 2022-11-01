@@ -15,6 +15,7 @@ import SuratJalanIcon from "src/assets/images/pre-dashboard/sosial/surat-jalan-i
 import SuratKeteranganIcon from "src/assets/images/pre-dashboard/sosial/surat-keterangan-icon.png";
 import PenyaluranSubsidiIcon from "src/assets/images/pre-dashboard/sosial/penyaluran-subsidi-icon.png";
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 // data
 const layananData = [
@@ -88,7 +89,7 @@ const Sosial = () => {
           ></div>
           <div className="container py-3 position-relative px-3">
             <div className="mb-4 pb-4">
-              <a href="/" className="mb-4 d-flex align-items-center">
+              <Link to="/" className="mb-4 d-flex align-items-center">
                 <Icon
                   icon="akar-icons:chevron-left"
                   width={16}
@@ -96,7 +97,7 @@ const Sosial = () => {
                   color="#FFFFFF"
                 />
                 <h6 className="mb-0 text-heading-7 text-white ms-2">Kembali</h6>
-              </a>
+              </Link>
               <h1 className="mb-3 text-heading-1 text-white">
                 Pilih Layanan Sosial
               </h1>

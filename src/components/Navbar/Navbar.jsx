@@ -1,17 +1,34 @@
 import { Icon } from "@iconify/react";
 import React from "react";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { authLogout } from "../../store/auth/authSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    const loader = toast.loading("Waiting...");
+
+    setTimeout(() => {
+      dispatch(authLogout());
+
+      toast.dismiss(loader);
+      toast.success("Logout successfully!");
+    }, 2000);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg py-2 bg-white">
       <div className="container px-3">
-        <a className="navbar-brand text-heading-3 text-primary-2" href="#">
+        <Link to="#" className="navbar-brand text-heading-3 text-primary-2">
           Jatimsatu
-        </a>
+        </Link>
         <div className="d-flex align-items-center">
-          <a href="#" className="me-2 d-block d-lg-none">
+          <Link to="#" className="me-2 d-block d-lg-none">
             <Icon icon="codicon:bell" width={24} height={24} color="#474747" />
-          </a>
+          </Link>
           <button
             className="navbar-toggler border-0"
             type="button"
@@ -31,35 +48,35 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="menu-drawer">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item mx-3">
-              <a className="nav-link text-body-4" href="#">
+              <Link className="nav-link text-body-4" to="#">
                 Kependudukan
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-3">
-              <a className="nav-link text-body-4" href="#">
+              <Link className="nav-link text-body-4" to="#">
                 Sosial
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-3">
-              <a className="nav-link text-body-4" href="#">
+              <Link className="nav-link text-body-4" to="#">
                 Kesehatan
-              </a>
+              </Link>
             </li>
             <li className="nav-item mx-3">
-              <a className="nav-link text-body-4" href="#">
+              <Link className="nav-link text-body-4" to="#">
                 Pariwisata
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <a href="#" className="d-none d-lg-block">
+            <Link to="#" className="d-none d-lg-block">
               <Icon
                 icon="codicon:bell"
                 width={24}
                 height={24}
                 color="#474747"
               />
-            </a>
+            </Link>
             <div
               className="mx-4 d-none d-lg-block"
               style={{ height: "24px", borderRight: "1px solid #949494 " }}
@@ -82,7 +99,7 @@ const Navbar = () => {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <a className="dropdown-item py-2" href="/dokumen">
+                  <Link className="dropdown-item py-2" to="/dokumen">
                     <Icon
                       icon="ep:document"
                       width={24}
@@ -92,10 +109,14 @@ const Navbar = () => {
                     <span className="ms-2 text-body-4 text-grey-1">
                       Dokumen saya
                     </span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item py-2" href="/logout">
+                  <Link
+                    role="button"
+                    className="dropdown-item py-2"
+                    onClick={() => handleLogout()}
+                  >
                     <Icon
                       icon="charm:sign-out"
                       width={24}
@@ -103,7 +124,7 @@ const Navbar = () => {
                       color="#000000"
                     />
                     <span className="ms-2 text-body-4 text-grey-1">Keluar</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

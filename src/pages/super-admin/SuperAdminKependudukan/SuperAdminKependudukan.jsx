@@ -80,9 +80,10 @@ const SuperAdminKependudukan = () => {
                 <option>Malang</option>
               </select>
             </div>
-            <a
-              href="/super-admin/kependudukan/add"
+            <button
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteModal"
             >
               <Icon
                 icon="akar-icons:circle-plus"
@@ -92,7 +93,7 @@ const SuperAdminKependudukan = () => {
                 className="me-2"
               />
               Tambah
-            </a>
+            </button>
           </div>
         </div>
         <div className="card w-100">
@@ -484,6 +485,79 @@ const SuperAdminKependudukan = () => {
                 <button className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1">
                   Terapkan
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="deleteModal"
+        tabIndex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-4">
+            <div className="modal-body">
+              <h3 className="mb-2 text-body-3 text-grey-1 text-center">
+                Tambah dokumen
+              </h3>
+              <p className="mb-4 text-paragraph-4 text-grey-1 text-center">
+                Apakah anda yakin untuk hapus dokumen ini?
+              </p>
+              <div className="mb-4">
+                <div className="mb-3">
+                  <label
+                    htmlFor="nik"
+                    className="form-label text-body-3 text-grey-1"
+                  >
+                    NIK <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="nik"
+                    placeholder="masukkan NIK terdaftar"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor="jenis"
+                    className="form-label text-body-3 text-grey-1"
+                  >
+                    Jenis Dokumen <span className="text-danger">*</span>
+                  </label>
+                  <select className="form-select" id="jenis">
+                    <option>Pilih Jenis Dokumen</option>
+                    <option>Blitar</option>
+                    <option>Malang</option>
+                  </select>
+                </div>
+              </div>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex">
+                  <button
+                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                    data-bs-dismiss="modal"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                  >
+                    <Icon
+                      icon="akar-icons:circle-plus"
+                      width={24}
+                      height={24}
+                      color="#FFFFFF"
+                      className="me-2"
+                    />
+                    Tambah
+                  </button>
+                </div>
               </div>
             </div>
           </div>

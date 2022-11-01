@@ -1,30 +1,44 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import "./AdminDashboard.css";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
+import { authLogout } from "../../store/auth/authSlice";
 
 const AdminDashboard = (props) => {
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const { pathname } = location;
   const navUrl = pathname.split("/")[2];
 
+  const handleLogout = async () => {
+    const loader = toast.loading("Waiting...");
+
+    setTimeout(() => {
+      dispatch(authLogout());
+
+      toast.dismiss(loader);
+      toast.success("Logout successfully!");
+    }, 2000);
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg py-2 bg-white border-bottom border-grey-5">
         <div className="container-fluid px-4">
-          <a className="navbar-brand text-heading-3 text-primary-2" href="#">
+          <Link to="#" className="navbar-brand text-heading-3 text-primary-2">
             Jatimsatu
-          </a>
+          </Link>
           <div className="d-flex align-items-center">
-            <a href="#" className="me-2 d-block d-lg-none">
+            <Link to="#" className="me-2 d-block d-lg-none">
               <Icon
                 icon="codicon:bell"
                 width={24}
                 height={24}
                 color="#474747"
               />
-            </a>
+            </Link>
             <button
               className="navbar-toggler border-0"
               type="button"
@@ -43,14 +57,14 @@ const AdminDashboard = (props) => {
           </div>
           <div className="collapse navbar-collapse" id="menu-drawer">
             <div className="ms-auto d-flex align-items-center">
-              <a href="#" className="d-none d-lg-block">
+              <Link to="#" className="d-none d-lg-block">
                 <Icon
                   icon="codicon:bell"
                   width={24}
                   height={24}
                   color="#474747"
                 />
-              </a>
+              </Link>
               <div
                 className="mx-4 d-none d-lg-block"
                 style={{ height: "24px", borderRight: "1px solid #949494 " }}
@@ -77,9 +91,9 @@ const AdminDashboard = (props) => {
                   </button>
                   <ul className="dropdown-menu">
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item py-2 d-flex align-items-center"
-                        href="/dokumen"
+                        to="/dokumen"
                       >
                         <Icon
                           icon="ep:document"
@@ -90,12 +104,13 @@ const AdminDashboard = (props) => {
                         <span className="ms-2 text-body-4 text-grey-1">
                           Dokumen saya
                         </span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
+                        role="button"
                         className="dropdown-item py-2 d-flex align-items-center"
-                        href="/logout"
+                        onClick={() => handleLogout()}
                       >
                         <Icon
                           icon="charm:sign-out"
@@ -106,7 +121,7 @@ const AdminDashboard = (props) => {
                         <span className="ms-2 text-body-4 text-grey-1">
                           Keluar
                         </span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -120,8 +135,8 @@ const AdminDashboard = (props) => {
           <ul className="mb-0 ps-4 py-4 d-flex flex-column">
             <li className="mb-3">
               {navUrl === undefined ? (
-                <a
-                  href="/admin"
+                <Link
+                  to="/admin"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -133,9 +148,9 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-primary-2">
                     Dashboard
                   </span>
-                </a>
+                </Link>
               ) : (
-                <a href="/admin" className="p-2 d-flex align-items-center">
+                <Link to="/admin" className="p-2 d-flex align-items-center">
                   <Icon
                     icon="ic:outline-dashboard"
                     width={24}
@@ -145,13 +160,13 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-grey-2">
                     Dashboard
                   </span>
-                </a>
+                </Link>
               )}
             </li>
             <li className="mb-3">
               {navUrl === "users" ? (
-                <a
-                  href="/admin/users"
+                <Link
+                  to="/admin/users"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -163,10 +178,10 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-primary-2">
                     User Management
                   </span>
-                </a>
+                </Link>
               ) : (
-                <a
-                  href="/admin/users"
+                <Link
+                  to="/admin/users"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -178,13 +193,13 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-grey-2">
                     User Management
                   </span>
-                </a>
+                </Link>
               )}
             </li>
             <li className="mb-3">
               {navUrl === "kependudukan" ? (
-                <a
-                  href="/admin/kependudukan"
+                <Link
+                  to="/admin/kependudukan"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -196,10 +211,10 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-primary-2">
                     Kependudukan
                   </span>
-                </a>
+                </Link>
               ) : (
-                <a
-                  href="/admin/kependudukan"
+                <Link
+                  to="/admin/kependudukan"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -211,13 +226,13 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-grey-2">
                     Kependudukan
                   </span>
-                </a>
+                </Link>
               )}
             </li>
             <li className="mb-3">
               {navUrl === "sosial" ? (
-                <a
-                  href="/admin/sosial"
+                <Link
+                  to="/admin/sosial"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -229,10 +244,10 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-primary-2">
                     Sosial
                   </span>
-                </a>
+                </Link>
               ) : (
-                <a
-                  href="/admin/sosial"
+                <Link
+                  to="/admin/sosial"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -244,13 +259,13 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-grey-2">
                     Sosial
                   </span>
-                </a>
+                </Link>
               )}
             </li>
             <li className="mb-3">
               {navUrl === "kesehatan" ? (
-                <a
-                  href="/admin/kesehatan"
+                <Link
+                  to="/admin/kesehatan"
                   className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
                 >
                   <Icon
@@ -262,10 +277,10 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-primary-2">
                     Kesehatan
                   </span>
-                </a>
+                </Link>
               ) : (
-                <a
-                  href="/admin/kesehatan"
+                <Link
+                  to="/admin/kesehatan"
                   className="p-2 d-flex align-items-center"
                 >
                   <Icon
@@ -277,11 +292,11 @@ const AdminDashboard = (props) => {
                   <span className="ms-2 text-paragraph-1 text-grey-2">
                     Kesehatan
                   </span>
-                </a>
+                </Link>
               )}
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
+              <Link to="#" className="p-2 d-flex align-items-center">
                 <Icon
                   icon="fluent-mdl2:education"
                   width={24}
@@ -291,10 +306,10 @@ const AdminDashboard = (props) => {
                 <span className="ms-2 text-paragraph-1 text-grey-2">
                   Pendidikan
                 </span>
-              </a>
+              </Link>
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
+              <Link to="#" className="p-2 d-flex align-items-center">
                 <Icon
                   icon="healthicons:market-stall-outline"
                   width={24}
@@ -302,10 +317,10 @@ const AdminDashboard = (props) => {
                   color="#949494"
                 />
                 <span className="ms-2 text-paragraph-1 text-grey-2">UMKM</span>
-              </a>
+              </Link>
             </li>
             <li className="mb-3">
-              <a href="#" className="p-2 d-flex align-items-center">
+              <Link to="#" className="p-2 d-flex align-items-center">
                 <Icon
                   icon="ant-design:user-outlined"
                   width={24}
@@ -315,7 +330,7 @@ const AdminDashboard = (props) => {
                 <span className="ms-2 text-paragraph-1 text-grey-2">
                   Perizinan
                 </span>
-              </a>
+              </Link>
             </li>
             <li className="mb-3">
               <div className="accordion">
@@ -325,7 +340,7 @@ const AdminDashboard = (props) => {
                     id="headingOne"
                   >
                     <a
-                      type="button"
+                      role="button"
                       className="accordion-button p-2 d-flex align-items-center bg-transparent border-0 shadow-none collapsed"
                       data-bs-toggle="collapse"
                       data-bs-target="#wilayahAccordion"
@@ -353,36 +368,36 @@ const AdminDashboard = (props) => {
                       <ul className="px-2">
                         <li className="mb-3">
                           {navUrl === "kecamatan" ? (
-                            <a
-                              href="/admin/kecamatan"
+                            <Link
+                              to="/admin/kecamatan"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
                             >
                               Kecamatan
-                            </a>
+                            </Link>
                           ) : (
-                            <a
-                              href="/admin/kecamatan"
+                            <Link
+                              to="/admin/kecamatan"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
                             >
                               Kecamatan
-                            </a>
+                            </Link>
                           )}
                         </li>
                         <li className="mb-3">
                           {navUrl === "desa" ? (
-                            <a
-                              href="/admin/desa"
+                            <Link
+                              to="/admin/desa"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
                             >
                               Desa
-                            </a>
+                            </Link>
                           ) : (
-                            <a
-                              href="/admin/desa"
+                            <Link
+                              to="/admin/desa"
                               className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
                             >
                               Desa
-                            </a>
+                            </Link>
                           )}
                         </li>
                       </ul>

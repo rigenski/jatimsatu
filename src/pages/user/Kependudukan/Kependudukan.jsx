@@ -11,6 +11,7 @@ import PerubahanStatusIcon from "src/assets/images/pre-dashboard/kependudukan/pe
 import KartuKeluargaIcon from "src/assets/images/pre-dashboard/kependudukan/kartu-keluarga-icon.png";
 import ESignatureIcon from "src/assets/images/pre-dashboard/kependudukan/e-signature-icon.png";
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 // data
 const layananData = [
@@ -64,7 +65,7 @@ const Kependudukan = () => {
           ></div>
           <div className="container py-3 position-relative px-3">
             <div className="mb-4 pb-4">
-              <a href="/" className="mb-4 d-flex align-items-center">
+              <Link to="/" className="mb-4 d-flex align-items-center">
                 <Icon
                   icon="akar-icons:chevron-left"
                   width={16}
@@ -72,7 +73,7 @@ const Kependudukan = () => {
                   color="#FFFFFF"
                 />
                 <h6 className="mb-0 text-heading-7 text-white ms-2">Kembali</h6>
-              </a>
+              </Link>
               <h1 className="mb-3 text-heading-1 text-white">
                 Pilih Layanan Kependudukan
               </h1>
@@ -87,8 +88,8 @@ const Kependudukan = () => {
               <div className="row mx-0 rounded-3">
                 {layananData.map((item, index) => {
                   return (
-                    <a
-                      href={item.path}
+                    <Link
+                      to={item.path}
                       className="col-6 col-xl-4 p-2 bg-transparent border border-1 border-grey-4"
                       key={index}
                     >
@@ -102,7 +103,7 @@ const Kependudukan = () => {
                           {item.title}
                         </h5>
                       </div>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

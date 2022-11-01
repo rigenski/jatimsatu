@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "src/components/Navbar/Navbar";
 import { Icon } from "@iconify/react";
-import "./LayananDetail.css";
+import "./DaftarKTP.css";
+
+// assets
+import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
 import { Link } from "react-router-dom";
 
-const LayananDetail = (props) => {
+const DaftarKTP = () => {
   return (
     <>
       <Navbar />
@@ -12,7 +15,7 @@ const LayananDetail = (props) => {
         <div className="jumbotron pt-2 px-0 position-relative bg-primary-2 px-lg-5 pt-lg-4">
           <div className="container py-3 position-relative px-3">
             <div className="mb-4 pb-2">
-              <Link to="/" className="mb-4 d-flex align-items-center">
+              <Link href="/" className="mb-4 d-flex align-items-center">
                 <Icon
                   icon="akar-icons:chevron-left"
                   width={16}
@@ -30,4 +33,4 @@ const LayananDetail = (props) => {
   );
 };
 
-export default LayananDetail;
+export default DaftarKTP;

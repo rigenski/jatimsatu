@@ -54,216 +54,264 @@ import AdminUserAdd from "./pages/admin/AdminUserAdd/AdminUserAdd";
 import AdminKependudukan from "./pages/admin/AdminKependudukan/AdminKependudukan";
 import SuratJalan from "./components/Kependudukan/SuratJalan/SuratJalan";
 import KartuKeluarga from "./components/Kependudukan/KartuKeluarga/KartuKeluarga";
+import { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import AuthRoute from "./middleware/routes/AuthRoute";
+import ProtectedRoute from "./middleware/routes/ProtectedRoute";
+import { checkToken } from "./store/auth/authAction";
+import { authLogout } from "./store/auth/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const { authToken } = useSelector((state) => state.auth);
+
+  const handleAuth = async () => {
+    if (authToken) {
+      await dispatch(checkToken());
+    } else {
+      await dispatch(authLogout());
+    }
+  };
+
+  useEffect(() => {
+    handleAuth();
+  }, [authToken]);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* auth */}
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        {/* user */}
-        <Route path="/" element={<Home />} />
-        <Route path="/kependudukan" element={<Kependudukan />} />
-        <Route path="/sosial" element={<Sosial />} />
-        <Route path="/dokumen" element={<Dokumen />} />
-        {/* kependudukan */}
-        <Route
-          path="/daftar-ktp"
-          element={
-            <LayananDetail>
-              <DaftarKTP />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/surat-jalan"
-          element={
-            <LayananDetail>
-              <SuratJalan />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/surat-keterangan"
-          element={
-            <LayananDetail>
-              <SuratKeterangan />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/kartu-keluarga"
-          element={
-            <LayananDetail>
-              <KartuKeluarga />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/perubahan-status"
-          element={
-            <LayananDetail>
-              <PerubahanStatus />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/e-signature"
-          element={
-            <LayananDetail>
-              <ESignature />
-            </LayananDetail>
-          }
-        />
-        {/* sosial */}
-        <Route
-          path="/bansos"
-          element={
-            <LayananDetail>
-              <Bansos />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/bantuan-langsung-tunai"
-          element={
-            <LayananDetail>
-              <BantuanLangsungTunai />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/kartu-indonesia-pintar"
-          element={
-            <LayananDetail>
-              <KartuIndonesiaPintar />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/kartu-indonesia-sehat"
-          element={
-            <LayananDetail>
-              <KartuIndonesiaSehat />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/bpjs"
-          element={
-            <LayananDetail>
-              <Bpjs />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/kartu-prakerja"
-          element={
-            <LayananDetail>
-              <KartuPrakerja />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/bantuan-bencana"
-          element={
-            <LayananDetail>
-              <BantuanBencana />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/penyaluran-subsidi"
-          element={
-            <LayananDetail>
-              <PenyaluranSubsidi />
-            </LayananDetail>
-          }
-        />
-        <Route
-          path="/pengaduan"
-          element={
-            <LayananDetail>
-              <Pengaduan />
-            </LayananDetail>
-          }
-        />
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* auth */}
+          <Route element={<AuthRoute />}>
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signin/:token" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+          </Route>
+          {/* user */}
+          <Route element={<ProtectedRoute role="PENDUDUK" />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/kependudukan" element={<Kependudukan />} />
+            <Route path="/sosial" element={<Sosial />} />
+            <Route path="/dokumen" element={<Dokumen />} />
+            {/* kependudukan */}
+            <Route
+              path="/daftar-ktp"
+              element={
+                <LayananDetail>
+                  <DaftarKTP />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/surat-jalan"
+              element={
+                <LayananDetail>
+                  <SuratJalan />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/surat-keterangan"
+              element={
+                <LayananDetail>
+                  <SuratKeterangan />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/kartu-keluarga"
+              element={
+                <LayananDetail>
+                  <KartuKeluarga />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/perubahan-status"
+              element={
+                <LayananDetail>
+                  <PerubahanStatus />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/e-signature"
+              element={
+                <LayananDetail>
+                  <ESignature />
+                </LayananDetail>
+              }
+            />
+            {/* sosial */}
+            <Route
+              path="/bansos"
+              element={
+                <LayananDetail>
+                  <Bansos />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/bantuan-langsung-tunai"
+              element={
+                <LayananDetail>
+                  <BantuanLangsungTunai />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/kartu-indonesia-pintar"
+              element={
+                <LayananDetail>
+                  <KartuIndonesiaPintar />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/kartu-indonesia-sehat"
+              element={
+                <LayananDetail>
+                  <KartuIndonesiaSehat />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/bpjs"
+              element={
+                <LayananDetail>
+                  <Bpjs />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/kartu-prakerja"
+              element={
+                <LayananDetail>
+                  <KartuPrakerja />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/bantuan-bencana"
+              element={
+                <LayananDetail>
+                  <BantuanBencana />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/penyaluran-subsidi"
+              element={
+                <LayananDetail>
+                  <PenyaluranSubsidi />
+                </LayananDetail>
+              }
+            />
+            <Route
+              path="/pengaduan"
+              element={
+                <LayananDetail>
+                  <Pengaduan />
+                </LayananDetail>
+              }
+            />
+          </Route>
 
-        {/* super admin */}
-        <Route path="/super-admin" element={<SuperAdminHome />} />
-        <Route path="/super-admin/users" element={<SuperAdminUser />} />
-        <Route
-          path="/super-admin/users/detail"
-          element={<SuperAdminUserDetail />}
-        />
-        <Route
-          path="/super-admin/users/edit"
-          element={<SuperAdminUserEdit />}
-        />
-        <Route path="/super-admin/users/add" element={<SuperAdminUserAdd />} />
-        <Route
-          path="/super-admin/kependudukan"
-          element={<SuperAdminKependudukan />}
-        />
-        <Route
-          path="/super-admin/kependudukan/detail"
-          element={<SuperAdminKependudukanDetail />}
-        />
-        <Route
-          path="/super-admin/kependudukan/edit"
-          element={<SuperAdminKependudukanEdit />}
-        />
-        <Route path="/super-admin/sosial" element={<SuperAdminSosial />} />
-        <Route
-          path="/super-admin/sosial/detail"
-          element={<SuperAdminSosialDetail />}
-        />
-        <Route
-          path="/super-admin/sosial/edit"
-          element={<SuperAdminSosialEdit />}
-        />
-        <Route
-          path="/super-admin/kesehatan"
-          element={<SuperAdminKesehatan />}
-        />
-        <Route
-          path="/super-admin/kecamatan"
-          element={<SuperAdminKecamatan />}
-        />
-        <Route
-          path="/super-admin/kecamatan/add"
-          element={<SuperAdminKecamatanAdd />}
-        />
-        <Route path="/super-admin/desa" element={<SuperAdminDesa />} />
-        <Route path="/super-admin/desa/add" element={<SuperAdminDesaAdd />} />
+          <Route element={<ProtectedRoute role="SUPER_ADMIN" />}>
+            {/* super admin */}
+            <Route path="/super-admin" element={<SuperAdminHome />} />
+            <Route path="/super-admin/users" element={<SuperAdminUser />} />
+            <Route
+              path="/super-admin/users/detail"
+              element={<SuperAdminUserDetail />}
+            />
+            <Route
+              path="/super-admin/users/edit"
+              element={<SuperAdminUserEdit />}
+            />
+            <Route
+              path="/super-admin/users/add"
+              element={<SuperAdminUserAdd />}
+            />
+            <Route
+              path="/super-admin/kependudukan"
+              element={<SuperAdminKependudukan />}
+            />
+            <Route
+              path="/super-admin/kependudukan/detail"
+              element={<SuperAdminKependudukanDetail />}
+            />
+            <Route
+              path="/super-admin/kependudukan/edit"
+              element={<SuperAdminKependudukanEdit />}
+            />
+            <Route path="/super-admin/sosial" element={<SuperAdminSosial />} />
+            <Route
+              path="/super-admin/sosial/detail"
+              element={<SuperAdminSosialDetail />}
+            />
+            <Route
+              path="/super-admin/sosial/edit"
+              element={<SuperAdminSosialEdit />}
+            />
+            <Route
+              path="/super-admin/kesehatan"
+              element={<SuperAdminKesehatan />}
+            />
+            <Route
+              path="/super-admin/kecamatan"
+              element={<SuperAdminKecamatan />}
+            />
+            <Route
+              path="/super-admin/kecamatan/add"
+              element={<SuperAdminKecamatanAdd />}
+            />
+            <Route path="/super-admin/desa" element={<SuperAdminDesa />} />
+            <Route
+              path="/super-admin/desa/add"
+              element={<SuperAdminDesaAdd />}
+            />
+          </Route>
 
-        {/* super admin */}
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/users" element={<AdminUser />} />
-        <Route path="/admin/users/detail" element={<AdminUserDetail />} />
-        <Route path="/admin/users/edit" element={<AdminUserEdit />} />
-        <Route path="/admin/users/add" element={<AdminUserAdd />} />
-        <Route path="/admin/kependudukan" element={<AdminKependudukan />} />
-        <Route
-          path="/admin/kependudukan/detail"
-          element={<AdminKependudukanDetail />}
-        />
-        <Route
-          path="/admin/kependudukan/edit"
-          element={<AdminKependudukanEdit />}
-        />
-        <Route path="/admin/sosial" element={<AdminSosial />} />
-        <Route path="/admin/sosial/detail" element={<AdminSosialDetail />} />
-        <Route path="/admin/sosial/edit" element={<AdminSosialEdit />} />
-        <Route path="/admin/kesehatan" element={<AdminKesehatan />} />
-        <Route path="/admin/kecamatan" element={<AdminKecamatan />} />
-        <Route path="/admin/kecamatan/add" element={<AdminKecamatanAdd />} />
-        <Route path="/admin/desa" element={<AdminDesa />} />
-        <Route path="/admin/desa/add" element={<AdminDesaAdd />} />
-      </Routes>
-    </BrowserRouter>
+          <Route element={<ProtectedRoute role="ADMIN" />}>
+            {/* super admin */}
+            <Route path="/admin" element={<AdminHome />} />
+            <Route path="/admin/users" element={<AdminUser />} />
+            <Route path="/admin/users/detail" element={<AdminUserDetail />} />
+            <Route path="/admin/users/edit" element={<AdminUserEdit />} />
+            <Route path="/admin/users/add" element={<AdminUserAdd />} />
+            <Route path="/admin/kependudukan" element={<AdminKependudukan />} />
+            <Route
+              path="/admin/kependudukan/detail"
+              element={<AdminKependudukanDetail />}
+            />
+            <Route
+              path="/admin/kependudukan/edit"
+              element={<AdminKependudukanEdit />}
+            />
+            <Route path="/admin/sosial" element={<AdminSosial />} />
+            <Route
+              path="/admin/sosial/detail"
+              element={<AdminSosialDetail />}
+            />
+            <Route path="/admin/sosial/edit" element={<AdminSosialEdit />} />
+            <Route path="/admin/kesehatan" element={<AdminKesehatan />} />
+            <Route path="/admin/kecamatan" element={<AdminKecamatan />} />
+            <Route
+              path="/admin/kecamatan/add"
+              element={<AdminKecamatanAdd />}
+            />
+            <Route path="/admin/desa" element={<AdminDesa />} />
+            <Route path="/admin/desa/add" element={<AdminDesaAdd />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <Toaster />
+    </>
   );
 }
 
