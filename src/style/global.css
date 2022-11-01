@@ -502,3 +502,15 @@ button:hover {
 }
 
 /* BADGE */
+
+.badge-primary {
+    background: #EEFFF6 !important;
+}
+
+.badge-warning {
+    background: #FFFAED !important;
+}
+
+.badge-danger {
+    background: #FFE6E6 !important;
+}

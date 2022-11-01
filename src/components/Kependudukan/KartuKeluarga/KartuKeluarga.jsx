@@ -1,20 +1,163 @@
-import { Icon } from "@iconify/react";
 import React, { useState } from "react";
+import { ref, uploadBytes } from "firebase/storage";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { storage } from "src/config/firebase/firebase";
+import uuid from "react-uuid";
+import { Link } from "react-router-dom";
+import { createKependudukanForm } from "../../../store/kependudukan/kependudukanAction";
+import FormulirPendaftaran from "../../FormulirPendaftaran/FormulirPendaftaran";
 
 // assets
 import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
 
 const KartuKeluarga = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const { handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: user.name,
+      nik: user.nik,
+      alamat: user.address,
+      kabupatenId: user.kabupatenId,
+      kecamatanId: user.kecamatanId,
+      desaId: user.desaId,
+      rtrw: user.rtrw,
+      postalCode: user.postalCode,
+    },
+  });
+
+  const [loading, setLoading] = useState(false);
   const [section, setSection] = useState("formulir-pendaftaran");
   const [complete, setComplete] = useState(false);
 
+  const [formRegister, setFormRegister] = useState(null);
+
+  const [KKSuami, setKKSuami] = useState(null);
+  const [KKIstri, setKKIstri] = useState(null);
+  const [KTPSuami, setKTPSuami] = useState(null);
+  const [KTPIstri, setKTPIstri] = useState(null);
+  const [bukuNikah, setBukuNikah] = useState(null);
+
+  const handleCreateKependudukanForm = async (data) => {
+    setLoading(true);
+
+    const loader = toast.loading("Mohon Tunggu...");
+
+    let documents = {};
+
+    if (KKSuami) {
+      const KKSuamiSelected = KKSuami.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/kartu-keluarga/${KKSuamiSelected.name}`
+      );
+
+      uploadBytes(storageRef, KKSuamiSelected).then(() => {
+        KKSuamiSelected.value = "";
+      });
+
+      documents.KKSuami = `${uuid()}-${KKSuamiSelected.name}`;
+    }
+
+    if (KKIstri) {
+      const KKIstriSelected = KKIstri.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/kartu-keluarga/${KKIstriSelected.name}`
+      );
+
+      uploadBytes(storageRef, KKIstriSelected).then(() => {
+        KKIstriSelected.value = "";
+      });
+
+      documents.KKIstri = `${uuid()}-${KKIstriSelected.name}`;
+    }
+
+    if (KTPSuami) {
+      const KTPSuamiSelected = KTPSuami.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/kartu-keluarga/${KTPSuamiSelected.name}`
+      );
+
+      uploadBytes(storageRef, KTPSuamiSelected).then(() => {
+        KTPSuamiSelected.value = "";
+      });
+
+      documents.KTPSuami = `${uuid()}-${KTPSuamiSelected.name}`;
+    }
+
+    if (KTPIstri) {
+      const KTPIstriSelected = KTPIstri.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/kartu-keluarga/${KTPIstriSelected.name}`
+      );
+
+      uploadBytes(storageRef, KTPIstriSelected).then(() => {
+        KTPIstriSelected.value = "";
+      });
+
+      documents.KTPIstri = `${uuid()}-${KTPIstriSelected.name}`;
+    }
+
+    if (bukuNikah) {
+      const bukuNikahSelected = bukuNikah.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/kartu-keluarga/${bukuNikahSelected.name}`
+      );
+
+      uploadBytes(storageRef, bukuNikahSelected).then(() => {
+        bukuNikahSelected.value = "";
+      });
+
+      documents.bukuNikah = `${uuid()}-${bukuNikahSelected.name}`;
+    }
+
+    Object.assign(data, formRegister);
+
+    const dataJSON = {
+      formTypeId: "8dba0dda-9fd4-4cfe-9038-91620918c0d2",
+      registrationForm: data,
+      documents: documents,
+    };
+
+    await dispatch(createKependudukanForm(dataJSON)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        setLoading(false);
+        setComplete(true);
+        reset();
+      } else {
+        toast.error(res.payload.response.data.message);
+
+        setLoading(false);
+      }
+    });
+  };
+
   return (
     <>
-      <div className="form mb-4 px-3 py-4 bg-white rounded-2 px-md-4">
+      <form
+        className="form mb-4 px-3 py-4 bg-white rounded-2 px-md-4"
+        onSubmit={handleSubmit(handleCreateKependudukanForm)}
+      >
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Kartu Keluarga
+              Pengajuan Daftar KTP
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
@@ -23,16 +166,16 @@ const KartuKeluarga = () => {
           </div>
           {!complete ? (
             <div className="d-none align-items-center d-lg-flex">
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
               >
                 Batalkan
-              </button>
+              </Link>
               <button
-                type="button"
+                type="submit"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                onClick={() => setComplete(!complete)}
+                disabled={loading}
               >
                 Kirim
               </button>
@@ -41,22 +184,6 @@ const KartuKeluarga = () => {
         </div>
         {!complete ? (
           <>
-            <div
-              className="alert alert-warning d-flex align-items-center"
-              role="alert"
-            >
-              <Icon
-                icon="akar-icons:triangle-alert"
-                width={24}
-                height={24}
-                color="#C18B00"
-                className="me-2"
-              />
-              <p className="mb-0 text-paragraph-2">
-                Masih ada data yang belum lengkap. Mohon cek ulang formulir
-                pendaftaran dan upload dokumen sebelum mengirim dokumen
-              </p>
-            </div>
             <div className="mb-4">
               <div className="d-flex align-items-center border-bottom border-grey-4">
                 <button
@@ -84,168 +211,9 @@ const KartuKeluarga = () => {
               </div>
             </div>
             {section === "formulir-pendaftaran" ? (
-              <div className="row">
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="nama"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Nama <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nama"
-                      defaultValue="Bonyfasius Lumbanraja"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="nik"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      NIK <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nik"
-                      defaultValue="3312278010000009"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="alamat"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Alamat <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="alamat"
-                      defaultValue="Jalan Alpukat"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="desa"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Desa <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select" id="desa" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="kecamatan"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Kecamatan <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select" id="kecamatan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="kelurahan"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Kelurahan <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select" id="kelurahan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="rt"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      RT <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="rt"
-                      defaultValue="01"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="rw"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      RW <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="rw"
-                      defaultValue="07"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3 mb-md-0">
-                    <label
-                      htmlFor="kode-pos"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Kode Pos <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="kode-pos"
-                      defaultValue="172931"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div>
-                    <label
-                      htmlFor="deskripsi"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Deskripsi <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="deskripsi"
-                      placeholder="Berikan keterangan detail mengenai pengajuan anda"
-                    />
-                  </div>
-                </div>
-              </div>
+              <FormulirPendaftaran
+                setFormRegister={(value) => setFormRegister(value)}
+              />
             ) : (
               <div className="row">
                 <div className="col-12 col-md-6">
@@ -261,6 +229,8 @@ const KartuKeluarga = () => {
                       type="file"
                       className="form-control"
                       id="kk-keluarga-suami"
+                      onChange={(e) => setKKSuami(e.target)}
+                      required
                     />
                   </div>
                 </div>
@@ -277,6 +247,8 @@ const KartuKeluarga = () => {
                       type="file"
                       className="form-control"
                       id="kk-keluarga-istri"
+                      onChange={(e) => setKKIstri(e.target)}
+                      required
                     />
                   </div>
                 </div>
@@ -292,6 +264,8 @@ const KartuKeluarga = () => {
                       type="file"
                       className="form-control"
                       id="ktp-suami"
+                      onChange={(e) => setKTPSuami(e.target)}
+                      required
                     />
                   </div>
                 </div>
@@ -307,6 +281,8 @@ const KartuKeluarga = () => {
                       type="file"
                       className="form-control"
                       id="ktp-istri"
+                      onChange={(e) => setKTPIstri(e.target)}
+                      required
                     />
                   </div>
                 </div>
@@ -322,6 +298,7 @@ const KartuKeluarga = () => {
                       type="file"
                       className="form-control"
                       id="buku-nikah"
+                      onChange={(e) => setBukuNikah(e.target)}
                     />
                   </div>
                 </div>
@@ -329,16 +306,16 @@ const KartuKeluarga = () => {
             )}
 
             <div className="mt-4 d-flex justify-content-center align-items-center d-lg-none justify-content-md-end">
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
               >
                 Batalkan
-              </button>
+              </Link>
               <button
-                type="button"
+                type="submit"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                onClick={() => setComplete(!complete)}
+                disabled={loading}
               >
                 Kirim
               </button>
@@ -357,16 +334,16 @@ const KartuKeluarga = () => {
                 Anda akan mendapatkan informasi jika dokumen telah selesai
                 melalui notifkasi
               </p>
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
               >
                 Kembali ke dashboard
-              </button>
+              </Link>
             </div>
           </>
         )}
-      </div>
+      </form>
     </>
   );
 };

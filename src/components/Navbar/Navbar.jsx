@@ -22,13 +22,13 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg py-2 bg-white">
       <div className="container px-3">
-        <Link to="#" className="navbar-brand text-heading-3 text-primary-2">
+        <Link to="/" className="navbar-brand text-heading-3 text-primary-2">
           Jatimsatu
         </Link>
         <div className="d-flex align-items-center">
-          <Link to="#" className="me-2 d-block d-lg-none">
+          <a role="button" to="#" className="me-2 d-block d-lg-none">
             <Icon icon="codicon:bell" width={24} height={24} color="#474747" />
-          </Link>
+          </a>
           <button
             className="navbar-toggler border-0"
             type="button"
@@ -48,22 +48,22 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="menu-drawer">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="#">
+              <Link className="nav-link text-body-4" to="/kependudukan">
                 Kependudukan
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="#">
+              <Link className="nav-link text-body-4" to="/sosial">
                 Sosial
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="#">
+              <Link className="nav-link text-body-4" to="/kesehatan">
                 Kesehatan
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="#">
+              <Link className="nav-link text-body-4" to="/pariwisata">
                 Pariwisata
               </Link>
             </li>

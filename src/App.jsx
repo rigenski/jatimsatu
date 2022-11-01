@@ -97,6 +97,7 @@ function App() {
             <Route path="/kependudukan" element={<Kependudukan />} />
             <Route path="/sosial" element={<Sosial />} />
             <Route path="/dokumen" element={<Dokumen />} />
+            <Route path="/dokumen/:rows" element={<Dokumen />} />
             {/* kependudukan */}
             <Route
               path="/daftar-ktp"

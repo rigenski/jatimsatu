@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllKependudukanTypes } from "./kependudukanAction";
+import {
+  getAllKependudukan,
+  getAllKependudukanTypes,
+} from "./kependudukanAction";
 
 const initialState = {
   kependudukanTypes: [],
@@ -7,16 +10,19 @@ const initialState = {
 };
 
 const kependudukanSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState: initialState,
   reducers: {
-    resetKependudukan: (state) => {},
+    resetKependudukan: (state) => {
+      state.kependudukanTypes = [];
+      state.kependudukanAll = [];
+    },
   },
   extraReducers: {
     [getAllKependudukanTypes.fulfilled]: (state, { payload }) => {
       state.kependudukanTypes = payload.content;
     },
-    [getAllKependudukanTypes.fulfilled]: (state, { payload }) => {
+    [getAllKependudukan.fulfilled]: (state, { payload }) => {
       state.kependudukanAll = payload.content.kependudukanForms;
     },
   },

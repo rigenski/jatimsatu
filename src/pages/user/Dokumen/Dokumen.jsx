@@ -1,15 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "src/components/Navbar/Navbar";
 import { Icon } from "@iconify/react";
 import "./Dokumen.css";
 
 import { useTheme } from "@table-library/react-table-library/theme";
 import { getTheme } from "@table-library/react-table-library/baseline";
-import {
-  CellSelect,
-  HeaderCellSelect,
-  useRowSelect,
-} from "@table-library/react-table-library/select";
 import {
   Body,
   Cell,
@@ -19,39 +14,65 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
-
-const sosialData = [
-  {
-    id: 1,
-    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
-    layanan: "Sosial",
-    tanggal: "15-10-2022",
-    waktu: "21:00",
-    status: 1,
-    keterangan: "Dokumen KK tidak jelas, upload ulang.",
-  },
-  {
-    id: 2,
-    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
-    layanan: "Sosial",
-    tanggal: "15-10-2022",
-    waktu: "21:00",
-    status: 1,
-    keterangan: "Dokumen KK tidak jelas, upload ulang.",
-  },
-];
+import { useEffect } from "react";
+import { getAllKependudukan } from "../../../store/kependudukan/kependudukanAction";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getAllSosial } from "../../../store/sosial/sosialAction";
 
 const Dokumen = () => {
-  const nodes = sosialData;
+  const params = useParams();
+  const dispatch = useDispatch();
 
   const theme = useTheme([
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  16% 16% 16% 16% 16% minmax(300px, 1fr);
+      --data-table-library_grid-template-columns:  320px 260px 200px 320px 260px;
       `,
     },
   ]);
+
+  const { kependudukanAll } = useSelector((state) => state.kependudukan);
+  const { sosialAll } = useSelector((state) => state.sosial);
+
+  const [dataAll, setDataAll] = useState([]);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [section, setSection] = useState("kependudukan");
+  const [startRange, setStartRange] = useState("");
+  const [lastRange, setlastRange] = useState("");
+
+  const nodes = dataAll;
+  const rows = params.rows;
+
+  const handleGetKependudukanAll = async (data) => {
+    await dispatch(getAllKependudukan(data));
+
+    setDataAll(kependudukanAll);
+  };
+
+  const handleGetSosialAll = async (data) => {
+    await dispatch(getAllSosial(data));
+
+    setDataAll(sosialAll);
+  };
+
+  useEffect(() => {
+    const data = {
+      searchKey: "name",
+      searchValue: searchValue,
+      startRange: startRange,
+      lastRange: lastRange,
+      rows: rows,
+    };
+
+    if (section === "kependudukan") {
+      handleGetKependudukanAll(data);
+    } else if (section === "sosial") {
+      handleGetSosialAll(data);
+    }
+  }, [searchValue, section, startRange, lastRange, rows]);
 
   return (
     <>
@@ -88,6 +109,8 @@ const Dokumen = () => {
                           id="cari"
                           placeholder="Cari dokumen"
                           style={{ paddingLeft: "48px" }}
+                          value={searchValue}
+                          onChange={(e) => setSearchValue(e.target.value)}
                         />
                         <Icon
                           icon="charm:search"
@@ -108,10 +131,13 @@ const Dokumen = () => {
                       >
                         Layanan <span className="text-danger">*</span>
                       </label>
-                      <select className="form-select" id="layanan">
-                        <option>pilih layanan</option>
-                        <option>Blitar</option>
-                        <option>Malang</option>
+                      <select
+                        className="form-select"
+                        id="layanan"
+                        onChange={(e) => setSection(e.target.value)}
+                      >
+                        <option value="kependudukan">Kependudukan</option>
+                        <option value="sosial">Sosial</option>
                       </select>
                     </div>
                   </div>
@@ -127,6 +153,8 @@ const Dokumen = () => {
                         type="date"
                         className="form-control"
                         id="tanggal-awal"
+                        value={startRange}
+                        onChange={(e) => setStartRange(e.target.value)}
                       />
                     </div>
                   </div>
@@ -142,6 +170,8 @@ const Dokumen = () => {
                         type="date"
                         className="form-control"
                         id="tanggal-akhir"
+                        value={lastRange}
+                        onChange={(e) => setlastRange(e.target.value)}
                       />
                     </div>
                   </div>
@@ -161,9 +191,9 @@ const Dokumen = () => {
                               <HeaderCell className="px-2 py-3 text-grey-1">
                                 Nama Dokumen
                               </HeaderCell>
-                              <HeaderCell className="px-2 py-3 text-grey-1">
+                              {/* <HeaderCell className="px-2 py-3 text-grey-1">
                                 Layanan
-                              </HeaderCell>
+                              </HeaderCell> */}
                               <HeaderCell className="px-2 py-3 text-grey-1">
                                 Tanggal
                               </HeaderCell>
@@ -180,37 +210,57 @@ const Dokumen = () => {
                           </Header>
 
                           <Body>
-                            {tableList.map((item) => (
+                            {nodes.map((item) => (
                               <Row key={item.id} item={item}>
                                 <Cell className="px-2 py-3 text-grey-1">
-                                  {item.dokumen}
+                                  {item.formType.name}
                                 </Cell>
+                                {/* <Cell className="px-2 py-3 text-grey-1">
+                                  {item.createdAt}
+                                </Cell> */}
                                 <Cell className="px-2 py-3 text-grey-1">
-                                  {item.layanan}
-                                </Cell>
-                                <Cell className="px-2 py-3 text-grey-1">
-                                  {item.tanggal}
+                                  {item.createdAt}
                                   <br />
-                                  {item.waktu}
+                                  {item.createdAt}
                                 </Cell>
                                 <Cell className="px-2 py-3 text-grey-1">
-                                  {item.status === 1 ? (
-                                    <div className="badge px-4 text-paragraph-1 text-primary-2 bg-primary-6 rounded-1">
-                                      Disetujui
+                                  {item.status === "Disetujui" ? (
+                                    <div className="badge badge-primary px-4 text-paragraph-1 text-primary-2 rounded-1">
+                                      {item.status}
                                     </div>
-                                  ) : null}
+                                  ) : item.status === "Diproses" ? (
+                                    <div className="badge badge-warning px-4 text-paragraph-1 text-warning rounded-1">
+                                      {item.status}
+                                    </div>
+                                  ) : (
+                                    <div className="badge badge-danger px-4 text-paragraph-1 text-danger rounded-1">
+                                      {item.status}
+                                    </div>
+                                  )}
                                 </Cell>
                                 <Cell className="px-2 py-3 text-grey-1">
-                                  {item.keterangan}
+                                  {item.description}
                                 </Cell>
                                 <Cell className="px-2 py-3 text-grey-1">
                                   <div className="d-flex flex-column">
-                                    <button className="btn mb-2 me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
-                                      Lihat Dokumen
-                                    </button>
-                                    <button className="btn px-3 py-1 text-white text-nowrap bg-info rounded-1">
-                                      Export PDF
-                                    </button>
+                                    {item.status === "Disetujui" ? (
+                                      <>
+                                        <button className="btn mb-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
+                                          Lihat Dokumen
+                                        </button>
+                                        <button className="btn px-3 py-1 text-white text-nowrap bg-info rounded-1">
+                                          Export PDF
+                                        </button>
+                                      </>
+                                    ) : item.status === "Diproses" ? (
+                                      <></>
+                                    ) : (
+                                      <>
+                                        <button className="btn px-3 py-1 text-white text-nowrap bg-orange-2 rounded-1">
+                                          Kirim Ulang
+                                        </button>
+                                      </>
+                                    )}
                                   </div>
                                 </Cell>
                               </Row>
@@ -220,42 +270,29 @@ const Dokumen = () => {
                       )}
                     </Table>
                   </div>
-                  <div className="pagination d-flex flex-column justify-content-between align-items-center flex-md-row">
-                    <div className="mb-3 d-flex align-items-center mb-md-0">
-                      <span className="text-body-4 text-black">Show</span>
-                      <select className="form-select mx-2">
-                        <option>4</option>
-                        <option>10</option>
-                      </select>
-                      <span className="text-body-4 text-black">entries</span>
-                    </div>
-                    <ul className="mb-0 p-0 d-flex align-items-center">
-                      <li className="mx-2">
-                        <button className="text-grey-1 bg-transparent border-0 rounded-circle">
-                          {"<"}
-                        </button>
-                      </li>
-                      <li className="mx-2">
-                        <button className="text-white bg-primary-2 border-0 rounded-circle">
-                          1
-                        </button>
-                      </li>
-                      <li className="mx-2">
-                        <button className="text-grey-1 bg-transparent border-0 rounded-circle">
-                          2
-                        </button>
-                      </li>
-                      <li className="mx-2">
-                        <button className="text-grey-1 bg-transparent border-0 rounded-circle">
-                          3
-                        </button>
-                      </li>
-                      <li className="mx-2">
-                        <button className="text-grey-1 bg-transparent border-0 rounded-circle">
-                          {">"}
-                        </button>
-                      </li>
-                    </ul>
+                  <div className="d-flex justify-content-center">
+                    <Link
+                      to={`/dokumen/${rows > 1 ? parseInt(rows) - 1 : 1}`}
+                      className="bg-transparent border-0"
+                    >
+                      <Icon
+                        icon="dashicons:arrow-left-alt2"
+                        width={24}
+                        height={24}
+                        color="#474747"
+                      />
+                    </Link>
+                    <Link
+                      to={`/dokumen/${rows ? parseInt(rows) + 1 : 1}`}
+                      className="bg-transparent border-0"
+                    >
+                      <Icon
+                        icon="dashicons:arrow-right-alt2"
+                        width={24}
+                        height={24}
+                        color="#474747"
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>

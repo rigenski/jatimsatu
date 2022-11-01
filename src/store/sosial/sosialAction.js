@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 
-export const createKependudukanForm = createAsyncThunk(
-  "kependudukan",
+export const createSosialForm = createAsyncThunk(
+  "sosial",
   async ({ formTypeId, registrationForm, documents }, { rejectWithValue }) => {
     try {
       const data = {
@@ -11,7 +11,7 @@ export const createKependudukanForm = createAsyncThunk(
         documents: documents,
       };
 
-      const response = await api.post("kependudukan", data);
+      const response = await api.post("sosial", data);
 
       return response.data;
     } catch (err) {
@@ -20,11 +20,11 @@ export const createKependudukanForm = createAsyncThunk(
   }
 );
 
-export const getAllKependudukanTypes = createAsyncThunk(
-  "kependudukan/types",
+export const getAllSosialTypes = createAsyncThunk(
+  "sosial/types",
   async (arg, { rejectWithValue }) => {
     try {
-      const response = await api.get("kependudukan/types");
+      const response = await api.get("sosial/types");
 
       return response.data;
     } catch (err) {
@@ -33,8 +33,8 @@ export const getAllKependudukanTypes = createAsyncThunk(
   }
 );
 
-export const getAllKependudukan = createAsyncThunk(
-  "kependudukan",
+export const getAllSosial = createAsyncThunk(
+  "sosial",
   async (
     { searchKey, searchValue, startRange, lastRange, rows },
     { rejectWithValue }
@@ -50,7 +50,7 @@ export const getAllKependudukan = createAsyncThunk(
         },
       };
 
-      const response = await api.get("kependudukan", data);
+      const response = await api.get("sosial", data);
 
       return response.data;
     } catch (err) {
@@ -59,8 +59,8 @@ export const getAllKependudukan = createAsyncThunk(
   }
 );
 
-export const updateKependudukan = createAsyncThunk(
-  "kependudukan/update",
+export const updateSosial = createAsyncThunk(
+  "sosial/update",
   async ({ id, status, description }, { rejectWithValue }) => {
     try {
       const data = {
@@ -68,7 +68,7 @@ export const updateKependudukan = createAsyncThunk(
         description: description,
       };
 
-      const response = await api.put(`kependudukan/${id}`, data);
+      const response = await api.put(`sosial/${id}`, data);
 
       return response.data;
     } catch (err) {
@@ -77,11 +77,11 @@ export const updateKependudukan = createAsyncThunk(
   }
 );
 
-export const deleteKependudukan = createAsyncThunk(
-  "kependudukan/delete",
+export const deleteSosial = createAsyncThunk(
+  "sosial/delete",
   async ({ ids }, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`kependudukan?ids=${ids}`);
+      const response = await api.delete(`sosial?ids=${ids}`);
 
       return response.data;
     } catch (err) {

@@ -78,22 +78,21 @@ const Signup = () => {
         toast.dismiss(loader);
 
         if (res.meta.requestStatus === "fulfilled") {
-          setLoading(false);
-
           toast.success(res.payload.message);
 
+          setLoading(false);
           setStatus(2);
         } else {
-          setLoading(false);
-
           toast.error(res.payload.response.data.message);
+
+          setLoading(false);
         }
       });
     } else {
-      setLoading(false);
-
       toast.dismiss(loader);
       toast.error("Konfirm Password tidak sama!");
+
+      setLoading(false);
     }
   };
 

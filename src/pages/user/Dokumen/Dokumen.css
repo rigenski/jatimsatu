@@ -27,17 +27,3 @@
     min-width: 180px;
     max-width: 180px;
 }
-
-.pagination ul li button {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.pagination select {
-    width: 70px;
-    height: 40px;
-    padding: 0 16px !important;
-}

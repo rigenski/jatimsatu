@@ -1,49 +1,102 @@
-import { Icon } from "@iconify/react";
 import React, { useState } from "react";
+import { ref, uploadBytes } from "firebase/storage";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { storage } from "src/config/firebase/firebase";
+import uuid from "react-uuid";
+import { Link } from "react-router-dom";
+import { createKependudukanForm } from "../../../store/kependudukan/kependudukanAction";
 
 // assets
 import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
-
-const typeDocuments = [
-  {
-    type: 1,
-    name: "Surat Keterangan Domisili",
-  },
-  {
-    type: 2,
-    name: "Surat Keterangan Lahir",
-  },
-  {
-    type: 3,
-    name: "Surat Keterangan Meninggal",
-  },
-  {
-    type: 4,
-    name: "Surat Keterangan Pindah/Datang",
-  },
-  {
-    type: 5,
-    name: "Surat Keterangan Duda/Janda",
-  },
-  {
-    type: 6,
-    name: "Surat Keterangan Menikah",
-  },
-  {
-    type: 7,
-    name: "Surat Keterangan Cerai",
-  },
-];
+import FormulirPendaftaranBanyak from "../../FormulirPendaftaranBanyak/FormulirPendaftaranBanyak";
+import { useEffect } from "react";
 
 const SuratKeterangan = () => {
+  const [typeSelected, setTypeSelected] = useState(1);
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const { handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: user.name,
+      nik: user.nik,
+      alamat: user.address,
+      kabupatenId: user.kabupatenId,
+      kecamatanId: user.kecamatanId,
+      desaId: user.desaId,
+      rtrw: user.rtrw,
+      postalCode: user.postalCode,
+    },
+  });
+
+  const [loading, setLoading] = useState(false);
   const [section, setSection] = useState("formulir-pendaftaran");
   const [complete, setComplete] = useState(false);
 
-  const [typeSelected, setTypeSelected] = useState(1);
+  const [formRegister, setFormRegister] = useState(null);
+
+  const [KK, setKK] = useState(null);
+
+  const handleCreateKependudukanForm = async (data) => {
+    setLoading(true);
+
+    const loader = toast.loading("Mohon Tunggu...");
+
+    let documents = {};
+
+    if (KK) {
+      const KKSelected = KK.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${KKSelected.name}`
+      );
+
+      uploadBytes(storageRef, KKSelected).then(() => {
+        KKSelected.value = "";
+      });
+
+      documents.KK = `${uuid()}-${KKSelected.name}`;
+    }
+
+    Object.assign(data, formRegister);
+
+    const dataJSON = {
+      formTypeId: "9b6d0e7e-0bd7-4504-9483-a4e55ccf60ec",
+      registrationForm: data,
+      documents: documents,
+    };
+
+    await dispatch(createKependudukanForm(dataJSON)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        setLoading(false);
+        setComplete(true);
+        reset();
+      } else {
+        toast.error(res.payload.response.data.message);
+
+        setLoading(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    console.log(typeSelected);
+  }, [typeSelected]);
 
   return (
     <>
-      <div className="form mb-4 px-3 py-4 bg-white rounded-2 px-md-4">
+      <form
+        className="form mb-4 px-3 py-4 bg-white rounded-2 px-md-4"
+        onSubmit={handleSubmit(handleCreateKependudukanForm)}
+      >
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
@@ -74,22 +127,6 @@ const SuratKeterangan = () => {
         </div>
         {!complete ? (
           <>
-            <div
-              className="alert alert-warning d-flex align-items-center"
-              role="alert"
-            >
-              <Icon
-                icon="akar-icons:triangle-alert"
-                width={24}
-                height={24}
-                color="#C18B00"
-                className="me-2"
-              />
-              <p className="mb-0 text-paragraph-2">
-                Masih ada data yang belum lengkap. Mohon cek ulang formulir
-                pendaftaran dan upload dokumen sebelum mengirim dokumen
-              </p>
-            </div>
             <div className="mb-4">
               <div className="d-flex align-items-center border-bottom border-grey-4">
                 <button
@@ -117,202 +154,11 @@ const SuratKeterangan = () => {
               </div>
             </div>
             {section === "formulir-pendaftaran" ? (
-              <div className="row">
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="jenis-dokumen"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Jenis Dokumen <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      id="jenis-dokumen"
-                      onChange={(e) =>
-                        setTypeSelected(parseInt(e.target.value))
-                      }
-                    >
-                      {typeDocuments.map((item, index) => {
-                        if (item.type === typeSelected) {
-                          return (
-                            <option value={item.type} key={index} selected>
-                              {item.name}
-                            </option>
-                          );
-                        } else {
-                          return (
-                            <option value={item.type} key={index}>
-                              {item.name}
-                            </option>
-                          );
-                        }
-                      })}
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="nama"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Nama <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nama"
-                      defaultValue="Bonyfasius Lumbanraja"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="nik"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      NIK <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nik"
-                      defaultValue="3312278010000009"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="alamat"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Alamat <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="alamat"
-                      defaultValue="Jalan Alpukat"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="desa"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Desa <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select" id="desa" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="kecamatan"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Kecamatan <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select" id="kecamatan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="kelurahan"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Kelurahan <span className="text-danger">*</span>
-                    </label>
-                    <select className="form-select" id="kelurahan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="rt"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      RT <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="rt"
-                      defaultValue="01"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="rw"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      RW <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="rw"
-                      defaultValue="07"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3 mb-md-0">
-                    <label
-                      htmlFor="kode-pos"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Kode Pos <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="kode-pos"
-                      defaultValue="172931"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div>
-                    <label
-                      htmlFor="deskripsi"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Deskripsi <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="deskripsi"
-                      placeholder="Berikan keterangan detail mengenai pengajuan anda"
-                    />
-                  </div>
-                </div>
-              </div>
-            ) : typeSelected === 1 ? (
+              <FormulirPendaftaranBanyak
+                setFormRegister={(value) => setFormRegister(value)}
+                setTypeSelected={(value) => setTypeSelected(value)}
+              />
+            ) : typeSelected === "91a35f21-bf13-45d2-96da-0a76089f8f71" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -355,7 +201,7 @@ const SuratKeterangan = () => {
                   </div>
                 </div>
               </>
-            ) : typeSelected === 2 ? (
+            ) : typeSelected === "969ba0c8-3e65-4d3b-8bf6-dd998c4230cb" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -435,7 +281,7 @@ const SuratKeterangan = () => {
                   </div>
                 </div>
               </>
-            ) : typeSelected === 3 ? (
+            ) : typeSelected === "56ebfd26-63c5-4fea-893c-176473c38968" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -490,7 +336,7 @@ const SuratKeterangan = () => {
                   </div>
                 </div>
               </>
-            ) : typeSelected === 4 ? (
+            ) : typeSelected === "3e4a7a04-c680-4639-a3ee-a7d6be5bf673" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -533,7 +379,7 @@ const SuratKeterangan = () => {
                   </div>
                 </div>
               </>
-            ) : typeSelected === 5 ? (
+            ) : typeSelected === "0cd3c8fd-ce1d-4736-97d2-ad243974c417" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -592,7 +438,7 @@ const SuratKeterangan = () => {
                   </div>
                 </div>
               </>
-            ) : typeSelected === 6 ? (
+            ) : typeSelected === "9ea5d289-42d8-4c52-a51a-3153a3aad4ea" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -624,7 +470,7 @@ const SuratKeterangan = () => {
                   </div>
                 </div>
               </>
-            ) : typeSelected === 7 ? (
+            ) : typeSelected === "35b57cc0-56e9-435c-9508-b4102d6ad5f1" ? (
               <>
                 <div className="row">
                   <div className="col-12 col-md-6">
@@ -723,7 +569,7 @@ const SuratKeterangan = () => {
             </div>
           </>
         )}
-      </div>
+      </form>
     </>
   );
 };
