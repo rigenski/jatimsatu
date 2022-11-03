@@ -17,10 +17,10 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [getAllUser.fulfilled]: (state, { payload }) => {
-      state.userAll = payload.content;
+      state.userAll = payload.content.users;
     },
     [getUser.fulfilled]: (state, { payload }) => {
-      state.userDetail = payload.content.kependudukanForms;
+      state.userDetail = payload.content;
     },
   },
 });

@@ -33,11 +33,10 @@ const typeDocuments = [
   },
 ];
 
-const FormulirPendaftaranBanyak = (props) => {
+const FormulirPendaftaranSuratKeterangan = (props) => {
   const { user } = useSelector((state) => state.auth);
 
   const [deskripsi, setDeskripsi] = useState("");
-  const [typeSelected, setTypeSelected] = useState(1);
 
   useEffect(() => {
     props.setFormRegister({ deskripsi: deskripsi });
@@ -58,12 +57,11 @@ const FormulirPendaftaranBanyak = (props) => {
               className="form-select"
               id="jenis-dokumen"
               onChange={(e) => {
-                setTypeSelected(e.target.value);
                 props.setTypeSelected(e.target.value);
               }}
             >
               {typeDocuments.map((item, index) => {
-                if (item.id === typeSelected) {
+                if (item.id === props.typeSelected) {
                   return (
                     <option value={item.id} key={index} selected>
                       {item.name}
@@ -236,4 +234,4 @@ const FormulirPendaftaranBanyak = (props) => {
   );
 };
 
-export default FormulirPendaftaranBanyak;
+export default FormulirPendaftaranSuratKeterangan;

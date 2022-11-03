@@ -112,8 +112,8 @@ const Sosial = () => {
               <div className="row mx-0 rounded-3">
                 {layananData.map((item, index) => {
                   return (
-                    <a
-                      href={item.path}
+                    <Link
+                      to={item.path}
                       className="col-6 col-xl-4 p-2 bg-transparent border border-1 border-grey-4"
                       key={index}
                     >
@@ -127,7 +127,7 @@ const Sosial = () => {
                           {item.title}
                         </h5>
                       </div>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

@@ -27,6 +27,19 @@ export const getKabupaten = createAsyncThunk(
   }
 );
 
+export const getKabupatenById = createAsyncThunk(
+  "/kabupaten/detail",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/kabupaten/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const getKecamatan = createAsyncThunk(
   "/kecamatan",
   async (arg, { rejectWithValue }) => {
@@ -40,11 +53,37 @@ export const getKecamatan = createAsyncThunk(
   }
 );
 
+export const getKecamatanById = createAsyncThunk(
+  "/kecamatan/detail",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/kecamatan/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const getDesaByKecamatan = createAsyncThunk(
   "/kecamatan/desa",
   async ({ kecamatanId }, { rejectWithValue }) => {
     try {
       const response = await api.get(`/kecamatan/${kecamatanId}/desa`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const getDesaById = createAsyncThunk(
+  "/desa/detail",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/desa/${id}`);
 
       return response.data;
     } catch (err) {

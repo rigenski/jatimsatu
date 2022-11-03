@@ -53,7 +53,7 @@ const KartuKeluarga = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/kartu-keluarga/${KKSuamiSelected.name}`
+        `documents/kependudukan/kk/${KKSuamiSelected.name}`
       );
 
       uploadBytes(storageRef, KKSuamiSelected).then(() => {
@@ -68,7 +68,7 @@ const KartuKeluarga = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/kartu-keluarga/${KKIstriSelected.name}`
+        `documents/kependudukan/kk/${KKIstriSelected.name}`
       );
 
       uploadBytes(storageRef, KKIstriSelected).then(() => {
@@ -83,7 +83,7 @@ const KartuKeluarga = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/kartu-keluarga/${KTPSuamiSelected.name}`
+        `documents/kependudukan/kk/${KTPSuamiSelected.name}`
       );
 
       uploadBytes(storageRef, KTPSuamiSelected).then(() => {
@@ -98,7 +98,7 @@ const KartuKeluarga = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/kartu-keluarga/${KTPIstriSelected.name}`
+        `documents/kependudukan/kk/${KTPIstriSelected.name}`
       );
 
       uploadBytes(storageRef, KTPIstriSelected).then(() => {
@@ -113,7 +113,7 @@ const KartuKeluarga = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/kartu-keluarga/${bukuNikahSelected.name}`
+        `documents/kependudukan/kk/${bukuNikahSelected.name}`
       );
 
       uploadBytes(storageRef, bukuNikahSelected).then(() => {
@@ -157,7 +157,7 @@ const KartuKeluarga = () => {
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Daftar KTP
+              Pengajuan Kartu Keluarga
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
@@ -205,6 +205,7 @@ const KartuKeluarga = () => {
                       : "ms-2 px-3 py-2 text-button text-grey-1 bg-background text-center border-0 rounded-1"
                   }
                   onClick={() => setSection("upload-dokumen")}
+                  disabled={formRegister?.deskripsi ? false : true}
                 >
                   Upload Dokumen
                 </button>
@@ -212,6 +213,7 @@ const KartuKeluarga = () => {
             </div>
             {section === "formulir-pendaftaran" ? (
               <FormulirPendaftaran
+                formRegister={formRegister}
                 setFormRegister={(value) => setFormRegister(value)}
               />
             ) : (

@@ -173,6 +173,7 @@ const DaftarKTP = () => {
                       : "ms-2 px-3 py-2 text-button text-grey-1 bg-background text-center border-0 rounded-1"
                   }
                   onClick={() => setSection("upload-dokumen")}
+                  disabled={formRegister?.deskripsi ? false : true}
                 >
                   Upload Dokumen
                 </button>
@@ -180,6 +181,7 @@ const DaftarKTP = () => {
             </div>
             {section === "formulir-pendaftaran" ? (
               <FormulirPendaftaran
+                formRegister={formRegister}
                 setFormRegister={(value) => setFormRegister(value)}
               />
             ) : (

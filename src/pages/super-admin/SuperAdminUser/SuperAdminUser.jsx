@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 import { useTheme } from "@table-library/react-table-library/theme";
@@ -18,26 +18,19 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
-
-const userData = [
-  {
-    id: 1,
-    nama: "Bonyfasius  Lumbanraja",
-    deskripsi: "08123459010",
-    tipe_user: "User",
-    status: 1,
-  },
-  {
-    id: 2,
-    nama: "Bonyfasius  Lumbanraja",
-    deskripsi: "08123459010",
-    tipe_user: "User",
-    status: 1,
-  },
-];
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { deleteManyUser, getAllUser } from "../../../store/user/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const SuperAdminUser = () => {
-  const nodes = userData;
+  const dispatch = useDispatch();
+
+  const { userAll } = useSelector((state) => state.user);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const nodes = userAll;
 
   const select = useRowSelect({ nodes });
 
@@ -49,6 +42,35 @@ const SuperAdminUser = () => {
       `,
     },
   ]);
+
+  const handleGetAllUser = async (data) => {
+    await dispatch(getAllUser(data));
+  };
+
+  const handleDeleteManyUser = async (data) => {
+    await dispatch(deleteManyUser(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        navigate("/super-admin/users");
+
+        handleGetAllUser();
+      } else {
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const data = {
+      searchKey: "name",
+      searchValue: searchValue,
+    };
+
+    handleGetAllUser(data);
+  }, [searchValue]);
 
   return (
     <>
@@ -74,12 +96,12 @@ const SuperAdminUser = () => {
                 <option>Malang</option>
               </select>
             </div>
-            <a
-              href="/super-admin/users/add"
+            <Link
+              to="/super-admin/users/add"
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
             >
               Tambah
-            </a>
+            </Link>
           </div>
         </div>
         <div className="card w-100">
@@ -89,18 +111,41 @@ const SuperAdminUser = () => {
                 <p className="mb-0 text-body-4">
                   {select.state.ids.length} dipilih
                 </p>
-                <button className="ms-4 px-2 bg-transparent border-0">
-                  <Icon
-                    icon="akar-icons:trash-can"
-                    width={24}
-                    height={24}
-                    color="#E61A1A"
-                    className="me-2"
-                  />
-                  <span className="mb-0 text-body-3 text-danger">
-                    Hapus Data
-                  </span>
-                </button>
+                {select.state.ids.length ? (
+                  <button
+                    className="ms-4 px-2 bg-transparent border-0"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#E61A1A"
+                      className="me-2"
+                    />
+                    <span className="mb-0 text-body-3 text-danger">
+                      Hapus Data
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    className="ms-4 px-2 bg-transparent border-0"
+                    data-bs-toggle="modal"
+                    disabled
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#E61A1A"
+                      className="me-2"
+                    />
+                    <span className="mb-0 text-body-3 text-danger">
+                      Hapus Data
+                    </span>
+                  </button>
+                )}
               </div>
               <div className="d-flex align-items-center">
                 <button
@@ -122,8 +167,9 @@ const SuperAdminUser = () => {
                     type="text"
                     className="form-control"
                     id="cari"
-                    placeholder="Cari dokumen"
+                    placeholder="Cari user"
                     style={{ paddingLeft: "48px" }}
+                    onChange={(e) => setSearchValue(e.target.value)}
                   />
                   <Icon
                     icon="charm:search"
@@ -172,29 +218,36 @@ const SuperAdminUser = () => {
                         <Row key={item.id} item={item}>
                           <CellSelect item={item} />
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.nama}
+                            {item.name}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.deskripsi}
+                            {item.phoneNumber}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.tipe_user}
+                            {item.role}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.status === 1 ? (
-                              <div className="badge px-4 text-paragraph-1 text-primary-2 bg-primary-6 rounded-1">
-                                Disetujui
+                            {item.accountConfirmed === true ? (
+                              <div className="badge badge-primary px-4 text-paragraph-1 text-primary-2 rounded-1">
+                                Aktif
+                              </div>
+                            ) : item.accountConfirmed === false ? (
+                              <div className="badge badge-danger px-4 text-paragraph-1 text-danger rounded-1">
+                                Tidak Aktif
                               </div>
                             ) : null}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
                             <div>
-                              <button className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
+                              <Link
+                                to={`/super-admin/users/${item.id}`}
+                                className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1"
+                              >
                                 Lihat
-                              </button>
-                              <button className="btn px-3 py-1 text-white text-nowrap bg-danger rounded-1">
+                              </Link>
+                              {/* <button className="btn px-3 py-1 text-white text-nowrap bg-danger rounded-1">
                                 Hapus
-                              </button>
+                              </button> */}
                             </div>
                           </Cell>
                         </Row>
@@ -457,6 +510,49 @@ const SuperAdminUser = () => {
                 <button className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1">
                   Terapkan
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="deleteModal"
+        tabIndex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-4">
+            <div className="modal-body">
+              <p className="mb-4 text-body-3 text-grey-1 text-center">
+                Apakah anda yakin untuk hapus dokumen ini?
+              </p>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex">
+                  <button
+                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                    data-bs-dismiss="modal"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
+                    data-bs-dismiss="modal"
+                    onClick={() =>
+                      handleDeleteManyUser({ ids: select.state.ids })
+                    }
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#FFFFFF"
+                      className="me-2"
+                    />
+                    Hapus
+                  </button>
+                </div>
               </div>
             </div>
           </div>

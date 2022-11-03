@@ -97,7 +97,7 @@ function App() {
             <Route path="/kependudukan" element={<Kependudukan />} />
             <Route path="/sosial" element={<Sosial />} />
             <Route path="/dokumen" element={<Dokumen />} />
-            <Route path="/dokumen/:rows" element={<Dokumen />} />
+            <Route path="/dokumen/:cursor" element={<Dokumen />} />
             {/* kependudukan */}
             <Route
               path="/daftar-ktp"
@@ -227,11 +227,11 @@ function App() {
             <Route path="/super-admin" element={<SuperAdminHome />} />
             <Route path="/super-admin/users" element={<SuperAdminUser />} />
             <Route
-              path="/super-admin/users/detail"
+              path="/super-admin/users/:id"
               element={<SuperAdminUserDetail />}
             />
             <Route
-              path="/super-admin/users/edit"
+              path="/super-admin/users/:id/edit"
               element={<SuperAdminUserEdit />}
             />
             <Route

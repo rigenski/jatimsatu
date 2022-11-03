@@ -21,8 +21,10 @@ import { Link, useParams } from "react-router-dom";
 import { getAllSosial } from "../../../store/sosial/sosialAction";
 
 const Dokumen = () => {
-  const params = useParams();
   const dispatch = useDispatch();
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const cursor = queryParams.get("cursor") ?? null;
 
   const theme = useTheme([
     getTheme(),
@@ -37,34 +39,47 @@ const Dokumen = () => {
   const { sosialAll } = useSelector((state) => state.sosial);
 
   const [dataAll, setDataAll] = useState([]);
+  const [dataDetail, setDataDetail] = useState(null);
 
-  const [searchValue, setSearchValue] = useState("");
   const [section, setSection] = useState("kependudukan");
+  const [searchValue, setSearchValue] = useState("");
   const [startRange, setStartRange] = useState("");
   const [lastRange, setlastRange] = useState("");
 
   const nodes = dataAll;
-  const rows = params.rows;
 
   const handleGetKependudukanAll = async (data) => {
-    await dispatch(getAllKependudukan(data));
-
-    setDataAll(kependudukanAll);
+    await dispatch(getAllKependudukan(data)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setDataDetail(res.payload.content);
+      }
+    });
   };
 
   const handleGetSosialAll = async (data) => {
-    await dispatch(getAllSosial(data));
-
-    setDataAll(sosialAll);
+    await dispatch(getAllSosial(data)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setDataDetail(res.payload.content);
+      }
+    });
   };
 
   useEffect(() => {
+    if (section === "kependudukan") {
+      setDataAll(kependudukanAll);
+    } else if (section === "sosial") {
+      setDataAll(sosialAll);
+    }
+  }, [kependudukanAll, sosialAll]);
+
+  useEffect(() => {
     const data = {
-      searchKey: "name",
+      searchKey: "formType.name",
       searchValue: searchValue,
       startRange: startRange,
       lastRange: lastRange,
-      rows: rows,
+      rows: 5,
+      cursor: cursor,
     };
 
     if (section === "kependudukan") {
@@ -72,7 +87,7 @@ const Dokumen = () => {
     } else if (section === "sosial") {
       handleGetSosialAll(data);
     }
-  }, [searchValue, section, startRange, lastRange, rows]);
+  }, [searchValue, section, startRange, lastRange, cursor]);
 
   return (
     <>
@@ -191,9 +206,6 @@ const Dokumen = () => {
                               <HeaderCell className="px-2 py-3 text-grey-1">
                                 Nama Dokumen
                               </HeaderCell>
-                              {/* <HeaderCell className="px-2 py-3 text-grey-1">
-                                Layanan
-                              </HeaderCell> */}
                               <HeaderCell className="px-2 py-3 text-grey-1">
                                 Tanggal
                               </HeaderCell>
@@ -210,14 +222,11 @@ const Dokumen = () => {
                           </Header>
 
                           <Body>
-                            {nodes.map((item) => (
+                            {tableList.map((item) => (
                               <Row key={item.id} item={item}>
                                 <Cell className="px-2 py-3 text-grey-1">
                                   {item.formType.name}
                                 </Cell>
-                                {/* <Cell className="px-2 py-3 text-grey-1">
-                                  {item.createdAt}
-                                </Cell> */}
                                 <Cell className="px-2 py-3 text-grey-1">
                                   {item.createdAt}
                                   <br />
@@ -271,28 +280,52 @@ const Dokumen = () => {
                     </Table>
                   </div>
                   <div className="d-flex justify-content-center">
-                    <Link
-                      to={`/dokumen/${rows > 1 ? parseInt(rows) - 1 : 1}`}
-                      className="bg-transparent border-0"
-                    >
-                      <Icon
-                        icon="dashicons:arrow-left-alt2"
-                        width={24}
-                        height={24}
-                        color="#474747"
-                      />
-                    </Link>
-                    <Link
-                      to={`/dokumen/${rows ? parseInt(rows) + 1 : 1}`}
-                      className="bg-transparent border-0"
-                    >
-                      <Icon
-                        icon="dashicons:arrow-right-alt2"
-                        width={24}
-                        height={24}
-                        color="#474747"
-                      />
-                    </Link>
+                    {dataDetail?.previousCursor ? (
+                      <Link
+                        to={`/dokumen?cursor=${dataDetail?.previousCursor}`}
+                        className="bg-transparent border-0"
+                        disabled={dataDetail?.previousCursor ? false : true}
+                      >
+                        <Icon
+                          icon="dashicons:arrow-left-alt2"
+                          width={24}
+                          height={24}
+                          color="#474747"
+                        />
+                      </Link>
+                    ) : (
+                      <Link className="bg-transparent border-0" disabled>
+                        <Icon
+                          icon="dashicons:arrow-left-alt2"
+                          width={24}
+                          height={24}
+                          color="#474747"
+                        />
+                      </Link>
+                    )}
+                    {dataDetail?.nextCursor ? (
+                      <Link
+                        to={`/dokumen?cursor=${dataDetail?.nextCursor}`}
+                        className="bg-transparent border-0"
+                        disabled={dataDetail?.nextCursor ? false : true}
+                      >
+                        <Icon
+                          icon="dashicons:arrow-right-alt2"
+                          width={24}
+                          height={24}
+                          color="#474747"
+                        />
+                      </Link>
+                    ) : (
+                      <Link className="bg-transparent border-0" disabled>
+                        <Icon
+                          icon="dashicons:arrow-right-alt2"
+                          width={24}
+                          height={24}
+                          color="#474747"
+                        />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

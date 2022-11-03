@@ -7,17 +7,18 @@ import { storage } from "src/config/firebase/firebase";
 import uuid from "react-uuid";
 import { Link } from "react-router-dom";
 import { createKependudukanForm } from "../../../store/kependudukan/kependudukanAction";
+import FormulirPendaftaranBanyak from "../../FormulirPendaftaranBanyak/FormulirPendaftaranBanyak";
 
 // assets
 import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
-import FormulirPendaftaranBanyak from "../../FormulirPendaftaranBanyak/FormulirPendaftaranBanyak";
-import { useEffect } from "react";
 
 const SuratKeterangan = () => {
-  const [typeSelected, setTypeSelected] = useState(1);
-
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+  const [typeSelected, setTypeSelected] = useState(
+    "91a35f21-bf13-45d2-96da-0a76089f8f71"
+  );
 
   const { handleSubmit, reset } = useForm({
     defaultValues: {
@@ -39,6 +40,16 @@ const SuratKeterangan = () => {
   const [formRegister, setFormRegister] = useState(null);
 
   const [KK, setKK] = useState(null);
+  const [KTP, setKTP] = useState(null);
+  const [suratRekomendasiRTRW, setSuratRekomendasiRTRW] = useState(null);
+  const [KKOrtu, setKKOrtu] = useState(null);
+  const [SKKelahiranBayi, setSKKelahiranBayi] = useState(null);
+  const [bukuNikah, setBukuNikah] = useState(null);
+  const [ijazahOrtu, setIjazahOrtu] = useState(null);
+  const [SKKematianRS, setSKKematianRS] = useState(null);
+  const [SKRT, setSKRT] = useState(null);
+  const [SKKematianPasangan, setSKKematianPasangan] = useState(null);
+  const [SKCeraiPengadilan, setSKCeraiPengadilan] = useState(null);
 
   const handleCreateKependudukanForm = async (data) => {
     setLoading(true);
@@ -60,6 +71,177 @@ const SuratKeterangan = () => {
       });
 
       documents.KK = `${uuid()}-${KKSelected.name}`;
+    }
+
+    if (KK) {
+      const KKSelected = KK.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${KKSelected.name}`
+      );
+
+      uploadBytes(storageRef, KKSelected).then(() => {
+        KKSelected.value = "";
+      });
+
+      documents.KK = `${uuid()}-${KKSelected.name}`;
+    }
+
+    if (KTP) {
+      const KTPSelected = KTP.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${KTPSelected.name}`
+      );
+
+      uploadBytes(storageRef, KTPSelected).then(() => {
+        KTPSelected.value = "";
+      });
+
+      documents.KTP = `${uuid()}-${KTPSelected.name}`;
+    }
+
+    if (suratRekomendasiRTRW) {
+      const suratRekomendasiRTRWSelected = suratRekomendasiRTRW.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${suratRekomendasiRTRWSelected.name}`
+      );
+
+      uploadBytes(storageRef, suratRekomendasiRTRWSelected).then(() => {
+        suratRekomendasiRTRWSelected.value = "";
+      });
+
+      documents.suratRekomendasiRTRW = `${uuid()}-${
+        suratRekomendasiRTRWSelected.name
+      }`;
+    }
+
+    if (KKOrtu) {
+      const KKOrtuSelected = KKOrtu.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${KKOrtuSelected.name}`
+      );
+
+      uploadBytes(storageRef, KKOrtuSelected).then(() => {
+        KKOrtuSelected.value = "";
+      });
+
+      documents.KKOrtu = `${uuid()}-${KKOrtuSelected.name}`;
+    }
+
+    if (SKKelahiranBayi) {
+      const SKKelahiranBayiSelected = SKKelahiranBayi.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${SKKelahiranBayiSelected.name}`
+      );
+
+      uploadBytes(storageRef, SKKelahiranBayiSelected).then(() => {
+        SKKelahiranBayiSelected.value = "";
+      });
+
+      documents.SKKelahiranBayi = `${uuid()}-${SKKelahiranBayiSelected.name}`;
+    }
+
+    if (bukuNikah) {
+      const bukuNikahSelected = bukuNikah.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${bukuNikahSelected.name}`
+      );
+
+      uploadBytes(storageRef, bukuNikahSelected).then(() => {
+        bukuNikahSelected.value = "";
+      });
+
+      documents.bukuNikah = `${uuid()}-${bukuNikahSelected.name}`;
+    }
+
+    if (ijazahOrtu) {
+      const ijazahOrtuSelected = ijazahOrtu.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${ijazahOrtuSelected.name}`
+      );
+
+      uploadBytes(storageRef, ijazahOrtuSelected).then(() => {
+        ijazahOrtuSelected.value = "";
+      });
+
+      documents.ijazahOrtu = `${uuid()}-${ijazahOrtuSelected.name}`;
+    }
+
+    if (SKKematianRS) {
+      const SKKematianRSSelected = SKKematianRS.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${SKKematianRSSelected.name}`
+      );
+
+      uploadBytes(storageRef, SKKematianRSSelected).then(() => {
+        SKKematianRSSelected.value = "";
+      });
+
+      documents.SKKematianRS = `${uuid()}-${SKKematianRSSelected.name}`;
+    }
+
+    if (SKRT) {
+      const SKRTSelected = SKRT.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${SKRTSelected.name}`
+      );
+
+      uploadBytes(storageRef, SKRTSelected).then(() => {
+        SKRTSelected.value = "";
+      });
+
+      documents.SKRT = `${uuid()}-${SKRTSelected.name}`;
+    }
+
+    if (SKKematianPasangan) {
+      const SKKematianPasanganSelected = SKKematianPasangan.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${SKKematianPasanganSelected.name}`
+      );
+
+      uploadBytes(storageRef, SKKematianPasanganSelected).then(() => {
+        SKKematianPasanganSelected.value = "";
+      });
+
+      documents.SKKematianPasangan = `${uuid()}-${
+        SKKematianPasanganSelected.name
+      }`;
+    }
+
+    if (SKCeraiPengadilan) {
+      const SKCeraiPengadilanSelected = SKCeraiPengadilan.files[0];
+
+      const storageRef = ref(
+        storage,
+        `documents/kependudukan/daftar-ktp/${SKCeraiPengadilanSelected.name}`
+      );
+
+      uploadBytes(storageRef, SKCeraiPengadilanSelected).then(() => {
+        SKCeraiPengadilanSelected.value = "";
+      });
+
+      documents.SKCeraiPengadilan = `${uuid()}-${
+        SKCeraiPengadilanSelected.name
+      }`;
     }
 
     Object.assign(data, formRegister);
@@ -87,10 +269,6 @@ const SuratKeterangan = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(typeSelected);
-  }, [typeSelected]);
-
   return (
     <>
       <form
@@ -109,16 +287,16 @@ const SuratKeterangan = () => {
           </div>
           {!complete ? (
             <div className="d-none align-items-center d-lg-flex">
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
               >
                 Batalkan
-              </button>
+              </Link>
               <button
-                type="button"
+                type="submit"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                onClick={() => setComplete(!complete)}
+                disabled={loading}
               >
                 Kirim
               </button>
@@ -155,8 +333,9 @@ const SuratKeterangan = () => {
             </div>
             {section === "formulir-pendaftaran" ? (
               <FormulirPendaftaranBanyak
-                setFormRegister={(value) => setFormRegister(value)}
+                typeSelected={typeSelected}
                 setTypeSelected={(value) => setTypeSelected(value)}
+                setFormRegister={(value) => setFormRegister(value)}
               />
             ) : typeSelected === "91a35f21-bf13-45d2-96da-0a76089f8f71" ? (
               <>
@@ -169,7 +348,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KK <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="kk" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk"
+                        required
+                        onChange={(e) => setKK(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -180,7 +365,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KTP <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="ktp" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp"
+                        required
+                        onChange={(e) => setKTP(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -196,6 +387,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="rekomendasi-rt-rw"
+                        required
+                        onChange={(e) => setSuratRekomendasiRTRW(e.target)}
                       />
                     </div>
                   </div>
@@ -216,6 +409,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="kk-ortu"
+                        required
+                        onChange={(e) => setKKOrtu(e.target)}
                       />
                     </div>
                   </div>
@@ -231,6 +426,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="ktp-ortu"
+                        required
+                        onChange={(e) => setKTPOrtu(e.target)}
                       />
                     </div>
                   </div>
@@ -246,6 +443,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="sk-kelahiran-bayi"
+                        required
+                        onChange={(e) => setSKKelahiranBayi(e.target)}
                       />
                     </div>
                   </div>
@@ -261,6 +460,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="buku-nikah"
+                        required
+                        onChange={(e) => setBukuNikah(e.target)}
                       />
                     </div>
                   </div>
@@ -276,6 +477,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="ijazah-ortu"
+                        required
+                        onChange={(e) => setIjazahOrtu(e.target)}
                       />
                     </div>
                   </div>
@@ -292,7 +495,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KK<span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="kk" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk"
+                        required
+                        onChange={(e) => setKK(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -301,9 +510,15 @@ const SuratKeterangan = () => {
                         htmlFor="ktp"
                         className="form-label text-body-3 text-grey-1"
                       >
-                        Upload KT <span className="text-danger">*</span>
+                        Upload KTP <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="ktp" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp"
+                        required
+                        onChange={(e) => setKTP(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -319,6 +534,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="sk-kematian-rs"
+                        required
+                        onChange={(e) => setSKKematianRS(e.target)}
                       />
                     </div>
                   </div>
@@ -331,7 +548,13 @@ const SuratKeterangan = () => {
                         Surat Keterangan dari RT{" "}
                         <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="sk-rt" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="sk-rt"
+                        required
+                        onChange={(e) => setSKRT(e.target)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -347,7 +570,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KK <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="kk" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk"
+                        required
+                        onChange={(e) => setKK(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -358,7 +587,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KTP <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="ktp" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp"
+                        required
+                        onChange={(e) => setKTP(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -374,6 +609,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="rekomendasi-rt-rw"
+                        required
+                        onChange={(e) => setRekomendasiRTRW(e.target)}
                       />
                     </div>
                   </div>
@@ -390,7 +627,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KK <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="kk" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk"
+                        required
+                        onChange={(e) => setKK(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -401,7 +644,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KTP <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="ktp" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp"
+                        required
+                        onChange={(e) => setKTP(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -417,6 +666,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="rekomendasi-rt-rw"
+                        required
+                        onChange={(e) => setSuratRekomendasiRTRW(e.target)}
                       />
                     </div>
                   </div>
@@ -433,6 +684,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="sk-kematian-pasangan"
+                        required
+                        onChange={(e) => setSKKematianPasangan(e.target)}
                       />
                     </div>
                   </div>
@@ -454,6 +707,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="kk-keluarga-asal"
+                        required
+                        onChange={(e) => setKKKeluargaAsal(e.target)}
                       />
                     </div>
                   </div>
@@ -465,7 +720,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KTP <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="ktp" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp"
+                        required
+                        onChange={(e) => setKTP(e.target)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -481,7 +742,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KK <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="kk" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="kk"
+                        required
+                        onChange={(e) => setKK(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -492,7 +759,13 @@ const SuratKeterangan = () => {
                       >
                         Upload KTP <span className="text-danger">*</span>
                       </label>
-                      <input type="file" className="form-control" id="ktp" />
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="ktp"
+                        required
+                        onChange={(e) => setKTP(e.target)}
+                      />
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -508,6 +781,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="rekomendasi-rt-rw"
+                        required
+                        onChange={(e) => setRekomendasiRTRW(e.target)}
                       />
                     </div>
                   </div>
@@ -524,6 +799,8 @@ const SuratKeterangan = () => {
                         type="file"
                         className="form-control"
                         id="sk-cerai"
+                        required
+                        onChange={(e) => setSKCeraiPengadilan(e.target)}
                       />
                     </div>
                   </div>
@@ -532,16 +809,16 @@ const SuratKeterangan = () => {
             ) : null}
 
             <div className="mt-4 d-flex justify-content-center align-items-center d-lg-none justify-content-md-end">
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
               >
                 Batalkan
-              </button>
+              </Link>
               <button
-                type="button"
+                type="submit"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
-                onClick={() => setComplete(!complete)}
+                disabled={loading}
               >
                 Kirim
               </button>
@@ -560,12 +837,12 @@ const SuratKeterangan = () => {
                 Anda akan mendapatkan informasi jika dokumen telah selesai
                 melalui notifkasi
               </p>
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
               >
                 Kembali ke dashboard
-              </button>
+              </Link>
             </div>
           </>
         )}

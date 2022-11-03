@@ -457,7 +457,7 @@ const SuperAdminHome = () => {
           <div className="col-12 col-xl-4 mb-4">
             <div className="card">
               <div className="card-body p-lg-4">
-                <div className="mb-4">
+                <div className="mb-4 d-flex justify-content-center">
                   <Chart
                     options={pendudukChart.options}
                     series={pendudukChart.series}
@@ -472,7 +472,7 @@ const SuperAdminHome = () => {
           <div className="col-12 col-xl-4 mb-4">
             <div className="card">
               <div className="card-body p-lg-4">
-                <div className="mb-4">
+                <div className="mb-4 d-flex justify-content-center">
                   <Chart
                     options={profesiChart.options}
                     series={profesiChart.series}
@@ -487,7 +487,7 @@ const SuperAdminHome = () => {
           <div className="col-12 col-xl-4 mb-4">
             <div className="card">
               <div className="card-body p-lg-4">
-                <div className="mb-4">
+                <div className="mb-4 d-flex justify-content-center">
                   <Chart
                     options={umurChart.options}
                     series={umurChart.series}

@@ -11,6 +11,10 @@ const FormulirPendaftaran = (props) => {
     props.setFormRegister({ deskripsi: deskripsi });
   }, [deskripsi]);
 
+  useEffect(() => {
+    setDeskripsi(props.formRegister?.deskripsi);
+  }, []);
+
   return (
     <>
       <div className="row">
@@ -72,7 +76,7 @@ const FormulirPendaftaran = (props) => {
               Kabupaten <span className="text-danger">*</span>
             </label>
             <select className="form-select" id="kabupaten" disabled>
-              <option>{user.kabupatenId}</option>
+              <option>{user.kabupaten.name}</option>
             </select>
           </div>
         </div>
@@ -85,7 +89,7 @@ const FormulirPendaftaran = (props) => {
               Kecamatan <span className="text-danger">*</span>
             </label>
             <select className="form-select" id="kecamatan" disabled>
-              <option>{user.kecamatanId}</option>
+              <option>{user.kecamatan.name}</option>
             </select>
           </div>
         </div>
@@ -98,7 +102,7 @@ const FormulirPendaftaran = (props) => {
               Desa <span className="text-danger">*</span>
             </label>
             <select className="form-select" id="desa" disabled>
-              <option>{user.desaId}</option>
+              <option>{user.desa.name}</option>
             </select>
           </div>
         </div>
@@ -111,7 +115,7 @@ const FormulirPendaftaran = (props) => {
               type="text"
               className="form-control"
               id="rt"
-              defaultValue={user.rtrw}
+              defaultValue={user.rtrw.split("/")[0]}
               disabled
             />
           </div>
@@ -125,7 +129,7 @@ const FormulirPendaftaran = (props) => {
               type="text"
               className="form-control"
               id="rw"
-              defaultValue={user.rtrw}
+              defaultValue={user.rtrw.split("/")[1]}
               disabled
             />
           </div>
@@ -160,6 +164,7 @@ const FormulirPendaftaran = (props) => {
               className="form-control"
               id="deskripsi"
               placeholder="Berikan keterangan detail mengenai pengajuan anda"
+              value={deskripsi}
               onChange={(e) => setDeskripsi(e.target.value)}
               required
             />

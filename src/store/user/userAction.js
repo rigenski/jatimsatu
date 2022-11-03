@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 
-export const createKependudukanForm = createAsyncThunk(
+export const createUser = createAsyncThunk(
   "user/create",
   async (
     {
@@ -12,12 +12,17 @@ export const createKependudukanForm = createAsyncThunk(
       ktpURL,
       kartuKeluargaURL,
       occupation,
+      birthPlace,
+      birthDate,
+      provinsiId,
+      kabupatenId,
       kecamatanId,
       desaId,
       address,
       postalCode,
       rt,
       rw,
+      role,
     },
     { rejectWithValue }
   ) => {
@@ -30,11 +35,16 @@ export const createKependudukanForm = createAsyncThunk(
         ktpURL: ktpURL,
         kartuKeluargaURL: kartuKeluargaURL,
         occupation: occupation,
+        birthPlace: birthPlace,
+        birthDate: birthDate,
+        provinsiId: provinsiId,
+        kabupatenId: kabupatenId,
         kecamatanId: kecamatanId,
         desaId: desaId,
         address: address,
         postalCode: postalCode,
         rtrw: `${rt}/${rw}`,
+        role: role,
       };
 
       const response = await api.post("user", data);
@@ -61,9 +71,16 @@ export const getUser = createAsyncThunk(
 
 export const getAllUser = createAsyncThunk(
   "user",
-  async (arg, { rejectWithValue }) => {
+  async ({ searchKey, searchValue }, { rejectWithValue }) => {
     try {
-      const response = await api.get("user");
+      const data = {
+        params: {
+          searchKey: searchKey,
+          searchValue: searchValue,
+        },
+      };
+
+      const response = await api.get("user", data);
 
       return response.data;
     } catch (err) {
@@ -76,6 +93,7 @@ export const updateUser = createAsyncThunk(
   "user/update",
   async (
     {
+      id,
       name,
       phoneNumber,
       nik,
@@ -83,12 +101,16 @@ export const updateUser = createAsyncThunk(
       ktpURL,
       kartuKeluargaURL,
       occupation,
+      birthPlace,
+      birthDate,
+      kabupatenId,
       kecamatanId,
       desaId,
       address,
       postalCode,
       rt,
       rw,
+      role,
     },
     { rejectWithValue }
   ) => {
@@ -101,11 +123,15 @@ export const updateUser = createAsyncThunk(
         ktpURL: ktpURL,
         kartuKeluargaURL: kartuKeluargaURL,
         occupation: occupation,
+        birthPlace: birthPlace,
+        birthDate: birthDate,
+        kabupatenId: kabupatenId,
         kecamatanId: kecamatanId,
         desaId: desaId,
         address: address,
         postalCode: postalCode,
         rtrw: `${rt}/${rw}`,
+        role: role,
       };
 
       const response = await api.put(`user/${id}`, data);
@@ -117,11 +143,30 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const deleteKependudukan = createAsyncThunk(
+export const deleteUser = createAsyncThunk(
   "user/delete",
   async ({ id }, { rejectWithValue }) => {
     try {
       const response = await api.delete(`user/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteManyUser = createAsyncThunk(
+  "user/delete/many",
+  async ({ ids }, { rejectWithValue }) => {
+    try {
+      const data = {
+        params: {
+          ids: ids,
+        },
+      };
+
+      const response = await api.delete(`user`, data);
 
       return response.data;
     } catch (err) {

@@ -33,7 +33,7 @@ const pekerjaanAll = [
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset, getValues } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(1);
@@ -52,27 +52,27 @@ const Signup = () => {
     const loader = toast.loading("Mohon Tunggu...");
 
     if (data.password === data.confirmPassword) {
-      const KKSelected = KK.files[0];
-      const KTPSelected = KTP.files[0];
-
-      if (KKSelected) {
+      if (KK) {
+        const KKSelected = KK.files[0];
         const storageRef = ref(storage, `documents/kk/${KKSelected.name}`);
 
         uploadBytes(storageRef, KKSelected).then(() => {
           KKSelected.value = "";
         });
+
+        data.kartuKeluargaURL = `${uuid()}-${KKSelected.name}`;
       }
 
-      if (KTPSelected) {
+      if (KTP) {
+        const KTPSelected = KTP.files[0];
         const storageRef = ref(storage, `documents/ktp/${KTPSelected.name}`);
 
         uploadBytes(storageRef, KTPSelected).then(() => {
           KTPSelected.value = "";
         });
-      }
 
-      data.kartuKeluargaURL = `${uuid()}-${KKSelected.name}`;
-      data.ktpURL = `${uuid()}-${KTPSelected.name}`;
+        data.ktpURL = `${uuid()}-${KTPSelected.name}`;
+      }
 
       await dispatch(authRegister(data)).then((res) => {
         toast.dismiss(loader);
@@ -162,7 +162,7 @@ const Signup = () => {
                                 id="nama"
                                 placeholder="Masukkan nama lengkap Anda"
                                 required
-                                {...register("name", { required: true })}
+                                {...register("name")}
                               />
                             </div>
                           </div>
@@ -180,7 +180,7 @@ const Signup = () => {
                                 id="no-hp"
                                 placeholder="Masukkan nomor hp"
                                 required
-                                {...register("phoneNumber", { required: true })}
+                                {...register("phoneNumber")}
                               />
                             </div>
                           </div>
@@ -198,14 +198,14 @@ const Signup = () => {
                                 id="password"
                                 placeholder="Masukkan password"
                                 required
-                                {...register("password", { required: true })}
+                                {...register("password")}
                               />
                             </div>
                           </div>
                           <div className="col-12 col-md-6">
                             <div className="mb-3">
                               <label
-                                htmlFor="password"
+                                htmlFor="confirmPassword"
                                 className="form-label text-body-3 text-grey-1"
                               >
                                 Konfirmasi Password{" "}
@@ -214,7 +214,7 @@ const Signup = () => {
                               <input
                                 type="password"
                                 className="form-control"
-                                id="password"
+                                id="confirmPassword"
                                 placeholder="Masukkan ulang password"
                                 {...register("confirmPassword", {
                                   required: true,
@@ -254,7 +254,7 @@ const Signup = () => {
                                 id="nik"
                                 placeholder="Masukkan nomor induk keluar
                                 requiredga"
-                                {...register("nik", { required: true })}
+                                {...register("nik")}
                               />
                             </div>
                           </div>
@@ -273,7 +273,7 @@ const Signup = () => {
                                 id="tempat-lahir"
                                 placeholder="Masukkan tempat lahir sesuai KTP"
                                 required
-                                {...register("birthPlace", { required: true })}
+                                {...register("birthPlace")}
                               />
                             </div>
                           </div>
@@ -308,7 +308,7 @@ const Signup = () => {
                                 id="alamat"
                                 placeholder="Masukkan alamat sesuai KTP"
                                 required
-                                {...register("address", { required: true })}
+                                {...register("address")}
                               />
                             </div>
                           </div>
@@ -326,7 +326,7 @@ const Signup = () => {
                                 className="form-control"
                                 id="tanggal-lahir"
                                 required
-                                {...register("birthDate", { required: true })}
+                                {...register("birthDate")}
                               />
                             </div>
                           </div>
@@ -342,7 +342,7 @@ const Signup = () => {
                                 className="form-select"
                                 id="provinsi"
                                 required
-                                {...register("provinsiId", { required: true })}
+                                {...register("provinsiId")}
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {provinsiAll.map((item, index) => {
@@ -379,7 +379,7 @@ const Signup = () => {
                                 className="form-select"
                                 id="kabupaten"
                                 required
-                                {...register("kabupatenId", { required: true })}
+                                {...register("kabupatenId")}
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {kabupatenAll.map((item, index) => {
@@ -416,7 +416,7 @@ const Signup = () => {
                                 className="form-select"
                                 id="kecamatan"
                                 required
-                                {...register("kecamatanId", { required: true })}
+                                {...register("kecamatanId")}
                                 onChange={(e) => {
                                   setKecamatanId(e.target.value);
                                 }}
@@ -456,7 +456,7 @@ const Signup = () => {
                                 className="form-select"
                                 id="desa"
                                 required
-                                {...register("desaId", { required: true })}
+                                {...register("desaId")}
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {desaAll.map((item, index) => {
@@ -496,7 +496,7 @@ const Signup = () => {
                                 id="rt"
                                 placeholder="Masukkan RT sesuai KTP"
                                 required
-                                {...register("rt", { required: true })}
+                                {...register("rt")}
                               />
                             </div>
                           </div>
@@ -514,7 +514,7 @@ const Signup = () => {
                                 id="rw"
                                 placeholder="Masukkan RW sesuai KTP"
                                 required
-                                {...register("rw", { required: true })}
+                                {...register("rw")}
                               />
                             </div>
                           </div>
@@ -532,7 +532,7 @@ const Signup = () => {
                                 id="kode-pos"
                                 placeholder="Masukkan kode pos "
                                 required
-                                {...register("postalCode", { required: true })}
+                                {...register("postalCode")}
                               />
                             </div>
                           </div>
@@ -548,7 +548,7 @@ const Signup = () => {
                                 className="form-select"
                                 id="pekerjaan"
                                 required
-                                {...register("occupation", { required: true })}
+                                {...register("occupation")}
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {pekerjaanAll.map((item, index) => {

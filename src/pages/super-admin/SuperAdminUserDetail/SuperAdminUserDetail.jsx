@@ -1,8 +1,76 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import {
+  getDesaById,
+  getKabupatenById,
+  getKecamatanById,
+} from "../../../store/region/regionAction";
+import { deleteUser, getUser } from "../../../store/user/userAction";
 
 const SuperAdminUserDetail = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  const { userDetail } = useSelector((state) => state.user);
+  const { kabupatenDetail, kecamatanDetail, desaDetail } = useSelector(
+    (state) => state.region
+  );
+
+  const { id } = params;
+
+  const handleGetUser = async (data) => {
+    await dispatch(getUser(data));
+  };
+
+  const handleGetKabupatenById = async (data) => {
+    await dispatch(getKabupatenById(data));
+  };
+
+  const handleGetKecamatanById = async (data) => {
+    await dispatch(getKecamatanById(data));
+  };
+
+  const handleGetDesaById = async (data) => {
+    await dispatch(getDesaById(data));
+  };
+
+  const handleDeleteUser = async (data) => {
+    const loader = toast.loading("Mohon Tunggu...");
+
+    await dispatch(deleteUser(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        navigate("/super-admin/users");
+      } else {
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const data = {
+      id: id,
+    };
+
+    handleGetUser(data);
+  }, [id]);
+
+  useEffect(() => {
+    if (userDetail) {
+      handleGetKabupatenById({ id: userDetail?.kabupatenId });
+      handleGetKecamatanById({ id: userDetail?.kecamatanId });
+      handleGetDesaById({ id: userDetail?.desaId });
+    }
+  }, [userDetail]);
+
   return (
     <>
       <SuperAdminDashboard>
@@ -12,8 +80,8 @@ const SuperAdminUserDetail = () => {
             <p className="mb-0 text-body-2 text-grey-3">User / Detail user</p>
           </div>
           <div className="d-flex">
-            <a
-              href="/super-admin/users/edit"
+            <Link
+              to={`/super-admin/users/${id}/edit`}
               className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
             >
               <Icon
@@ -24,7 +92,7 @@ const SuperAdminUserDetail = () => {
                 className="me-2"
               />
               Edit
-            </a>
+            </Link>
             <button
               className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
               data-bs-toggle="modal"
@@ -42,7 +110,26 @@ const SuperAdminUserDetail = () => {
           </div>
         </div>
         <div className="card mb-4 w-100">
-          <div className="card-body">
+          <div className="card-body p-lg-4">
+            <div className="row">
+              <div className="col-12">
+                <div>
+                  <label
+                    htmlFor="tipe-user"
+                    className="form-label text-body-3 text-grey-1"
+                  >
+                    Tipe User <span className="text-danger">*</span>
+                  </label>
+                  <select className="form-select" id="tipe-user" disabled>
+                    <option>{userDetail?.role}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card mb-4 w-100">
+          <div className="card-body p-lg-4">
             <div className="row">
               <div className="col-12 col-md-6">
                 <div className="mb-3">
@@ -56,7 +143,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="nama"
-                    defaultValue="Bonyfasius  Lumbanraja"
+                    defaultValue={userDetail?.name}
+                    disabled
                   />
                 </div>
               </div>
@@ -73,7 +161,8 @@ const SuperAdminUserDetail = () => {
                     className="form-control"
                     id="no-hp"
                     placeholder="Masukkan nomor hp"
-                    value="type something here"
+                    defaultValue={userDetail?.phoneNumber}
+                    disabled
                   />
                 </div>
               </div>
@@ -89,7 +178,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="nik"
-                    defaultValue="331241418000121"
+                    defaultValue={userDetail?.nik}
+                    disabled
                   />
                 </div>
               </div>
@@ -101,7 +191,13 @@ const SuperAdminUserDetail = () => {
                   >
                     Upload KK <span className="text-danger">*</span>
                   </label>
-                  <input type="file" className="form-control" id="kk" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="file"
+                    defaultValue={userDetail?.kartuKeluargaURL}
+                    disabled
+                  />
                 </div>
               </div>
               <div className="col-12 col-md-6">
@@ -112,7 +208,13 @@ const SuperAdminUserDetail = () => {
                   >
                     Upload KTP <span className="text-danger">*</span>
                   </label>
-                  <input type="file" className="form-control" id="ktp" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="ktp"
+                    defaultValue={userDetail?.ktpUrl}
+                    disabled
+                  />
                 </div>
               </div>
               <div className="col-12 col-md-6">
@@ -127,7 +229,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="tempat-lahir"
-                    defaultValue="Blitar"
+                    defaultValue={userDetail?.birthPlace}
+                    disabled
                   />
                 </div>
               </div>
@@ -143,7 +246,8 @@ const SuperAdminUserDetail = () => {
                     type="date"
                     className="form-control"
                     id="tanggal-lahir"
-                    defaultValue="01/01/2000"
+                    defaultValue={userDetail?.birthDate}
+                    disabled
                   />
                 </div>
               </div>
@@ -159,21 +263,21 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="alamat"
-                    defaultValue="Jalan Alpukat"
+                    defaultValue={userDetail?.address}
+                    disabled
                   />
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="mb-3">
                   <label
-                    htmlFor="desa"
+                    htmlFor="kabupaten"
                     className="form-label text-body-3 text-grey-1"
                   >
-                    Desa <span className="text-danger">*</span>
+                    Kabupaten <span className="text-danger">*</span>
                   </label>
-                  <select className="form-select" id="desa">
-                    <option>Blitar</option>
-                    <option>Malang</option>
+                  <select className="form-select" id="kabupaten" disabled>
+                    <option>{kabupatenDetail?.name}</option>
                   </select>
                 </div>
               </div>
@@ -185,23 +289,21 @@ const SuperAdminUserDetail = () => {
                   >
                     Kecamatan <span className="text-danger">*</span>
                   </label>
-                  <select className="form-select" id="kecamatan">
-                    <option>Blitar</option>
-                    <option>Malang</option>
+                  <select className="form-select" id="kecamatan" disabled>
+                    <option>{kecamatanDetail?.name}</option>
                   </select>
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="mb-3">
                   <label
-                    htmlFor="kelurahan"
+                    htmlFor="desa"
                     className="form-label text-body-3 text-grey-1"
                   >
-                    Kelurahan <span className="text-danger">*</span>
+                    Desa <span className="text-danger">*</span>
                   </label>
-                  <select className="form-select" id="kelurahan">
-                    <option>Blitar</option>
-                    <option>Malang</option>
+                  <select className="form-select" id="desa" disabled>
+                    <option>{desaDetail?.name}</option>
                   </select>
                 </div>
               </div>
@@ -217,7 +319,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="kode-pos"
-                    defaultValue="Blitar"
+                    defaultValue={userDetail?.postalCode}
+                    disabled
                   />
                 </div>
               </div>
@@ -233,7 +336,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="rt"
-                    defaultValue="01"
+                    defaultValue={userDetail?.rtrw.split("/")[0]}
+                    disabled
                   />
                 </div>
               </div>
@@ -249,7 +353,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="rw"
-                    defaultValue="02"
+                    defaultValue={userDetail?.rtrw.split("/")[1]}
+                    disabled
                   />
                 </div>
               </div>
@@ -265,7 +370,8 @@ const SuperAdminUserDetail = () => {
                     type="text"
                     className="form-control"
                     id="pekerjaan"
-                    defaultValue="Karyawan Swasta"
+                    defaultValue={userDetail?.occupation}
+                    disabled
                   />
                 </div>
               </div>
@@ -294,7 +400,11 @@ const SuperAdminUserDetail = () => {
                   >
                     Batal
                   </button>
-                  <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
+                  <button
+                    className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
+                    data-bs-dismiss="modal"
+                    onClick={() => handleDeleteUser({ id: userDetail?.id })}
+                  >
                     <Icon
                       icon="akar-icons:trash-can"
                       width={24}

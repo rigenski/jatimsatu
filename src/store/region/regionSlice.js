@@ -1,12 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getDesaById,
   getDesaByKecamatan,
   getKabupaten,
+  getKabupatenById,
   getKecamatan,
+  getKecamatanById,
   getProvinsi,
 } from "./regionAction";
 
 const initialState = {
+  provinsiDetail: null,
+  kabupatenDetail: null,
+  kecamatanDetail: null,
+  desaDetail: null,
   provinsiAll: [],
   kabupatenAll: [],
   kecamatanAll: [],
@@ -18,6 +25,10 @@ const regionSlice = createSlice({
   initialState: initialState,
   reducers: {
     resetRegion: (state) => {
+      state.provinsiDetail = null;
+      state.kabupatenDetail = null;
+      state.kecamatanDetail = null;
+      state.desaDetail = null;
       state.provinsiAll = [];
       state.kabupatenAll = [];
       state.kecamatanAll = [];
@@ -36,6 +47,15 @@ const regionSlice = createSlice({
     },
     [getDesaByKecamatan.fulfilled]: (state, { payload }) => {
       state.desaAll = payload.content;
+    },
+    [getKabupatenById.fulfilled]: (state, { payload }) => {
+      state.kabupatenDetail = payload.content;
+    },
+    [getKecamatanById.fulfilled]: (state, { payload }) => {
+      state.kecamatanDetail = payload.content;
+    },
+    [getDesaById.fulfilled]: (state, { payload }) => {
+      state.desaDetail = payload.content;
     },
   },
 });
