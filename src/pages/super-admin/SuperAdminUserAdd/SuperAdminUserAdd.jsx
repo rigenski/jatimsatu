@@ -31,7 +31,7 @@ const roleAll = ["SUPER_ADMIN", "ADMIN", "PENDUDUK"];
 const SuperAdminUserAdd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit, getValues } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const { provinsiAll, kabupatenAll, kecamatanAll, desaAll } = useSelector(
     (state) => state.region
@@ -43,16 +43,21 @@ const SuperAdminUserAdd = () => {
   const [KK, setKK] = useState(null);
   const [KTP, setKTP] = useState(null);
 
-  const handleGetProvinsi = async () => {
+  const handleGetAllProvinsi = async () => {
     await dispatch(getProvinsi());
   };
 
-  const handleGetKabupaten = async () => {
+  const handleGetAllKabupaten = async () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetKecamatan = async () => {
-    await dispatch(getKecamatan());
+  const handleGetAllKecamatan = async () => {
+    const data = {
+      searchKey: null,
+      searchValue: null,
+    };
+
+    await dispatch(getKecamatan(data));
   };
 
   const handleGetDesaByKecamatan = async () => {
@@ -109,9 +114,9 @@ const SuperAdminUserAdd = () => {
   };
 
   useEffect(() => {
-    handleGetProvinsi();
-    handleGetKabupaten();
-    handleGetKecamatan();
+    handleGetAllProvinsi();
+    handleGetAllKabupaten();
+    handleGetAllKecamatan();
   }, []);
 
   useEffect(() => {
@@ -139,7 +144,7 @@ const SuperAdminUserAdd = () => {
                 className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded-1"
                 disabled={loading}
               >
-                Tambah
+                Simpan
               </button>
             </div>
           </div>

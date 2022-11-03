@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 
+// provinsi
 export const getProvinsi = createAsyncThunk(
-  "/provinsi",
+  "provinsi",
   async (arg, { rejectWithValue }) => {
     try {
-      const response = await api.get("/provinsi");
+      const response = await api.get("provinsi");
 
       return response.data;
     } catch (err) {
@@ -14,11 +15,12 @@ export const getProvinsi = createAsyncThunk(
   }
 );
 
+// kabupaten
 export const getKabupaten = createAsyncThunk(
-  "/kabupaten",
+  "kabupaten",
   async (arg, { rejectWithValue }) => {
     try {
-      const response = await api.get("/kabupaten");
+      const response = await api.get("kabupaten");
 
       return response.data;
     } catch (err) {
@@ -28,10 +30,10 @@ export const getKabupaten = createAsyncThunk(
 );
 
 export const getKabupatenById = createAsyncThunk(
-  "/kabupaten/detail",
+  "kabupaten/detail",
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/kabupaten/${id}`);
+      const response = await api.get(`kabupaten/${id}`);
 
       return response.data;
     } catch (err) {
@@ -40,11 +42,19 @@ export const getKabupatenById = createAsyncThunk(
   }
 );
 
+// kecamatan
 export const getKecamatan = createAsyncThunk(
-  "/kecamatan",
-  async (arg, { rejectWithValue }) => {
+  "kecamatan",
+  async ({ searchKey, searchValue }, { rejectWithValue }) => {
     try {
-      const response = await api.get("/kecamatan");
+      const data = {
+        params: {
+          searchKey: searchKey,
+          searchValue: searchValue,
+        },
+      };
+
+      const response = await api.get("kecamatan", data);
 
       return response.data;
     } catch (err) {
@@ -54,10 +64,88 @@ export const getKecamatan = createAsyncThunk(
 );
 
 export const getKecamatanById = createAsyncThunk(
-  "/kecamatan/detail",
+  "kecamatan/detail",
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/kecamatan/${id}`);
+      const response = await api.get(`kecamatan/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const createKecamatan = createAsyncThunk(
+  "kecamatan/create",
+  async ({ name, kabupatenId, provinsiId }, { rejectWithValue }) => {
+    try {
+      const data = {
+        name: name,
+        kabupatenId: kabupatenId,
+        provinsiId: provinsiId,
+      };
+
+      const response = await api.post("kecamatan", data);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const updateKecamatan = createAsyncThunk(
+  "kecamatan/update",
+  async ({ id, name, kabupatenId, provinsiId }, { rejectWithValue }) => {
+    try {
+      const data = {
+        name: name,
+        kabupatenId: kabupatenId,
+        provinsiId: provinsiId,
+      };
+
+      const response = await api.put(`kecamatan/${id}`, data);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteManyKecamatan = createAsyncThunk(
+  "kecamatan/delete/many",
+  async ({ ids }, { rejectWithValue }) => {
+    try {
+      const data = {
+        params: {
+          ids: ids,
+        },
+      };
+
+      const response = await api.delete("kecamatan", data);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+// desa
+export const getDesa = createAsyncThunk(
+  "desa",
+  async ({ searchKey, searchValue }, { rejectWithValue }) => {
+    try {
+      const data = {
+        params: {
+          searchKey: searchKey,
+          searchValue: searchValue,
+        },
+      };
+
+      const response = await api.get("desa", data);
 
       return response.data;
     } catch (err) {
@@ -67,10 +155,10 @@ export const getKecamatanById = createAsyncThunk(
 );
 
 export const getDesaByKecamatan = createAsyncThunk(
-  "/kecamatan/desa",
+  "kecamatan/desa",
   async ({ kecamatanId }, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/kecamatan/${kecamatanId}/desa`);
+      const response = await api.get(`kecamatan/${kecamatanId}/desa`);
 
       return response.data;
     } catch (err) {
@@ -80,10 +168,75 @@ export const getDesaByKecamatan = createAsyncThunk(
 );
 
 export const getDesaById = createAsyncThunk(
-  "/desa/detail",
+  "desa/detail",
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/desa/${id}`);
+      const response = await api.get(`desa/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const createDesa = createAsyncThunk(
+  "desa/create",
+  async (
+    { name, kecamatanId, kabupatenId, provinsiId },
+    { rejectWithValue }
+  ) => {
+    try {
+      const data = {
+        name: name,
+        kecamatanId: kecamatanId,
+        kabupatenId: kabupatenId,
+        provinsiId: provinsiId,
+      };
+
+      const response = await api.post("desa", data);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const updateDesa = createAsyncThunk(
+  "desa/update",
+  async (
+    { id, name, kecamatanId, kabupatenId, provinsiId },
+    { rejectWithValue }
+  ) => {
+    try {
+      const data = {
+        name: name,
+        kecamatanId: kecamatanId,
+        kabupatenId: kabupatenId,
+        provinsiId: provinsiId,
+      };
+
+      const response = await api.put(`desa/${id}`, data);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteManyDesa = createAsyncThunk(
+  "desa/delete/many",
+  async ({ ids }, { rejectWithValue }) => {
+    try {
+      const data = {
+        params: {
+          ids: ids,
+        },
+      };
+
+      const response = await api.delete("desa", data);
 
       return response.data;
     } catch (err) {

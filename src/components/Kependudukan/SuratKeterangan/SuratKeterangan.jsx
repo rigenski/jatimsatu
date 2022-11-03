@@ -63,22 +63,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${KKSelected.name}`
-      );
-
-      uploadBytes(storageRef, KKSelected).then(() => {
-        KKSelected.value = "";
-      });
-
-      documents.KK = `${uuid()}-${KKSelected.name}`;
-    }
-
-    if (KK) {
-      const KKSelected = KK.files[0];
-
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/daftar-ktp/${KKSelected.name}`
+        `documents/kependudukan/surat-keterangan/${KKSelected.name}`
       );
 
       uploadBytes(storageRef, KKSelected).then(() => {
@@ -93,7 +78,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${KTPSelected.name}`
+        `documents/kependudukan/surat-keterangan/${KTPSelected.name}`
       );
 
       uploadBytes(storageRef, KTPSelected).then(() => {
@@ -108,7 +93,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${suratRekomendasiRTRWSelected.name}`
+        `documents/kependudukan/surat-keterangan/${suratRekomendasiRTRWSelected.name}`
       );
 
       uploadBytes(storageRef, suratRekomendasiRTRWSelected).then(() => {
@@ -125,7 +110,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${KKOrtuSelected.name}`
+        `documents/kependudukan/surat-keterangan/${KKOrtuSelected.name}`
       );
 
       uploadBytes(storageRef, KKOrtuSelected).then(() => {
@@ -140,7 +125,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${SKKelahiranBayiSelected.name}`
+        `documents/kependudukan/surat-keterangan/${SKKelahiranBayiSelected.name}`
       );
 
       uploadBytes(storageRef, SKKelahiranBayiSelected).then(() => {
@@ -155,7 +140,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${bukuNikahSelected.name}`
+        `documents/kependudukan/surat-keterangan/${bukuNikahSelected.name}`
       );
 
       uploadBytes(storageRef, bukuNikahSelected).then(() => {
@@ -170,7 +155,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${ijazahOrtuSelected.name}`
+        `documents/kependudukan/surat-keterangan/${ijazahOrtuSelected.name}`
       );
 
       uploadBytes(storageRef, ijazahOrtuSelected).then(() => {
@@ -185,7 +170,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${SKKematianRSSelected.name}`
+        `documents/kependudukan/surat-keterangan/${SKKematianRSSelected.name}`
       );
 
       uploadBytes(storageRef, SKKematianRSSelected).then(() => {
@@ -200,7 +185,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${SKRTSelected.name}`
+        `documents/kependudukan/surat-keterangan/${SKRTSelected.name}`
       );
 
       uploadBytes(storageRef, SKRTSelected).then(() => {
@@ -215,7 +200,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${SKKematianPasanganSelected.name}`
+        `documents/kependudukan/surat-keterangan/${SKKematianPasanganSelected.name}`
       );
 
       uploadBytes(storageRef, SKKematianPasanganSelected).then(() => {
@@ -232,7 +217,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/daftar-ktp/${SKCeraiPengadilanSelected.name}`
+        `documents/kependudukan/surat-keterangan/${SKCeraiPengadilanSelected.name}`
       );
 
       uploadBytes(storageRef, SKCeraiPengadilanSelected).then(() => {
@@ -247,7 +232,7 @@ const SuratKeterangan = () => {
     Object.assign(data, formRegister);
 
     const dataJSON = {
-      formTypeId: "9b6d0e7e-0bd7-4504-9483-a4e55ccf60ec",
+      formTypeId: typeSelected,
       registrationForm: data,
       documents: documents,
     };
@@ -278,7 +263,7 @@ const SuratKeterangan = () => {
         <div className="mb-4 d-flex justify-content-between">
           <div>
             <h5 className="mb-1 text-heading-5 text-grey-1">
-              Pengajuan Perubahan Status
+              Pengajuan Surat Keterangan
             </h5>
             <p className="mb-0 text-paragraph-2 text-grey-3">
               Isi formulir dan unggah dokumen-dokumen yang dibutuhkan untuk
@@ -326,6 +311,7 @@ const SuratKeterangan = () => {
                       : "ms-2 px-3 py-2 text-button text-grey-1 bg-background text-center border-0 rounded-1"
                   }
                   onClick={() => setSection("upload-dokumen")}
+                  disabled={formRegister?.deskripsi ? false : true}
                 >
                   Upload Dokumen
                 </button>
@@ -334,6 +320,7 @@ const SuratKeterangan = () => {
             {section === "formulir-pendaftaran" ? (
               <FormulirPendaftaranSuratKeterangan
                 typeSelected={typeSelected}
+                formRegister={formRegister}
                 setTypeSelected={(value) => setTypeSelected(value)}
                 setFormRegister={(value) => setFormRegister(value)}
               />

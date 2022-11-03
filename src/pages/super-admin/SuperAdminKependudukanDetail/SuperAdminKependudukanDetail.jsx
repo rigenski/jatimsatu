@@ -1,9 +1,32 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import { getKependudukanById } from "../../../store/kependudukan/kependudukanAction";
 
 const SuperAdminKependudukanDetail = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  const { id } = params;
+
+  const { kependudukanDetail } = useSelector((state) => state.kependudukan);
+
   const [section, setSection] = useState("formulir-pendaftaran");
+
+  const handleGetKependudukanById = async (data) => {
+    await dispatch(getKependudukanById(data));
+  };
+
+  useEffect(() => {
+    const data = {
+      id: id,
+    };
+
+    handleGetKependudukanById(data);
+  }, [id]);
 
   return (
     <>
@@ -38,8 +61,8 @@ const SuperAdminKependudukanDetail = () => {
                 </p>
               </div>
               <div className="d-flex">
-                <a
-                  href="/super-admin/kependudukan/edit"
+                <Link
+                  to={`/super-admin/kependudukan/${id}/edit`}
                   className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
                 >
                   <Icon
@@ -50,7 +73,7 @@ const SuperAdminKependudukanDetail = () => {
                     className="me-2"
                   />
                   Edit
-                </a>
+                </Link>
                 <button
                   className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
                   data-bs-toggle="modal"
@@ -107,7 +130,7 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="nama"
-                      defaultValue="Bonyfasius Lumbanraja"
+                      defaultValue={kependudukanDetail?.registrationForm?.name}
                       disabled
                     />
                   </div>
@@ -124,7 +147,7 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="nik"
-                      defaultValue="3312278010000009"
+                      defaultValue={kependudukanDetail?.registrationForm?.nik}
                       disabled
                     />
                   </div>
@@ -141,7 +164,9 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="alamat"
-                      defaultValue="Jalan Alpukat"
+                      defaultValue={
+                        kependudukanDetail?.registrationForm?.alamat
+                      }
                       disabled
                     />
                   </div>
@@ -149,14 +174,13 @@ const SuperAdminKependudukanDetail = () => {
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="desa"
+                      htmlFor="kabupaten"
                       className="form-label text-body-3 text-grey-1"
                     >
-                      Desa <span className="text-danger">*</span>
+                      Kabupaten <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="desa" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
+                    <select className="form-select" id="kabupaten" disabled>
+                      <option>{kependudukanDetail?.kabupaten.name}</option>
                     </select>
                   </div>
                 </div>
@@ -169,22 +193,20 @@ const SuperAdminKependudukanDetail = () => {
                       Kecamatan <span className="text-danger">*</span>
                     </label>
                     <select className="form-select" id="kecamatan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
+                      <option>{kependudukanDetail?.kecamatan.name}</option>
                     </select>
                   </div>
                 </div>
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="kelurahan"
+                      htmlFor="desa"
                       className="form-label text-body-3 text-grey-1"
                     >
-                      Kelurahan <span className="text-danger">*</span>
+                      Desa <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="kelurahan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
+                    <select className="form-select" id="desa" disabled>
+                      <option>{kependudukanDetail?.desa.name}</option>
                     </select>
                   </div>
                 </div>
@@ -200,7 +222,9 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="rt"
-                      defaultValue="01"
+                      defaultValue={
+                        kependudukanDetail?.registrationForm?.rtrw.split("/")[0]
+                      }
                       disabled
                     />
                   </div>
@@ -217,7 +241,9 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="rw"
-                      defaultValue="07"
+                      defaultValue={
+                        kependudukanDetail?.registrationForm?.rtrw.split("/")[1]
+                      }
                       disabled
                     />
                   </div>
@@ -234,7 +260,9 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="kode-pos"
-                      defaultValue="172931"
+                      defaultValue={
+                        kependudukanDetail?.registrationForm?.postalCode
+                      }
                       disabled
                     />
                   </div>
@@ -251,7 +279,9 @@ const SuperAdminKependudukanDetail = () => {
                       type="text"
                       className="form-control"
                       id="deskripsi"
-                      defaultValue="Pembuatan BPJS pribadi"
+                      defaultValue={
+                        kependudukanDetail?.registrationForm?.deskripsi
+                      }
                       disabled
                     />
                   </div>

@@ -18,6 +18,7 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
+import { Link } from "react-router-dom";
 
 const userData = [
   {
@@ -74,12 +75,12 @@ const AdminUser = () => {
                 <option>Malang</option>
               </select>
             </div>
-            <a
-              href="/admin/users/add"
+            <Link
+              to="/admin/users/add"
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
             >
               Tambah
-            </a>
+            </Link>
           </div>
         </div>
         <div className="card w-100">

@@ -243,20 +243,20 @@ function App() {
               element={<SuperAdminKependudukan />}
             />
             <Route
-              path="/super-admin/kependudukan/detail"
+              path="/super-admin/kependudukan/:id"
               element={<SuperAdminKependudukanDetail />}
             />
             <Route
-              path="/super-admin/kependudukan/edit"
+              path="/super-admin/kependudukan/:id/edit"
               element={<SuperAdminKependudukanEdit />}
             />
             <Route path="/super-admin/sosial" element={<SuperAdminSosial />} />
             <Route
-              path="/super-admin/sosial/detail"
+              path="/super-admin/sosial/:id"
               element={<SuperAdminSosialDetail />}
             />
             <Route
-              path="/super-admin/sosial/edit"
+              path="/super-admin/sosial/:id/edit"
               element={<SuperAdminSosialEdit />}
             />
             <Route

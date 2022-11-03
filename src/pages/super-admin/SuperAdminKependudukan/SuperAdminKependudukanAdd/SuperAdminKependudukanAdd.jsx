@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Dashboard from "src/components/Dashboard/Dashboard";
 
 const SuperAdminKependudukanAdd = () => {
@@ -11,9 +12,12 @@ const SuperAdminKependudukanAdd = () => {
             <p className="mb-0 text-body-2 text-grey-3">Sosial / Tambah user</p>
           </div>
           <div className="d-flex">
-            <button className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded">
+            <Link
+              to="/super-admin/kependudukan"
+              className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded"
+            >
               Batal
-            </button>
+            </Link>
             <button className="btn w-auto px-2 text-white bg-primary-2 text-center border-0 rounded">
               Hapus
             </button>

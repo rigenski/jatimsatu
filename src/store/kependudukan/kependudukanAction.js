@@ -60,6 +60,19 @@ export const getAllKependudukan = createAsyncThunk(
   }
 );
 
+export const getKependudukanById = createAsyncThunk(
+  "kependudukan/detail",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`kependudukan/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const updateKependudukan = createAsyncThunk(
   "kependudukan/update",
   async ({ id, status, description }, { rejectWithValue }) => {

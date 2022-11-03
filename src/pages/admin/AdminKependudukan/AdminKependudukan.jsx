@@ -18,6 +18,7 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
+import { Link } from "react-router-dom";
 
 const kependudukanData = [
   {
@@ -80,8 +81,8 @@ const AdminKependudukan = () => {
                 <option>Malang</option>
               </select>
             </div>
-            <a
-              href="/super-admin/kependudukan/add"
+            <Link
+              to="/admin/kependudukan/add"
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
             >
               <Icon
@@ -92,7 +93,7 @@ const AdminKependudukan = () => {
                 className="me-2"
               />
               Tambah
-            </a>
+            </Link>
           </div>
         </div>
         <div className="card w-100">

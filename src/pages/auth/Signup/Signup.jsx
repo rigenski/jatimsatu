@@ -96,16 +96,21 @@ const Signup = () => {
     }
   };
 
-  const handleGetProvinsi = async () => {
+  const handleGetAllProvinsi = async () => {
     await dispatch(getProvinsi());
   };
 
-  const handleGetKabupaten = async () => {
+  const handleGetAllKabupaten = async () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetKecamatan = async () => {
-    await dispatch(getKecamatan());
+  const handleGetAllKecamatan = async () => {
+    const data = {
+      searchKey: null,
+      searchValue: null,
+    };
+
+    await dispatch(getKecamatan(data));
   };
 
   const handleGetDesaByKecamatan = async () => {
@@ -117,9 +122,9 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    handleGetProvinsi();
-    handleGetKabupaten();
-    handleGetKecamatan();
+    handleGetAllProvinsi();
+    handleGetAllKabupaten();
+    handleGetAllKecamatan();
   }, []);
 
   useEffect(() => {

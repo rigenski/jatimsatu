@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllKependudukan,
   getAllKependudukanTypes,
+  getKependudukanById,
 } from "./kependudukanAction";
 
 const initialState = {
   kependudukanTypes: [],
   kependudukanAll: [],
+  kependudukanDetail: null,
 };
 
 const kependudukanSlice = createSlice({
@@ -16,6 +18,7 @@ const kependudukanSlice = createSlice({
     resetKependudukan: (state) => {
       state.kependudukanTypes = [];
       state.kependudukanAll = [];
+      state.kependudukanDetail = null;
     },
   },
   extraReducers: {
@@ -24,6 +27,9 @@ const kependudukanSlice = createSlice({
     },
     [getAllKependudukan.fulfilled]: (state, { payload }) => {
       state.kependudukanAll = payload.content.kependudukanForms;
+    },
+    [getKependudukanById.fulfilled]: (state, { payload }) => {
+      state.kependudukanDetail = payload.content;
     },
   },
 });

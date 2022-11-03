@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";

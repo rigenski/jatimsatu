@@ -162,7 +162,7 @@ export const deleteManyUser = createAsyncThunk(
     try {
       const data = {
         params: {
-          ids: ids,
+          ids: ids.toString(),
         },
       };
 

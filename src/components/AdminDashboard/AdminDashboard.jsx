@@ -56,7 +56,7 @@ const AdminDashboard = (props) => {
             </button>
           </div>
           <div className="collapse navbar-collapse" id="menu-drawer">
-            <div className="ms-auto d-flex align-items-center">
+            <div className="ms-auto py-2 d-flex align-items-center py-lg-0">
               <Link to="#" className="d-none d-lg-block">
                 <Icon
                   icon="codicon:bell"
@@ -341,7 +341,7 @@ const AdminDashboard = (props) => {
                   >
                     <a
                       role="button"
-                      className="accordion-button p-2 d-flex align-items-center bg-transparent border-0 shadow-none collapsed"
+                      className="accordion-button collapsed p-2 d-flex align-items-center bg-transparent border-0 shadow-none collapsed"
                       data-bs-toggle="collapse"
                       data-bs-target="#wilayahAccordion"
                       aria-expanded="false"

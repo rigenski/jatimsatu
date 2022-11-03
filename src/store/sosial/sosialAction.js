@@ -60,6 +60,19 @@ export const getAllSosial = createAsyncThunk(
   }
 );
 
+export const getSosialById = createAsyncThunk(
+  "sosial/detail",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`sosial/${id}`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const updateSosial = createAsyncThunk(
   "sosial/update",
   async ({ id, status, description }, { rejectWithValue }) => {

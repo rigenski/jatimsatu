@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getDesa,
   getDesaById,
   getDesaByKecamatan,
   getKabupaten,
@@ -44,6 +45,9 @@ const regionSlice = createSlice({
     },
     [getKecamatan.fulfilled]: (state, { payload }) => {
       state.kecamatanAll = payload.content.kecamatan;
+    },
+    [getDesa.fulfilled]: (state, { payload }) => {
+      state.desaAll = payload.content.desa;
     },
     [getDesaByKecamatan.fulfilled]: (state, { payload }) => {
       state.desaAll = payload.content;

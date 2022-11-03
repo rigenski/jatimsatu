@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllSosial, getAllSosialTypes } from "./sosialAction";
+import { getAllSosial, getAllSosialTypes, getSosialById } from "./sosialAction";
 
 const initialState = {
   sosialTypes: [],
   sosialAll: [],
+  sosialDetail: null,
 };
 
 const sosialSlice = createSlice({
@@ -21,6 +22,9 @@ const sosialSlice = createSlice({
     },
     [getAllSosial.fulfilled]: (state, { payload }) => {
       state.sosialAll = payload.content.sosialForms;
+    },
+    [getSosialById.fulfilled]: (state, { payload }) => {
+      state.sosialDetail = payload.content;
     },
   },
 });

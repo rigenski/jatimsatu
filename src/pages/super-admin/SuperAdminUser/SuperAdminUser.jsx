@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { deleteManyUser, getAllUser } from "../../../store/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const SuperAdminUser = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const SuperAdminUser = () => {
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  5% 16% 16% 16% 16% minmax(300px, 1fr);
+      --data-table-library_grid-template-columns:  40px 320px 240px 240px 240px 320px;
       `,
     },
   ]);
@@ -48,6 +49,8 @@ const SuperAdminUser = () => {
   };
 
   const handleDeleteManyUser = async (data) => {
+    const loader = toast.loading("Mohon Tunggu...");
+
     await dispatch(deleteManyUser(data)).then((res) => {
       toast.dismiss(loader);
 
@@ -56,7 +59,12 @@ const SuperAdminUser = () => {
 
         navigate("/super-admin/users");
 
-        handleGetAllUser();
+        const dataJSON = {
+          searchKey: "name",
+          searchValue: searchValue,
+        };
+
+        handleGetAllUser(dataJSON);
       } else {
         toast.error(res.payload.response.data.message);
       }
@@ -100,6 +108,13 @@ const SuperAdminUser = () => {
               to="/super-admin/users/add"
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
             >
+              <Icon
+                icon="akar-icons:circle-plus"
+                width={24}
+                height={24}
+                color="#FFFFFF"
+                className="me-2"
+              />
               Tambah
             </Link>
           </div>
@@ -131,7 +146,6 @@ const SuperAdminUser = () => {
                 ) : (
                   <button
                     className="ms-4 px-2 bg-transparent border-0"
-                    data-bs-toggle="modal"
                     disabled
                   >
                     <Icon
@@ -169,6 +183,7 @@ const SuperAdminUser = () => {
                     id="cari"
                     placeholder="Cari user"
                     style={{ paddingLeft: "48px" }}
+                    value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                   />
                   <Icon
@@ -526,7 +541,7 @@ const SuperAdminUser = () => {
           <div className="modal-content p-4">
             <div className="modal-body">
               <p className="mb-4 text-body-3 text-grey-1 text-center">
-                Apakah anda yakin untuk hapus dokumen ini?
+                Apakah anda yakin untuk hapus user ini?
               </p>
               <div className="d-flex justify-content-center align-items-center">
                 <div className="d-flex">

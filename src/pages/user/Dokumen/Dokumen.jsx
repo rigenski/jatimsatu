@@ -17,20 +17,22 @@ import {
 import { useEffect } from "react";
 import { getAllKependudukan } from "../../../store/kependudukan/kependudukanAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllSosial } from "../../../store/sosial/sosialAction";
+import moment from "moment";
 
 const Dokumen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(window.location.search);
-  const cursor = queryParams.get("cursor") ?? null;
+  const cursor = queryParams.get("cursor");
 
   const theme = useTheme([
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  320px 260px 200px 320px 260px;
+      --data-table-library_grid-template-columns:  320px 240px 240px 320px 240px;
       `,
     },
   ]);
@@ -48,7 +50,7 @@ const Dokumen = () => {
 
   const nodes = dataAll;
 
-  const handleGetKependudukanAll = async (data) => {
+  const handleGetAllKependudukan = async (data) => {
     await dispatch(getAllKependudukan(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         setDataDetail(res.payload.content);
@@ -56,7 +58,7 @@ const Dokumen = () => {
     });
   };
 
-  const handleGetSosialAll = async (data) => {
+  const handleGetAllSosial = async (data) => {
     await dispatch(getAllSosial(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         setDataDetail(res.payload.content);
@@ -83,9 +85,9 @@ const Dokumen = () => {
     };
 
     if (section === "kependudukan") {
-      handleGetKependudukanAll(data);
+      handleGetAllKependudukan(data);
     } else if (section === "sosial") {
-      handleGetSosialAll(data);
+      handleGetAllSosial(data);
     }
   }, [searchValue, section, startRange, lastRange, cursor]);
 
@@ -228,9 +230,9 @@ const Dokumen = () => {
                                   {item.formType.name}
                                 </Cell>
                                 <Cell className="px-2 py-3 text-grey-1">
-                                  {item.createdAt}
+                                  {moment(item.createdAt).format("DD-MM-YYYY")}
                                   <br />
-                                  {item.createdAt}
+                                  {moment(item.createdAt).format("HH:mm")}
                                 </Cell>
                                 <Cell className="px-2 py-3 text-grey-1">
                                   {item.status === "Disetujui" ? (
@@ -281,10 +283,15 @@ const Dokumen = () => {
                   </div>
                   <div className="d-flex justify-content-center">
                     {dataDetail?.previousCursor ? (
-                      <Link
-                        to={`/dokumen?cursor=${dataDetail?.previousCursor}`}
+                      <a
+                        role="button"
                         className="bg-transparent border-0"
                         disabled={dataDetail?.previousCursor ? false : true}
+                        onClick={() =>
+                          navigate(
+                            `/dokumen?cursor=${dataDetail?.previousCursor}`
+                          )
+                        }
                       >
                         <Icon
                           icon="dashicons:arrow-left-alt2"
@@ -292,22 +299,29 @@ const Dokumen = () => {
                           height={24}
                           color="#474747"
                         />
-                      </Link>
+                      </a>
                     ) : (
-                      <Link className="bg-transparent border-0" disabled>
+                      <a
+                        role="button"
+                        className="bg-transparent border-0"
+                        disabled
+                      >
                         <Icon
                           icon="dashicons:arrow-left-alt2"
                           width={24}
                           height={24}
                           color="#474747"
                         />
-                      </Link>
+                      </a>
                     )}
                     {dataDetail?.nextCursor ? (
-                      <Link
-                        to={`/dokumen?cursor=${dataDetail?.nextCursor}`}
+                      <a
+                        role="button"
                         className="bg-transparent border-0"
                         disabled={dataDetail?.nextCursor ? false : true}
+                        onClick={() =>
+                          navigate(`/dokumen?cursor=${dataDetail?.nextCursor}`)
+                        }
                       >
                         <Icon
                           icon="dashicons:arrow-right-alt2"
@@ -315,16 +329,20 @@ const Dokumen = () => {
                           height={24}
                           color="#474747"
                         />
-                      </Link>
+                      </a>
                     ) : (
-                      <Link className="bg-transparent border-0" disabled>
+                      <a
+                        role="button"
+                        className="bg-transparent border-0"
+                        disabled
+                      >
                         <Icon
                           icon="dashicons:arrow-right-alt2"
                           width={24}
                           height={24}
                           color="#474747"
                         />
-                      </Link>
+                      </a>
                     )}
                   </div>
                 </div>

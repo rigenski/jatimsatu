@@ -4,36 +4,20 @@ import { useSelector } from "react-redux";
 
 const typeDocuments = [
   {
-    id: "91a35f21-bf13-45d2-96da-0a76089f8f71",
-    name: "Surat Keterangan Domisili",
+    id: "1f3a348d-af77-424a-a2a2-636b47382599",
+    name: "Perubahan Status Pendidikan",
   },
   {
-    id: "969ba0c8-3e65-4d3b-8bf6-dd998c4230cb",
-    name: "Surat Keterangan Lahir",
+    id: "88bff511-5786-4a34-ad46-b7dbed19fd96",
+    name: "Perubahan Status Pekerjaan",
   },
   {
-    id: "56ebfd26-63c5-4fea-893c-176473c38968",
-    name: "Surat Keterangan Meninggal",
-  },
-  {
-    id: "3e4a7a04-c680-4639-a3ee-a7d6be5bf673",
-    name: "Surat Keterangan Pindah/Datang",
-  },
-  {
-    id: "0cd3c8fd-ce1d-4736-97d2-ad243974c417",
-    name: "Surat Keterangan Duda/Janda",
-  },
-  {
-    id: "9ea5d289-42d8-4c52-a51a-3153a3aad4ea",
-    name: "Surat Keterangan Menikah",
-  },
-  {
-    id: "35b57cc0-56e9-435c-9508-b4102d6ad5f1",
-    name: "Surat Keterangan Cerai",
+    id: "1234",
+    name: "Perubahan Status Kependudukan",
   },
 ];
 
-const FormulirPendaftaranSuratKeterangan = (props) => {
+const FormulirPendaftaranPerubahanStatus = (props) => {
   const { user } = useSelector((state) => state.auth);
 
   const [deskripsi, setDeskripsi] = useState("");
@@ -239,4 +223,4 @@ const FormulirPendaftaranSuratKeterangan = (props) => {
   );
 };
 
-export default FormulirPendaftaranSuratKeterangan;
+export default FormulirPendaftaranPerubahanStatus;

@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState } from "react";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 import { useTheme } from "@table-library/react-table-library/theme";
@@ -18,24 +18,23 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
-
-const sosialData = [
-  {
-    id: 1,
-    kecamatan: "Blitar",
-    kabupaten: "Kependudukan",
-    provinsi: "Jawa Timur",
-  },
-  {
-    id: 2,
-    kecamatan: "Blitar",
-    kabupaten: "Kependudukan",
-    provinsi: "Jawa Timur",
-  },
-];
+import {
+  deleteManyKecamatan,
+  getKecamatan,
+} from "../../../store/region/regionAction";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SuperAdminKecamatan = () => {
-  const nodes = sosialData;
+  const dispatch = useDispatch();
+
+  const { kecamatanAll } = useSelector((state) => state.region);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const nodes = kecamatanAll;
 
   const select = useRowSelect({ nodes });
 
@@ -43,10 +42,44 @@ const SuperAdminKecamatan = () => {
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  5% 16% 16% 16% minmax(300px, 1fr);
+      --data-table-library_grid-template-columns:  40px 320px 320px 320px;
       `,
     },
   ]);
+
+  const handleGetAllKecamatan = async (data) => {
+    await dispatch(getKecamatan(data));
+  };
+
+  const handleDeleteManyKecamatan = async (data) => {
+    const loader = toast.loading("Mohon Tunggu...");
+
+    await dispatch(deleteManyKecamatan(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        const dataJSON = {
+          searchKey: "name",
+          searchValue: searchValue,
+        };
+
+        handleGetAllKecamatan(dataJSON);
+      } else {
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const data = {
+      searchKey: "name",
+      searchValue: searchValue,
+    };
+
+    handleGetAllKecamatan(data);
+  }, [searchValue]);
 
   return (
     <>
@@ -59,8 +92,8 @@ const SuperAdminKecamatan = () => {
             </p>
           </div>
           <div className="d-flex">
-            <a
-              href="/super-admin/desa/add"
+            <Link
+              to="/super-admin/kecamatan/add"
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
             >
               <Icon
@@ -71,7 +104,7 @@ const SuperAdminKecamatan = () => {
                 className="me-2"
               />
               Tambah
-            </a>
+            </Link>
           </div>
         </div>
         <div className="card w-100">
@@ -82,41 +115,52 @@ const SuperAdminKecamatan = () => {
                   <p className="mb-0 text-body-4">
                     {select.state.ids.length} dipilih
                   </p>
-                  <button className="ms-4 px-2 bg-transparent border-0">
-                    <Icon
-                      icon="akar-icons:trash-can"
-                      width={24}
-                      height={24}
-                      color="#E61A1A"
-                      className="me-2"
-                    />
-                    <span className="mb-0 text-body-3 text-danger">
-                      Hapus Data
-                    </span>
-                  </button>
+                  {select.state.ids.length ? (
+                    <button
+                      className="ms-4 px-2 bg-transparent border-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteModal"
+                    >
+                      <Icon
+                        icon="akar-icons:trash-can"
+                        width={24}
+                        height={24}
+                        color="#E61A1A"
+                        className="me-2"
+                      />
+                      <span className="mb-0 text-body-3 text-danger">
+                        Hapus Data
+                      </span>
+                    </button>
+                  ) : (
+                    <button
+                      className="ms-4 px-2 bg-transparent border-0"
+                      data-bs-toggle="modal"
+                      disabled
+                    >
+                      <Icon
+                        icon="akar-icons:trash-can"
+                        width={24}
+                        height={24}
+                        color="#E61A1A"
+                        className="me-2"
+                      />
+                      <span className="mb-0 text-body-3 text-danger">
+                        Hapus Data
+                      </span>
+                    </button>
+                  )}
                 </div>
                 <div className="d-flex align-items-center">
-                  <button
-                    className="btn me-3 w-auto px-2 d-flex justify-content-center align-items-center text-button bg-white text-center border-1 border-grey-5 rounded-1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#filterModal"
-                  >
-                    <Icon
-                      icon="clarity:filter-line"
-                      width={24}
-                      height={24}
-                      color="#474747"
-                      className="me-2"
-                    />
-                    Filter
-                  </button>
                   <div className="position-relative">
                     <input
                       type="text"
                       className="form-control"
                       id="cari"
-                      placeholder="Cari dokumen"
+                      placeholder="Cari kecamatan"
                       style={{ paddingLeft: "48px" }}
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
                     />
                     <Icon
                       icon="charm:search"
@@ -151,9 +195,6 @@ const SuperAdminKecamatan = () => {
                           <HeaderCell className="px-2 py-3 text-grey-1">
                             Provinsi
                           </HeaderCell>
-                          <HeaderCell className="px-2 py-3 text-grey-1">
-                            Aksi
-                          </HeaderCell>
                         </HeaderRow>
                       </Header>
 
@@ -162,23 +203,13 @@ const SuperAdminKecamatan = () => {
                           <Row key={item.id} item={item}>
                             <CellSelect item={item} />
                             <Cell className="px-2 py-3 text-grey-1">
-                              {item.kecamatan}
+                              {item.name}
                             </Cell>
                             <Cell className="px-2 py-3 text-grey-1">
-                              {item.kabupaten}
+                              {item.kabupaten.name}
                             </Cell>
                             <Cell className="px-2 py-3 text-grey-1">
-                              {item.provinsi}
-                            </Cell>
-                            <Cell className="px-2 py-3 text-grey-1">
-                              <div>
-                                <button className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
-                                  Edit
-                                </button>
-                                <button className="btn px-3 py-1 text-white text-nowrap bg-danger rounded-1">
-                                  Hapus
-                                </button>
-                              </div>
+                              {item.provinsi.name}
                             </Cell>
                           </Row>
                         ))}
@@ -441,6 +472,49 @@ const SuperAdminKecamatan = () => {
                 <button className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1">
                   Terapkan
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="deleteModal"
+        tabIndex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-4">
+            <div className="modal-body">
+              <p className="mb-4 text-body-3 text-grey-1 text-center">
+                Apakah anda yakin untuk hapus kecamatan ini?
+              </p>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex">
+                  <button
+                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                    data-bs-dismiss="modal"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
+                    data-bs-dismiss="modal"
+                    onClick={() =>
+                      handleDeleteManyKecamatan({ ids: select.state.ids })
+                    }
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#FFFFFF"
+                      className="me-2"
+                    />
+                    Hapus
+                  </button>
+                </div>
               </div>
             </div>
           </div>

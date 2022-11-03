@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 
 import { useTheme } from "@table-library/react-table-library/theme";
@@ -18,32 +18,20 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
-
-const sosialData = [
-  {
-    id: 1,
-    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
-    deskripsi: "Bonyfasius Lumbanraja",
-    layanan: "Sosial",
-    tanggal: "15-10-2022",
-    waktu: "21:00",
-    status: 1,
-    keterangan: "Dokumen KK tidak jelas, upload ulang.",
-  },
-  {
-    id: 2,
-    dokumen: "Pengajuan Surat Keterangan Daftar KTP",
-    deskripsi: "Bonyfasius Lumbanraja",
-    layanan: "Sosial",
-    tanggal: "15-10-2022",
-    waktu: "21:00",
-    status: 1,
-    keterangan: "Dokumen KK tidak jelas, upload ulang.",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { deleteSosial, getAllSosial } from "../../../store/sosial/sosialAction";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
 const SuperAdminSosial = () => {
-  const nodes = sosialData;
+  const dispatch = useDispatch();
+
+  const { sosialAll } = useSelector((state) => state.sosial);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const nodes = sosialAll;
 
   const select = useRowSelect({ nodes });
 
@@ -51,10 +39,52 @@ const SuperAdminSosial = () => {
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  5% 16% 16% 16% 16% 16% 16% minmax(300px, 1fr);
+      --data-table-library_grid-template-columns: 40px 320px 320px 240px 240px 320px 240px;
       `,
     },
   ]);
+
+  const handleGetAllSosial = async (data) => {
+    await dispatch(getAllSosial(data));
+  };
+
+  const handleDeleteManySosial = async (data) => {
+    const loader = toast.loading("Mohon Tunggu...");
+
+    await dispatch(deleteSosial(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        const data = {
+          searchKey: "formType.name",
+          searchValue: searchValue,
+          startRange: null,
+          lastRange: null,
+          rows: null,
+          cursor: null,
+        };
+
+        handleGetAllSosial(data);
+      } else {
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const data = {
+      searchKey: "name",
+      searchValue: searchValue,
+      startRange: null,
+      lastRange: null,
+      rows: null,
+      cursor: null,
+    };
+
+    handleGetAllSosial(data);
+  }, [searchValue]);
 
   return (
     <>
@@ -80,9 +110,10 @@ const SuperAdminSosial = () => {
                 <option>Malang</option>
               </select>
             </div>
-            <a
-              href="/super-admin/sosial/add"
+            <button
               className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
+              data-bs-toggle="modal"
+              data-bs-target="#addModal"
             >
               <Icon
                 icon="akar-icons:circle-plus"
@@ -92,7 +123,7 @@ const SuperAdminSosial = () => {
                 className="me-2"
               />
               Tambah
-            </a>
+            </button>
           </div>
         </div>
         <div className="card w-100">
@@ -102,18 +133,41 @@ const SuperAdminSosial = () => {
                 <p className="mb-0 text-body-4">
                   {select.state.ids.length} dipilih
                 </p>
-                <button className="ms-4 px-2 bg-transparent border-0">
-                  <Icon
-                    icon="akar-icons:trash-can"
-                    width={24}
-                    height={24}
-                    color="#E61A1A"
-                    className="me-2"
-                  />
-                  <span className="mb-0 text-body-3 text-danger">
-                    Hapus Data
-                  </span>
-                </button>
+                {select.state.ids.length ? (
+                  <button
+                    className="ms-4 px-2 bg-transparent border-0"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#E61A1A"
+                      className="me-2"
+                    />
+                    <span className="mb-0 text-body-3 text-danger">
+                      Hapus Data
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    className="ms-4 px-2 bg-transparent border-0"
+                    data-bs-toggle="modal"
+                    disabled
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#E61A1A"
+                      className="me-2"
+                    />
+                    <span className="mb-0 text-body-3 text-danger">
+                      Hapus Data
+                    </span>
+                  </button>
+                )}
               </div>
               <div className="d-flex align-items-center">
                 <button
@@ -137,6 +191,8 @@ const SuperAdminSosial = () => {
                     id="cari"
                     placeholder="Cari dokumen"
                     style={{ paddingLeft: "48px" }}
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
                   />
                   <Icon
                     icon="charm:search"
@@ -169,9 +225,6 @@ const SuperAdminSosial = () => {
                           Nama
                         </HeaderCell>
                         <HeaderCell className="px-2 py-3 text-grey-1">
-                          Layanan
-                        </HeaderCell>
-                        <HeaderCell className="px-2 py-3 text-grey-1">
                           Tanggal
                         </HeaderCell>
                         <HeaderCell className="px-2 py-3 text-grey-1">
@@ -191,37 +244,48 @@ const SuperAdminSosial = () => {
                         <Row key={item.id} item={item}>
                           <CellSelect item={item} />
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.dokumen}
+                            {item.formType.name}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.deskripsi}
+                            {item.createdBy.name}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.layanan}
-                          </Cell>
-                          <Cell className="px-2 py-3 text-grey-1">
-                            {item.tanggal}
+                            {moment(item.createdAt).format("DD-MM-YYYY")}
                             <br />
-                            {item.waktu}
+                            {moment(item.createdAt).format("HH:mm")}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.status === 1 ? (
-                              <div className="badge px-4 text-paragraph-1 text-primary-2 bg-primary-6 rounded-1">
-                                Disetujui
-                              </div>
-                            ) : null}
+                            {item.status === "Disetujui" ? (
+                              <>
+                                <div className="badge badge-primary px-4 text-paragraph-1 text-primary-2 rounded-1">
+                                  {item.status}
+                                </div>
+                              </>
+                            ) : item.status === "Diproses" ? (
+                              <>
+                                <div className="badge badge-warning px-4 text-paragraph-1 text-warning rounded-1">
+                                  {item.status}
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="badge badge-danger px-4 text-paragraph-1 text-danger rounded-1">
+                                  {item.status}
+                                </div>
+                              </>
+                            )}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
-                            {item.keterangan}
+                            {item.description}
                           </Cell>
                           <Cell className="px-2 py-3 text-grey-1">
                             <div>
-                              <button className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1">
+                              <Link
+                                to={`/super-admin/kependudukan/${item.id}`}
+                                className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1"
+                              >
                                 Lihat
-                              </button>
-                              <button className="btn px-3 py-1 text-white text-nowrap bg-danger rounded-1">
-                                Hapus
-                              </button>
+                              </Link>
                             </div>
                           </Cell>
                         </Row>
@@ -252,6 +316,49 @@ const SuperAdminSosial = () => {
           </div>
         </div>
       </SuperAdminDashboard>
+      <div
+        className="modal fade"
+        id="deleteModal"
+        tabIndex="-1"
+        aria-labelledby="deleteModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-4">
+            <div className="modal-body">
+              <p className="mb-4 text-body-3 text-grey-1 text-center">
+                Apakah anda yakin untuk hapus dokumen ini?
+              </p>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex">
+                  <button
+                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                    data-bs-dismiss="modal"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
+                    data-bs-dismiss="modal"
+                    onClick={() =>
+                      handleDeleteManySosial({ ids: select.state.ids })
+                    }
+                  >
+                    <Icon
+                      icon="akar-icons:trash-can"
+                      width={24}
+                      height={24}
+                      color="#FFFFFF"
+                      className="me-2"
+                    />
+                    Hapus
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         className="modal fade"
         id="filterModal"
@@ -484,6 +591,79 @@ const SuperAdminSosial = () => {
                 <button className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1">
                   Terapkan
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="addModal"
+        tabIndex="-1"
+        aria-labelledby="addModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-4">
+            <div className="modal-body">
+              <h3 className="mb-2 text-body-3 text-grey-1 text-center">
+                Tambah dokumen
+              </h3>
+              <p className="mb-4 text-paragraph-4 text-grey-1 text-center">
+                Apakah anda yakin untuk hapus dokumen ini?
+              </p>
+              <div className="mb-4">
+                <div className="mb-3">
+                  <label
+                    htmlFor="nik"
+                    className="form-label text-body-3 text-grey-1"
+                  >
+                    NIK <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="nik"
+                    placeholder="masukkan NIK terdaftar"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor="jenis"
+                    className="form-label text-body-3 text-grey-1"
+                  >
+                    Jenis Dokumen <span className="text-danger">*</span>
+                  </label>
+                  <select className="form-select" id="jenis">
+                    <option>Pilih Jenis Dokumen</option>
+                    <option>Blitar</option>
+                    <option>Malang</option>
+                  </select>
+                </div>
+              </div>
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex">
+                  <button
+                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
+                    data-bs-dismiss="modal"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                  >
+                    <Icon
+                      icon="akar-icons:circle-plus"
+                      width={24}
+                      height={24}
+                      color="#FFFFFF"
+                      className="me-2"
+                    />
+                    Tambah
+                  </button>
+                </div>
               </div>
             </div>
           </div>

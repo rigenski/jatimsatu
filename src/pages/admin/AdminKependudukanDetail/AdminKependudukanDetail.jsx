@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import AdminDashboard from "src/components/AdminDashboard/AdminDashboard";
 
 const AdminKependudukanDetail = () => {
@@ -43,8 +44,8 @@ const AdminKependudukanDetail = () => {
                 </p>
               </div>
               <div className="d-flex">
-                <a
-                  href="/super-admin/kependudukan/edit"
+                <Link
+                  to="/admin/kependudukan/edit"
                   className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
                 >
                   <Icon
@@ -55,7 +56,7 @@ const AdminKependudukanDetail = () => {
                     className="me-2"
                   />
                   Edit
-                </a>
+                </Link>
                 <button
                   className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
                   data-bs-toggle="modal"
