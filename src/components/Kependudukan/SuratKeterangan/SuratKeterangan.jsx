@@ -7,7 +7,7 @@ import { storage } from "src/config/firebase/firebase";
 import uuid from "react-uuid";
 import { Link } from "react-router-dom";
 import { createKependudukanForm } from "../../../store/kependudukan/kependudukanAction";
-import FormulirPendaftaranBanyak from "../../FormulirPendaftaranBanyak/FormulirPendaftaranBanyak";
+import FormulirPendaftaranSuratKeterangan from "../../FormulirPendaftaranSuratKeterangan/FormulirPendaftaranSuratKeterangan";
 
 // assets
 import DokumentTerkirimIllust from "src/assets/images/pre-dashboard/sosial/dokumen-terkirim-illust.svg";
@@ -332,7 +332,7 @@ const SuratKeterangan = () => {
               </div>
             </div>
             {section === "formulir-pendaftaran" ? (
-              <FormulirPendaftaranBanyak
+              <FormulirPendaftaranSuratKeterangan
                 typeSelected={typeSelected}
                 setTypeSelected={(value) => setTypeSelected(value)}
                 setFormRegister={(value) => setFormRegister(value)}
