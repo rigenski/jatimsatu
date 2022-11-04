@@ -9,11 +9,19 @@ const ProtectedRoute = (props) => {
   useEffect(() => {
     if (login === true) {
       if (user.role === "SUPER_ADMIN") {
-        navigate("/super-admin");
+        if (location.pathname.split("/")[1] !== "super-admin") {
+          navigate("/super-admin");
+        }
       } else if (user.role === "ADMIN") {
-        navigate("/admin");
+        if (location.pathname.split("/")[1] !== "admin") {
+          navigate("/admin");
+        }
       } else if (user.role === "PENDUDUK") {
-        navigate("/");
+        if (location.pathname.split("/")[1] !== "home") {
+          navigate("/home");
+        }
+      } else {
+        navigate("/home");
       }
     } else if (login === false) {
       navigate("/signin");

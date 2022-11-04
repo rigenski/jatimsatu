@@ -18,32 +18,32 @@ const layananData = [
   {
     title: "Kependudukan",
     icon: KependudukanIcon,
-    path: "/kependudukan",
+    path: "/home/kependudukan",
   },
   {
     title: "Sosial",
     icon: SosialIcon,
-    path: "/sosial",
+    path: "/home/sosial",
   },
   {
     title: "Kesehatan",
     icon: KesehatanIcon,
-    path: "/kesehatan",
+    path: "/home/kesehatan",
   },
   {
     title: "Pendidikan",
     icon: PendidikanIcon,
-    path: "/pendidikan",
+    path: "/home/pendidikan",
   },
   {
     title: "UMKM",
     icon: UmkmIcon,
-    path: "/umkm",
+    path: "/home/umkm",
   },
   {
     title: "Perizinan",
     icon: PerizinanIcon,
-    path: "/perizinan",
+    path: "/home/perizinan",
   },
 ];
 

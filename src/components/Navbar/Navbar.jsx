@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg py-2 bg-white">
       <div className="container px-3">
-        <Link to="/" className="navbar-brand text-heading-3 text-primary-2">
+        <Link to="/home" className="navbar-brand text-heading-3 text-primary-2">
           Jatimsatu
         </Link>
         <div className="d-flex align-items-center">
@@ -48,22 +48,22 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="menu-drawer">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="/kependudukan">
+              <Link className="nav-link text-body-4" to="/home/kependudukan">
                 Kependudukan
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="/sosial">
+              <Link className="nav-link text-body-4" to="/home/sosial">
                 Sosial
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="/kesehatan">
+              <Link className="nav-link text-body-4" to="/home/kesehatan">
                 Kesehatan
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link text-body-4" to="/pariwisata">
+              <Link className="nav-link text-body-4" to="/home/pariwisata">
                 Pariwisata
               </Link>
             </li>
@@ -99,7 +99,7 @@ const Navbar = () => {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item py-2" to="/dokumen">
+                  <Link className="dropdown-item py-2" to="/home/dokumen">
                     <Icon
                       icon="ep:document"
                       width={24}

@@ -37,7 +37,7 @@ const SuperAdminDesa = () => {
     getTheme(),
     {
       Table: `
-      --data-table-library_grid-template-columns:  40px 320px 320px 320px 320px;
+      --data-table-library_grid-template-columns:  40px 320px 320px 320px 320px 240px;
       `,
     },
   ]);
@@ -205,6 +205,9 @@ const SuperAdminDesa = () => {
                           <HeaderCell className="px-2 py-3 text-grey-1">
                             Provinsi
                           </HeaderCell>
+                          <HeaderCell className="px-2 py-3 text-grey-1">
+                            Aksi
+                          </HeaderCell>
                         </HeaderRow>
                       </Header>
 
@@ -223,6 +226,14 @@ const SuperAdminDesa = () => {
                             </Cell>
                             <Cell className="px-2 py-3 text-grey-1">
                               {item.provinsi.name}
+                            </Cell>
+                            <Cell className="px-2 py-3 text-grey-1">
+                              <Link
+                                to={`/super-admin/desa/${item.id}/edit`}
+                                className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1"
+                              >
+                                Edit
+                              </Link>
                             </Cell>
                           </Row>
                         ))}

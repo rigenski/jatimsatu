@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
-const AuthRoute = () => {
+const NotFoundRoute = () => {
   const navigate = useNavigate();
   const { login, user } = useSelector((state) => state.auth);
 
@@ -20,11 +20,7 @@ const AuthRoute = () => {
     }
   }, [login]);
 
-  if (login === false) {
-    return <Outlet />;
-  } else if (login === null) {
-    return <></>;
-  }
+  return <Outlet />;
 };
 
-export default AuthRoute;
+export default NotFoundRoute;

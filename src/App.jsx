@@ -61,6 +61,9 @@ import AuthRoute from "./middleware/routes/AuthRoute";
 import ProtectedRoute from "./middleware/routes/ProtectedRoute";
 import { checkToken } from "./store/auth/authAction";
 import { authLogout } from "./store/auth/authSlice";
+import SuperAdminKecamatanEdit from "./pages/super-admin/SuperAdminKecamatanEdit/SuperAdminKecamatanEdit";
+import SuperAdminDesaEdit from "./pages/super-admin/SuperAdminDesaEdit/SuperAdminDesaEdit";
+import NotFoundRoute from "./middleware/routes/NotFoundRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,6 +87,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* auth */}
+          <Route path="*" element={<NotFoundRoute />} />
           <Route element={<AuthRoute />}>
             <Route path="/signin" element={<Signin />} />
             <Route path="/signin/:token" element={<Signin />} />
@@ -93,14 +97,14 @@ function App() {
           </Route>
           {/* user */}
           <Route element={<ProtectedRoute role="PENDUDUK" />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/kependudukan" element={<Kependudukan />} />
-            <Route path="/sosial" element={<Sosial />} />
-            <Route path="/dokumen" element={<Dokumen />} />
-            <Route path="/dokumen/:cursor" element={<Dokumen />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/home/kependudukan" element={<Kependudukan />} />
+            <Route path="/home/sosial" element={<Sosial />} />
+            <Route path="/home/dokumen" element={<Dokumen />} />
+            <Route path="/home/dokumen/:cursor" element={<Dokumen />} />
             {/* kependudukan */}
             <Route
-              path="/daftar-ktp"
+              path="/home/daftar-ktp"
               element={
                 <LayananDetail>
                   <DaftarKTP />
@@ -108,7 +112,7 @@ function App() {
               }
             />
             <Route
-              path="/surat-jalan"
+              path="/home/surat-jalan"
               element={
                 <LayananDetail>
                   <SuratJalan />
@@ -116,7 +120,7 @@ function App() {
               }
             />
             <Route
-              path="/surat-keterangan"
+              path="/home/surat-keterangan"
               element={
                 <LayananDetail>
                   <SuratKeterangan />
@@ -124,7 +128,7 @@ function App() {
               }
             />
             <Route
-              path="/kartu-keluarga"
+              path="/home/kartu-keluarga"
               element={
                 <LayananDetail>
                   <KartuKeluarga />
@@ -132,7 +136,7 @@ function App() {
               }
             />
             <Route
-              path="/perubahan-status"
+              path="/home/perubahan-status"
               element={
                 <LayananDetail>
                   <PerubahanStatus />
@@ -140,7 +144,7 @@ function App() {
               }
             />
             <Route
-              path="/e-signature"
+              path="/home/e-signature"
               element={
                 <LayananDetail>
                   <ESignature />
@@ -149,7 +153,7 @@ function App() {
             />
             {/* sosial */}
             <Route
-              path="/bansos"
+              path="/home/bansos"
               element={
                 <LayananDetail>
                   <Bansos />
@@ -157,7 +161,7 @@ function App() {
               }
             />
             <Route
-              path="/bantuan-langsung-tunai"
+              path="/home/bantuan-langsung-tunai"
               element={
                 <LayananDetail>
                   <BantuanLangsungTunai />
@@ -165,7 +169,7 @@ function App() {
               }
             />
             <Route
-              path="/kartu-indonesia-pintar"
+              path="/home/kartu-indonesia-pintar"
               element={
                 <LayananDetail>
                   <KartuIndonesiaPintar />
@@ -173,7 +177,7 @@ function App() {
               }
             />
             <Route
-              path="/kartu-indonesia-sehat"
+              path="/home/kartu-indonesia-sehat"
               element={
                 <LayananDetail>
                   <KartuIndonesiaSehat />
@@ -181,7 +185,7 @@ function App() {
               }
             />
             <Route
-              path="/bpjs"
+              path="/home/bpjs"
               element={
                 <LayananDetail>
                   <Bpjs />
@@ -189,7 +193,7 @@ function App() {
               }
             />
             <Route
-              path="/kartu-prakerja"
+              path="/home/kartu-prakerja"
               element={
                 <LayananDetail>
                   <KartuPrakerja />
@@ -197,7 +201,7 @@ function App() {
               }
             />
             <Route
-              path="/bantuan-bencana"
+              path="/home/bantuan-bencana"
               element={
                 <LayananDetail>
                   <BantuanBencana />
@@ -205,7 +209,7 @@ function App() {
               }
             />
             <Route
-              path="/penyaluran-subsidi"
+              path="/home/penyaluran-subsidi"
               element={
                 <LayananDetail>
                   <PenyaluranSubsidi />
@@ -213,7 +217,7 @@ function App() {
               }
             />
             <Route
-              path="/pengaduan"
+              path="/home/pengaduan"
               element={
                 <LayananDetail>
                   <Pengaduan />
@@ -271,10 +275,18 @@ function App() {
               path="/super-admin/kecamatan/add"
               element={<SuperAdminKecamatanAdd />}
             />
+            <Route
+              path="/super-admin/kecamatan/:id/edit"
+              element={<SuperAdminKecamatanEdit />}
+            />
             <Route path="/super-admin/desa" element={<SuperAdminDesa />} />
             <Route
               path="/super-admin/desa/add"
               element={<SuperAdminDesaAdd />}
+            />
+            <Route
+              path="/super-admin/desa/:id/edit"
+              element={<SuperAdminDesaEdit />}
             />
           </Route>
 

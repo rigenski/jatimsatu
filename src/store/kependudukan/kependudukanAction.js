@@ -36,7 +36,7 @@ export const getAllKependudukanTypes = createAsyncThunk(
 export const getAllKependudukan = createAsyncThunk(
   "kependudukan",
   async (
-    { searchKey, searchValue, startRange, lastRange, rows, cursor },
+    { searchKey, searchValue, startRange, endRange, rows, cursor },
     { rejectWithValue }
   ) => {
     try {
@@ -45,7 +45,7 @@ export const getAllKependudukan = createAsyncThunk(
           searchKey: searchKey,
           searchValue: searchValue,
           startRange: startRange,
-          lastRange: lastRange,
+          endRange: endRange,
           rows: rows,
           cursor: cursor,
         },

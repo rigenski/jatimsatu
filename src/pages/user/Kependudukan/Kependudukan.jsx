@@ -18,32 +18,32 @@ const layananData = [
   {
     title: "Daftar KTP",
     icon: DaftarKtpIcon,
-    path: "/daftar-ktp",
+    path: "/home/daftar-ktp",
   },
   {
     title: "Surat Jalan",
     icon: SuratJalanIcon,
-    path: "/surat-jalan",
+    path: "/home/surat-jalan",
   },
   {
     title: "Surat Keterangan",
     icon: SuratKeteranganIcon,
-    path: "/surat-keterangan",
+    path: "/home/surat-keterangan",
   },
   {
     title: "Perubahan Status",
     icon: PerubahanStatusIcon,
-    path: "/perubahan-status",
+    path: "/home/perubahan-status",
   },
   {
     title: "Kartu Keluarga",
     icon: KartuKeluargaIcon,
-    path: "/kartu-keluarga",
+    path: "/home/kartu-keluarga",
   },
   {
     title: "E-Signature",
     icon: ESignatureIcon,
-    path: "/e-signature",
+    path: "/home/e-signature",
   },
 ];
 
@@ -65,7 +65,7 @@ const Kependudukan = () => {
           ></div>
           <div className="container py-3 position-relative px-3">
             <div className="mb-4 pb-4">
-              <Link to="/" className="mb-4 d-flex align-items-center">
+              <Link to="/home" className="mb-4 d-flex align-items-center">
                 <Icon
                   icon="akar-icons:chevron-left"
                   width={16}

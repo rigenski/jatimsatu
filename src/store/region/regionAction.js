@@ -118,9 +118,21 @@ export const deleteManyKecamatan = createAsyncThunk(
   "kecamatan/delete/many",
   async ({ ids }, { rejectWithValue }) => {
     try {
+      let idsData = "[";
+
+      ids.map((item, index) => {
+        idsData += `"${item}"`;
+
+        if (index + 1 < ids.length) {
+          idsData += ",";
+        }
+      });
+
+      idsData += "]";
+
       const data = {
         params: {
-          ids: ids,
+          ids: idsData,
         },
       };
 

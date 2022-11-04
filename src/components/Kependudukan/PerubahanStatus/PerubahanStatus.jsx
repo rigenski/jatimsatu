@@ -123,7 +123,7 @@ const PerubahanStatus = () => {
           {!complete ? (
             <div className="d-none align-items-center d-lg-flex">
               <Link
-                to="/"
+                to="/home"
                 className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
               >
                 Batalkan
@@ -295,7 +295,7 @@ const PerubahanStatus = () => {
 
             <div className="mt-4 d-flex justify-content-center align-items-center d-lg-none justify-content-md-end">
               <Link
-                to="/"
+                to="/home"
                 className="btn me-3 text-button text-grey-1 bg-white text-center border-1 border-grey-1 rounded-1"
               >
                 Batalkan
@@ -323,7 +323,7 @@ const PerubahanStatus = () => {
                 melalui notifkasi
               </p>
               <Link
-                to="/"
+                to="/home"
                 className="btn text-button text-white bg-primary-2 text-center border-0 rounded-1"
               >
                 Kembali ke dashboard

@@ -12,7 +12,7 @@ const LayananDetail = (props) => {
         <div className="jumbotron pt-2 px-0 position-relative bg-primary-2 px-lg-5 pt-lg-4">
           <div className="container py-3 position-relative px-3">
             <div className="mb-4 pb-2">
-              <Link to="/" className="mb-4 d-flex align-items-center">
+              <Link to="/home" className="mb-4 d-flex align-items-center">
                 <Icon
                   icon="akar-icons:chevron-left"
                   width={16}

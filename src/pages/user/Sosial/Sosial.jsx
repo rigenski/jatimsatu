@@ -22,52 +22,52 @@ const layananData = [
   {
     title: "Bantuan Sosial",
     icon: BantuanSosialIcon,
-    path: "/bansos",
+    path: "/home/bansos",
   },
   {
     title: "Bantuan Langsung Tunai",
     icon: BantuanLangsungTunaiIcon,
-    path: "/bantuan-langsung-tunai",
+    path: "/home/bantuan-langsung-tunai",
   },
   {
     title: "BPJS",
     icon: BpjsIcon,
-    path: "/bpjs",
+    path: "/home/bpjs",
   },
   {
     title: "Kartu Indonesia Pintar",
     icon: KartuIndonesiaPintarIcon,
-    path: "/kartu-indonesia-pintar",
+    path: "/home/kartu-indonesia-pintar",
   },
   {
     title: "Kartu Indonesia Sehat",
     icon: KartuIndonesiaSehatIcon,
-    path: "/kartu-indonesia-sehat",
+    path: "/home/kartu-indonesia-sehat",
   },
   {
     title: "Bantuan Bencana",
     icon: BantuanBencanaIcon,
-    path: "/bantuan-bencana",
+    path: "/home/bantuan-bencana",
   },
   {
     title: "Daftar Ktp",
     icon: DaftarKtpIcon,
-    path: "/daftar-ktp",
+    path: "/home/daftar-ktp",
   },
   {
     title: "Surat Jalan",
     icon: SuratJalanIcon,
-    path: "/surat-jalan",
+    path: "/home/surat-jalan",
   },
   {
     title: "Kartu Keluarga",
     icon: SuratKeteranganIcon,
-    path: "/kartu-keluarga",
+    path: "/home/kartu-keluarga",
   },
   {
     title: "Penyaluran Subsidi",
     icon: PenyaluranSubsidiIcon,
-    path: "/penyaluran-subsidi",
+    path: "/home/penyaluran-subsidi",
   },
 ];
 
@@ -89,7 +89,7 @@ const Sosial = () => {
           ></div>
           <div className="container py-3 position-relative px-3">
             <div className="mb-4 pb-4">
-              <Link to="/" className="mb-4 d-flex align-items-center">
+              <Link to="/home" className="mb-4 d-flex align-items-center">
                 <Icon
                   icon="akar-icons:chevron-left"
                   width={16}

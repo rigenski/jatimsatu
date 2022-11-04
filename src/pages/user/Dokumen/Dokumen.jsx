@@ -17,7 +17,7 @@ import {
 import { useEffect } from "react";
 import { getAllKependudukan } from "../../../store/kependudukan/kependudukanAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAllSosial } from "../../../store/sosial/sosialAction";
 import moment from "moment";
 
@@ -46,7 +46,7 @@ const Dokumen = () => {
   const [section, setSection] = useState("kependudukan");
   const [searchValue, setSearchValue] = useState("");
   const [startRange, setStartRange] = useState("");
-  const [lastRange, setlastRange] = useState("");
+  const [endRange, setendRange] = useState("");
 
   const nodes = dataAll;
 
@@ -79,7 +79,7 @@ const Dokumen = () => {
       searchKey: "formType.name",
       searchValue: searchValue,
       startRange: startRange,
-      lastRange: lastRange,
+      endRange: endRange,
       rows: 5,
       cursor: cursor,
     };
@@ -89,7 +89,7 @@ const Dokumen = () => {
     } else if (section === "sosial") {
       handleGetAllSosial(data);
     }
-  }, [searchValue, section, startRange, lastRange, cursor]);
+  }, [searchValue, section, startRange, endRange, cursor]);
 
   return (
     <>
@@ -187,8 +187,8 @@ const Dokumen = () => {
                         type="date"
                         className="form-control"
                         id="tanggal-akhir"
-                        value={lastRange}
-                        onChange={(e) => setlastRange(e.target.value)}
+                        value={endRange}
+                        onChange={(e) => setendRange(e.target.value)}
                       />
                     </div>
                   </div>

@@ -18,7 +18,7 @@ import {
   Row,
   Table,
 } from "@table-library/react-table-library";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { deleteManyUser, getAllUser } from "../../../store/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,9 +26,15 @@ import toast from "react-hot-toast";
 
 const SuperAdminUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const cursor = queryParams.get("cursor");
+  const cursorDirection = queryParams.get("cursorDirection");
 
   const { userAll } = useSelector((state) => state.user);
 
+  const [dataDetail, setDataDetail] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
   const nodes = userAll;
@@ -45,7 +51,11 @@ const SuperAdminUser = () => {
   ]);
 
   const handleGetAllUser = async (data) => {
-    await dispatch(getAllUser(data));
+    await dispatch(getAllUser(data)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setDataDetail(res.payload.content);
+      }
+    });
   };
 
   const handleDeleteManyUser = async (data) => {
@@ -75,10 +85,12 @@ const SuperAdminUser = () => {
     const data = {
       searchKey: "name",
       searchValue: searchValue,
+      cursor: cursor,
+      cursorDirection: cursorDirection,
     };
 
     handleGetAllUser(data);
-  }, [searchValue]);
+  }, [searchValue, cursor, cursorDirection]);
 
   return (
     <>
@@ -273,22 +285,60 @@ const SuperAdminUser = () => {
               </Table>
             </div>
             <div className="d-flex justify-content-center">
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-left-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-right-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
+              {dataDetail?.previousCursor ? (
+                <button
+                  className="bg-transparent border-0"
+                  disabled={dataDetail?.previousCursor ? false : true}
+                  onClick={() =>
+                    navigate(
+                      `/super-admin/users?cursor=${dataDetail?.previousCursor}&cursorDirection=previous`
+                    )
+                  }
+                >
+                  <Icon
+                    icon="dashicons:arrow-left-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              ) : (
+                <button className="bg-transparent border-0" disabled>
+                  <Icon
+                    icon="dashicons:arrow-left-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              )}
+              {dataDetail?.nextCursor ? (
+                <button
+                  className="bg-transparent border-0"
+                  disabled={dataDetail?.nextCursor ? false : true}
+                  onClick={() =>
+                    navigate(
+                      `/super-admin/users?cursor=${dataDetail?.nextCursor}&cursorDirection=next`
+                    )
+                  }
+                >
+                  <Icon
+                    icon="dashicons:arrow-right-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              ) : (
+                <button className="bg-transparent border-0" disabled>
+                  <Icon
+                    icon="dashicons:arrow-right-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              )}
             </div>
           </div>
         </div>

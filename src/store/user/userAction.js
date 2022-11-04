@@ -71,12 +71,17 @@ export const getUser = createAsyncThunk(
 
 export const getAllUser = createAsyncThunk(
   "user",
-  async ({ searchKey, searchValue }, { rejectWithValue }) => {
+  async (
+    { searchKey, searchValue, cursor, cursorDirection },
+    { rejectWithValue }
+  ) => {
     try {
       const data = {
         params: {
           searchKey: searchKey,
           searchValue: searchValue,
+          cursor: cursor,
+          cursorDirection: cursorDirection,
         },
       };
 

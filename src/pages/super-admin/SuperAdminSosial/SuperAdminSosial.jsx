@@ -61,7 +61,7 @@ const SuperAdminSosial = () => {
           searchKey: "formType.name",
           searchValue: searchValue,
           startRange: null,
-          lastRange: null,
+          endRange: null,
           rows: null,
           cursor: null,
         };
@@ -78,7 +78,7 @@ const SuperAdminSosial = () => {
       searchKey: "name",
       searchValue: searchValue,
       startRange: null,
-      lastRange: null,
+      endRange: null,
       rows: null,
       cursor: null,
     };
