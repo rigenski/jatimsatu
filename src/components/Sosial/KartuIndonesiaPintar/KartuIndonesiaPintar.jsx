@@ -49,10 +49,7 @@ const KartuIndonesiaPintar = () => {
     if (KK) {
       const KKSelected = KK.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/sosial/kip/${KKSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKSelected.name}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
@@ -64,10 +61,7 @@ const KartuIndonesiaPintar = () => {
     if (KTP) {
       const KTPSelected = KTP.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/sosial/kip/${KTPSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KTPSelected.name}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";
@@ -81,7 +75,7 @@ const KartuIndonesiaPintar = () => {
 
       const storageRef = ref(
         storage,
-        `documents/sosial/kip/${suratRekomendasiRTRWSelected.name}`
+        `documents/${suratRekomendasiRTRWSelected.name}`
       );
 
       uploadBytes(storageRef, suratRekomendasiRTRWSelected).then(() => {

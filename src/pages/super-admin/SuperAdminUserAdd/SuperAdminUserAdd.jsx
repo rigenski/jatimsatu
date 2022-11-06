@@ -78,7 +78,7 @@ const SuperAdminUserAdd = () => {
     if (KK) {
       const KKSelected = KK.files[0];
 
-      const storageRef = ref(storage, `documents/kk/${KKSelected.name}`);
+      const storageRef = ref(storage, `documents/${KKSelected.name}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
@@ -89,7 +89,7 @@ const SuperAdminUserAdd = () => {
 
     if (KTP) {
       const KTPSelected = KTP.files[0];
-      const storageRef = ref(storage, `documents/ktp/${KTPSelected.name}`);
+      const storageRef = ref(storage, `documents/${KTPSelected.name}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";

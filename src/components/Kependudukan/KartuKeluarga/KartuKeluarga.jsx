@@ -51,10 +51,7 @@ const KartuKeluarga = () => {
     if (KKSuami) {
       const KKSuamiSelected = KKSuami.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/kk/${KKSuamiSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKSuamiSelected.name}`);
 
       uploadBytes(storageRef, KKSuamiSelected).then(() => {
         KKSuamiSelected.value = "";
@@ -66,10 +63,7 @@ const KartuKeluarga = () => {
     if (KKIstri) {
       const KKIstriSelected = KKIstri.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/kk/${KKIstriSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKIstriSelected.name}`);
 
       uploadBytes(storageRef, KKIstriSelected).then(() => {
         KKIstriSelected.value = "";
@@ -81,10 +75,7 @@ const KartuKeluarga = () => {
     if (KTPSuami) {
       const KTPSuamiSelected = KTPSuami.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/kk/${KTPSuamiSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KTPSuamiSelected.name}`);
 
       uploadBytes(storageRef, KTPSuamiSelected).then(() => {
         KTPSuamiSelected.value = "";
@@ -96,10 +87,7 @@ const KartuKeluarga = () => {
     if (KTPIstri) {
       const KTPIstriSelected = KTPIstri.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/kk/${KTPIstriSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KTPIstriSelected.name}`);
 
       uploadBytes(storageRef, KTPIstriSelected).then(() => {
         KTPIstriSelected.value = "";
@@ -111,10 +99,7 @@ const KartuKeluarga = () => {
     if (bukuNikah) {
       const bukuNikahSelected = bukuNikah.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/kk/${bukuNikahSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${bukuNikahSelected.name}`);
 
       uploadBytes(storageRef, bukuNikahSelected).then(() => {
         bukuNikahSelected.value = "";

@@ -9,6 +9,7 @@ import {
   deleteKependudukan,
   getKependudukanById,
 } from "../../../store/kependudukan/kependudukanAction";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const SuperAdminKependudukanDetail = () => {
   const dispatch = useDispatch();
@@ -41,11 +42,12 @@ const SuperAdminKependudukanDetail = () => {
     });
   };
 
-  useEffect(() => {
-    if (kependudukanDetail) {
-      console.log(Object.entries(kependudukanDetail.documents));
-    }
-  }, [kependudukanDetail]);
+  const handleDownloadFile = async (data) => {
+    const storage = getStorage();
+    getDownloadURL(ref(storage, `documents/${data}`)).then((url) => {
+      console.log("download success");
+    });
+  };
 
   useEffect(() => {
     const data = {
@@ -65,16 +67,6 @@ const SuperAdminKependudukanDetail = () => {
               Kependudukan / Detail dokumen
             </p>
           </div>
-          {/* <div className="p-3 text-white bg-black">
-            Dokumen berhasil disimpan
-            <Icon
-              icon="akar-icons:circle-x"
-              width={24}
-              height={24}
-              color="#FFFFFF"
-              className="ms-2"
-            />
-          </div> */}
         </div>
         <div className="card mb-4 w-100">
           <div className="card-body p-lg-4">
@@ -84,23 +76,10 @@ const SuperAdminKependudukanDetail = () => {
                   Pengajuan Surat Keterangan Daftar KTP
                 </h5>
                 <p className="mb-0 text-paragraph-2 text-grey-3">
-                  Sosial / Detail user
+                  Kependudukan / Detail Dokumen
                 </p>
               </div>
               <div className="d-flex">
-                {/* <Link
-                  to={`/super-admin/kependudukan/${id}/edit`}
-                  className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
-                >
-                  <Icon
-                    icon="la:pen"
-                    width={24}
-                    height={24}
-                    color="#FFFFFF"
-                    className="me-2"
-                  />
-                  Edit
-                </Link> */}
                 <button
                   className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
                   data-bs-toggle="modal"
@@ -316,54 +295,31 @@ const SuperAdminKependudukanDetail = () => {
               </div>
             ) : (
               <div className="row">
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="kk"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Upload KK <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="kk"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="ktp"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Upload KTP <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="ktp"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-md-6">
-                  <div className="mb-3">
-                    <label
-                      htmlFor="surat-hilang"
-                      className="form-label text-body-3 text-grey-1"
-                    >
-                      Surat keterangan hilang (jika hilang)
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="surat-hilang"
-                      disabled
-                    />
-                  </div>
-                </div>
+                {Object.entries(
+                  kependudukanDetail ? kependudukanDetail.documents : {}
+                ).map((item, index) => {
+                  return (
+                    <div className="col-12 col-md-6">
+                      <div className="mb-3 d-flex flex-column">
+                        <label
+                          htmlFor="kk"
+                          className="form-label text-body-3 text-grey-1"
+                        >
+                          {item[0]} <span className="text-danger">*</span>
+                        </label>
+                        <a
+                          role="button"
+                          className="mb-0 text-body-3 text-primary-3"
+                          onClick={() => {
+                            handleDownloadFile(item[1]);
+                          }}
+                        >
+                          Unduh
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

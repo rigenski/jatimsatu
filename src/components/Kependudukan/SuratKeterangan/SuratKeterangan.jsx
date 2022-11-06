@@ -61,10 +61,7 @@ const SuratKeterangan = () => {
     if (KK) {
       const KKSelected = KK.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${KKSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKSelected.name}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
@@ -76,10 +73,7 @@ const SuratKeterangan = () => {
     if (KTP) {
       const KTPSelected = KTP.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${KTPSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KTPSelected.name}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";
@@ -93,7 +87,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/surat-keterangan/${suratRekomendasiRTRWSelected.name}`
+        `documents/${suratRekomendasiRTRWSelected.name}`
       );
 
       uploadBytes(storageRef, suratRekomendasiRTRWSelected).then(() => {
@@ -108,10 +102,7 @@ const SuratKeterangan = () => {
     if (KKOrtu) {
       const KKOrtuSelected = KKOrtu.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${KKOrtuSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKOrtuSelected.name}`);
 
       uploadBytes(storageRef, KKOrtuSelected).then(() => {
         KKOrtuSelected.value = "";
@@ -125,7 +116,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/surat-keterangan/${SKKelahiranBayiSelected.name}`
+        `documents/${SKKelahiranBayiSelected.name}`
       );
 
       uploadBytes(storageRef, SKKelahiranBayiSelected).then(() => {
@@ -138,10 +129,7 @@ const SuratKeterangan = () => {
     if (bukuNikah) {
       const bukuNikahSelected = bukuNikah.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${bukuNikahSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${bukuNikahSelected.name}`);
 
       uploadBytes(storageRef, bukuNikahSelected).then(() => {
         bukuNikahSelected.value = "";
@@ -153,10 +141,7 @@ const SuratKeterangan = () => {
     if (ijazahOrtu) {
       const ijazahOrtuSelected = ijazahOrtu.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${ijazahOrtuSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${ijazahOrtuSelected.name}`);
 
       uploadBytes(storageRef, ijazahOrtuSelected).then(() => {
         ijazahOrtuSelected.value = "";
@@ -168,10 +153,7 @@ const SuratKeterangan = () => {
     if (SKKematianRS) {
       const SKKematianRSSelected = SKKematianRS.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${SKKematianRSSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${SKKematianRSSelected.name}`);
 
       uploadBytes(storageRef, SKKematianRSSelected).then(() => {
         SKKematianRSSelected.value = "";
@@ -183,10 +165,7 @@ const SuratKeterangan = () => {
     if (SKRT) {
       const SKRTSelected = SKRT.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/surat-keterangan/${SKRTSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${SKRTSelected.name}`);
 
       uploadBytes(storageRef, SKRTSelected).then(() => {
         SKRTSelected.value = "";
@@ -200,7 +179,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/surat-keterangan/${SKKematianPasanganSelected.name}`
+        `documents/${SKKematianPasanganSelected.name}`
       );
 
       uploadBytes(storageRef, SKKematianPasanganSelected).then(() => {
@@ -217,7 +196,7 @@ const SuratKeterangan = () => {
 
       const storageRef = ref(
         storage,
-        `documents/kependudukan/surat-keterangan/${SKCeraiPengadilanSelected.name}`
+        `documents/${SKCeraiPengadilanSelected.name}`
       );
 
       uploadBytes(storageRef, SKCeraiPengadilanSelected).then(() => {

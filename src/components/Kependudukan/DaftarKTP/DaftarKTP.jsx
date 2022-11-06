@@ -49,10 +49,7 @@ const DaftarKTP = () => {
     if (KK) {
       const KKSelected = KK.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/daftar-ktp/${KKSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKSelected.name}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
@@ -64,10 +61,7 @@ const DaftarKTP = () => {
     if (aktaLahir) {
       const aktaLahirSelected = aktaLahir.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/daftar-ktp/${aktaLahirSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${aktaLahirSelected.name}`);
 
       uploadBytes(storageRef, aktaLahirSelected).then(() => {
         aktaLahirSelected.value = "";
@@ -79,10 +73,7 @@ const DaftarKTP = () => {
     if (SKHilang) {
       const SKHilangSelected = SKHilang.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/daftar-ktp/${SKHilangSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${SKHilangSelected.name}`);
 
       uploadBytes(storageRef, SKHilangSelected).then(() => {
         SKHilangSelected.value = "";

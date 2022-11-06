@@ -52,10 +52,7 @@ const PerubahanStatus = () => {
     if (KK) {
       const KKSelected = KK.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/perubahan-sosial/${KKSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KKSelected.name}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
@@ -67,10 +64,7 @@ const PerubahanStatus = () => {
     if (KTP) {
       const KTPSelected = KTP.files[0];
 
-      const storageRef = ref(
-        storage,
-        `documents/kependudukan/perubahan-sosial/${KTPSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${KTPSelected.name}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";
