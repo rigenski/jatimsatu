@@ -8,6 +8,7 @@ import {
   getDesaByKecamatan,
   getKabupaten,
   getKecamatan,
+  getKecamatanByKabupaten,
   getProvinsi,
 } from "../../../store/region/regionAction";
 import { createUser } from "../../../store/user/userAction";
@@ -31,7 +32,7 @@ const roleAll = ["SUPER_ADMIN", "ADMIN", "PENDUDUK"];
 const SuperAdminUserAdd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, resetField } = useForm();
 
   const { provinsiAll, kabupatenAll, kecamatanAll, desaAll } = useSelector(
     (state) => state.region
@@ -39,7 +40,9 @@ const SuperAdminUserAdd = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [kabupatenId, setKabupatenId] = useState(null);
   const [kecamatanId, setKecamatanId] = useState(null);
+
   const [KK, setKK] = useState(null);
   const [KTP, setKTP] = useState(null);
 
@@ -51,13 +54,12 @@ const SuperAdminUserAdd = () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetAllKecamatan = async () => {
+  const handleGetKecamatanByKabupaten = async () => {
     const data = {
-      searchKey: null,
-      searchValue: null,
+      kabupatenId: kabupatenId,
     };
 
-    await dispatch(getKecamatan(data));
+    await dispatch(getKecamatanByKabupaten(data));
   };
 
   const handleGetDesaByKecamatan = async () => {
@@ -116,11 +118,20 @@ const SuperAdminUserAdd = () => {
   useEffect(() => {
     handleGetAllProvinsi();
     handleGetAllKabupaten();
-    handleGetAllKecamatan();
   }, []);
 
   useEffect(() => {
+    handleGetKecamatanByKabupaten();
+
+    setKecamatanId(null);
+    resetField("kecamatanId");
+    resetField("desaId");
+  }, [kabupatenId]);
+
+  useEffect(() => {
     handleGetDesaByKecamatan();
+
+    resetField("desaId");
   }, [kecamatanId]);
 
   return (
@@ -390,6 +401,7 @@ const SuperAdminUserAdd = () => {
                       id="kabupaten"
                       required
                       {...register("kabupatenId")}
+                      onChange={(e) => setKabupatenId(e.target.value)}
                     >
                       <option value="">---pilih salah satu---</option>
                       {kabupatenAll.map((item, index) => {
@@ -415,9 +427,7 @@ const SuperAdminUserAdd = () => {
                       id="kecamatan"
                       required
                       {...register("kecamatanId")}
-                      onChange={(e) => {
-                        setKecamatanId(e.target.value);
-                      }}
+                      onChange={(e) => setKecamatanId(e.target.value)}
                     >
                       <option value="">---pilih salah satu---</option>
                       {kecamatanAll.map((item, index) => {

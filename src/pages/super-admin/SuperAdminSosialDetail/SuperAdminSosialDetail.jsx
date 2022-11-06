@@ -1,10 +1,52 @@
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
+import {
+  deleteSosial,
+  getSosialById,
+} from "../../../store/sosial/sosialAction";
 
 const SuperAdminSosialDetail = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const { id } = params;
+
+  const { sosialDetail } = useSelector((state) => state.sosial);
+
   const [section, setSection] = useState("formulir-pendaftaran");
+
+  const handleGetSosialById = async (data) => {
+    await dispatch(getSosialById(data));
+  };
+
+  const handleDeleteManySosial = async (data) => {
+    const loader = toast.loading("Mohon Tunggu...");
+
+    await dispatch(deleteSosial(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        navigate("/super-admin/sosial");
+      } else {
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const data = {
+      id: id,
+    };
+
+    handleGetSosialById(data);
+  }, [id]);
 
   return (
     <>
@@ -16,7 +58,7 @@ const SuperAdminSosialDetail = () => {
               Sosial / Detail dokumen
             </p>
           </div>
-          <div className="p-3 text-white bg-black">
+          {/* <div className="p-3 text-white bg-black">
             Dokumen berhasil disimpan
             <Icon
               icon="akar-icons:circle-x"
@@ -25,7 +67,7 @@ const SuperAdminSosialDetail = () => {
               color="#FFFFFF"
               className="ms-2"
             />
-          </div>
+          </div> */}
         </div>
         <div className="card mb-4 w-100">
           <div className="card-body p-lg-4">
@@ -40,8 +82,8 @@ const SuperAdminSosialDetail = () => {
                 </p>
               </div>
               <div className="d-flex">
-                <Link
-                  to="/super-admin/sosial/edit"
+                {/* <Link
+                  to={`/super-admin/kependudukan/${id}/edit`}
                   className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
                 >
                   <Icon
@@ -52,7 +94,7 @@ const SuperAdminSosialDetail = () => {
                     className="me-2"
                   />
                   Edit
-                </Link>
+                </Link> */}
                 <button
                   className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
                   data-bs-toggle="modal"
@@ -109,7 +151,7 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="nama"
-                      defaultValue="Bonyfasius Lumbanraja"
+                      defaultValue={sosialDetail?.registrationForm?.name}
                       disabled
                     />
                   </div>
@@ -126,7 +168,7 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="nik"
-                      defaultValue="3312278010000009"
+                      defaultValue={sosialDetail?.registrationForm?.nik}
                       disabled
                     />
                   </div>
@@ -143,7 +185,7 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="alamat"
-                      defaultValue="Jalan Alpukat"
+                      defaultValue={sosialDetail?.registrationForm?.alamat}
                       disabled
                     />
                   </div>
@@ -151,14 +193,13 @@ const SuperAdminSosialDetail = () => {
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="desa"
+                      htmlFor="kabupaten"
                       className="form-label text-body-3 text-grey-1"
                     >
-                      Desa <span className="text-danger">*</span>
+                      Kabupaten <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="desa" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
+                    <select className="form-select" id="kabupaten" disabled>
+                      <option>{sosialDetail?.kabupaten.name}</option>
                     </select>
                   </div>
                 </div>
@@ -171,22 +212,20 @@ const SuperAdminSosialDetail = () => {
                       Kecamatan <span className="text-danger">*</span>
                     </label>
                     <select className="form-select" id="kecamatan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
+                      <option>{sosialDetail?.kecamatan.name}</option>
                     </select>
                   </div>
                 </div>
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label
-                      htmlFor="kelurahan"
+                      htmlFor="desa"
                       className="form-label text-body-3 text-grey-1"
                     >
-                      Kelurahan <span className="text-danger">*</span>
+                      Desa <span className="text-danger">*</span>
                     </label>
-                    <select className="form-select" id="kelurahan" disabled>
-                      <option>Blitar</option>
-                      <option>Malang</option>
+                    <select className="form-select" id="desa" disabled>
+                      <option>{sosialDetail?.desa.name}</option>
                     </select>
                   </div>
                 </div>
@@ -202,7 +241,9 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="rt"
-                      defaultValue="01"
+                      defaultValue={
+                        sosialDetail?.registrationForm?.rtrw.split("/")[0]
+                      }
                       disabled
                     />
                   </div>
@@ -219,7 +260,9 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="rw"
-                      defaultValue="07"
+                      defaultValue={
+                        sosialDetail?.registrationForm?.rtrw.split("/")[1]
+                      }
                       disabled
                     />
                   </div>
@@ -236,7 +279,7 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="kode-pos"
-                      defaultValue="172931"
+                      defaultValue={sosialDetail?.registrationForm?.postalCode}
                       disabled
                     />
                   </div>
@@ -253,7 +296,7 @@ const SuperAdminSosialDetail = () => {
                       type="text"
                       className="form-control"
                       id="deskripsi"
-                      defaultValue="Pembuatan BPJS pribadi"
+                      defaultValue={sosialDetail?.registrationForm?.deskripsi}
                       disabled
                     />
                   </div>
@@ -293,6 +336,22 @@ const SuperAdminSosialDetail = () => {
                     />
                   </div>
                 </div>
+                <div className="col-12 col-md-6">
+                  <div className="mb-3">
+                    <label
+                      htmlFor="surat-hilang"
+                      className="form-label text-body-3 text-grey-1"
+                    >
+                      Surat keterangan hilang (jika hilang)
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="surat-hilang"
+                      disabled
+                    />
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -318,7 +377,11 @@ const SuperAdminSosialDetail = () => {
                     >
                       Batal
                     </button>
-                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
+                    <button
+                      className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
+                      data-bs-dismiss="modal"
+                      onClick={() => handleDeleteManySosial({ ids: [id] })}
+                    >
                       <Icon
                         icon="akar-icons:trash-can"
                         width={24}

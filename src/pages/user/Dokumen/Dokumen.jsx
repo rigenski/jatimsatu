@@ -80,7 +80,6 @@ const Dokumen = () => {
       searchValue: searchValue,
       startRange: startRange,
       endRange: endRange,
-      rows: 5,
       cursor: cursor,
     };
 

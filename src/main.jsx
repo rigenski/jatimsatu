@@ -4,6 +4,7 @@ import App from "src/App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "src/style/global.css";
+import "react-select-search/style.css";
 import { Provider } from "react-redux";
 import store from "./store";
 

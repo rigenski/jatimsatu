@@ -36,7 +36,15 @@ export const getAllKependudukanTypes = createAsyncThunk(
 export const getAllKependudukan = createAsyncThunk(
   "kependudukan",
   async (
-    { searchKey, searchValue, startRange, endRange, rows, cursor },
+    {
+      searchKey,
+      searchValue,
+      startRange,
+      endRange,
+      cursor,
+      cursorDirection,
+      filters,
+    },
     { rejectWithValue }
   ) => {
     try {
@@ -46,8 +54,9 @@ export const getAllKependudukan = createAsyncThunk(
           searchValue: searchValue,
           startRange: startRange,
           endRange: endRange,
-          rows: rows,
           cursor: cursor,
+          cursorDirection: cursorDirection,
+          filters: filters,
         },
       };
 
@@ -95,7 +104,25 @@ export const deleteKependudukan = createAsyncThunk(
   "kependudukan/delete",
   async ({ ids }, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`kependudukan?ids=${ids}`);
+      let idsData = "[";
+
+      ids.map((item, index) => {
+        idsData += `"${item}"`;
+
+        if (index + 1 < ids.length) {
+          idsData += ",";
+        }
+      });
+
+      idsData += "]";
+
+      const data = {
+        params: {
+          ids: idsData,
+        },
+      };
+
+      const response = await api.delete(`kependudukan`, data);
 
       return response.data;
     } catch (err) {

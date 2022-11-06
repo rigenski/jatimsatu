@@ -45,6 +45,8 @@ const SuperAdminDesaEdit = () => {
     const data = {
       searchKey: null,
       searchValue: null,
+      cursor: null,
+      cursorDirection: null,
     };
 
     await dispatch(getKecamatan(data));

@@ -72,7 +72,7 @@ export const getUser = createAsyncThunk(
 export const getAllUser = createAsyncThunk(
   "user",
   async (
-    { searchKey, searchValue, cursor, cursorDirection },
+    { searchKey, searchValue, cursor, cursorDirection, filters },
     { rejectWithValue }
   ) => {
     try {
@@ -82,6 +82,7 @@ export const getAllUser = createAsyncThunk(
           searchValue: searchValue,
           cursor: cursor,
           cursorDirection: cursorDirection,
+          filters: filters,
         },
       };
 
@@ -148,26 +149,25 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const deleteUser = createAsyncThunk(
-  "user/delete",
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const response = await api.delete(`user/${id}`);
-
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  }
-);
-
 export const deleteManyUser = createAsyncThunk(
   "user/delete/many",
   async ({ ids }, { rejectWithValue }) => {
     try {
+      let idsData = "[";
+
+      ids.map((item, index) => {
+        idsData += `"${item}"`;
+
+        if (index + 1 < ids.length) {
+          idsData += ",";
+        }
+      });
+
+      idsData += "]";
+
       const data = {
         params: {
-          ids: ids.toString(),
+          ids: idsData,
         },
       };
 

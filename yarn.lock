@@ -1809,6 +1809,11 @@ react-router@6.4.2:
   dependencies:
     "@remix-run/router" "1.0.2"
 
+react-select-search@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/react-select-search/-/react-select-search-4.1.5.tgz#64d887e2a4b1582e49eae8f486334d22407c9476"
+  integrity sha512-3NbCdTn4NMWSXvHk6iFMaQ9jml832TbsoNEKvdYjtOC39WOV9AfpTIhfKy2VVASAnYVGtX+PuaUvLR1Rem5Pqw==
+
 react-uuid@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-uuid/-/react-uuid-2.0.0.tgz#e3c97e190db9eef53cb9dacfcc7314d913a411fa"

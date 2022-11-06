@@ -14,6 +14,7 @@ import DaftarKtpIcon from "src/assets/images/pre-dashboard/sosial/daftar-ktp-ico
 import SuratJalanIcon from "src/assets/images/pre-dashboard/sosial/surat-jalan-icon.png";
 import SuratKeteranganIcon from "src/assets/images/pre-dashboard/sosial/surat-keterangan-icon.png";
 import PenyaluranSubsidiIcon from "src/assets/images/pre-dashboard/sosial/penyaluran-subsidi-icon.png";
+import KartuPrakerjaIcon from "src/assets/images/pre-dashboard/sosial/kartu-prakerja-icon.png";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
@@ -68,6 +69,11 @@ const layananData = [
     title: "Penyaluran Subsidi",
     icon: PenyaluranSubsidiIcon,
     path: "/home/penyaluran-subsidi",
+  },
+  {
+    title: "Kartu Prakerja",
+    icon: KartuPrakerjaIcon,
+    path: "/home/kartu-prakerja",
   },
 ];
 

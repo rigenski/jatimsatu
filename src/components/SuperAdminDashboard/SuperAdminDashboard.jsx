@@ -3,12 +3,14 @@ import { Icon } from "@iconify/react";
 import "./SuperAdminDashboard.css";
 import { Link, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authLogout } from "../../store/auth/authSlice";
 
 const AdminDashboard = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const { user } = useSelector((state) => state.auth);
 
   const { pathname } = location;
   const navUrl = pathname.split("/")[2];
@@ -57,7 +59,199 @@ const AdminDashboard = (props) => {
             </button>
           </div>
           <div className="collapse navbar-collapse" id="menu-drawer">
-            <div className="ms-auto py-2 d-flex align-items-center py-lg-0">
+            <ul className="mb-0 p-0 d-block d-lg-none">
+              <li>
+                {navUrl === undefined ? (
+                  <Link
+                    to="/super-admin"
+                    className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                  >
+                    <span className="text-paragraph-1 text-primary-2">
+                      Dashboard
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/super-admin"
+                    className="p-2 d-flex align-items-center"
+                  >
+                    <span className="text-paragraph-1 text-grey-2">
+                      Dashboard
+                    </span>
+                  </Link>
+                )}
+              </li>
+              <li>
+                {navUrl === "users" ? (
+                  <Link
+                    to="/super-admin/users"
+                    className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                  >
+                    <span className="text-paragraph-1 text-primary-2">
+                      User Management
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/super-admin/users"
+                    className="p-2 d-flex align-items-center"
+                  >
+                    <span className="text-paragraph-1 text-grey-2">
+                      User Management
+                    </span>
+                  </Link>
+                )}
+              </li>
+              <li>
+                {navUrl === "kependudukan" ? (
+                  <Link
+                    to="/super-admin/kependudukan"
+                    className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                  >
+                    <span className="text-paragraph-1 text-primary-2">
+                      Kependudukan
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/super-admin/kependudukan"
+                    className="p-2 d-flex align-items-center"
+                  >
+                    <span className="text-paragraph-1 text-grey-2">
+                      Kependudukan
+                    </span>
+                  </Link>
+                )}
+              </li>
+              <li>
+                {navUrl === "sosial" ? (
+                  <Link
+                    to="/super-admin/sosial"
+                    className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                  >
+                    <span className="text-paragraph-1 text-primary-2">
+                      Sosial
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/super-admin/sosial"
+                    className="p-2 d-flex align-items-center"
+                  >
+                    <span className="text-paragraph-1 text-grey-2">Sosial</span>
+                  </Link>
+                )}
+              </li>
+              <li>
+                {navUrl === "kesehatan" ? (
+                  <Link
+                    to="/super-admin/kesehatan"
+                    className="p-2 d-flex align-items-center border-4 border-end border-primary-2"
+                  >
+                    <span className="text-paragraph-1 text-primary-2">
+                      Kesehatan
+                    </span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/super-admin/kesehatan"
+                    className="p-2 d-flex align-items-center"
+                  >
+                    <span className="text-paragraph-1 text-grey-2">
+                      Kesehatan
+                    </span>
+                  </Link>
+                )}
+              </li>
+              <li>
+                <Link to="#" className="p-2 d-flex align-items-center">
+                  <span className="text-paragraph-1 text-grey-2">
+                    Pendidikan
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="p-2 d-flex align-items-center">
+                  <span className="text-paragraph-1 text-grey-2">UMKM</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="p-2 d-flex align-items-center">
+                  <span className="text-paragraph-1 text-grey-2">
+                    Perizinan
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <div className="accordion">
+                  <div className="accordion-item border-0">
+                    <h2
+                      className="accordion-header bg-transparent"
+                      id="headingOne"
+                    >
+                      <a
+                        role="button"
+                        className="accordion-button collapsed p-2 d-flex align-items-center bg-transparent border-0 shadow-none"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#wilayahAccordion"
+                        aria-expanded="true"
+                        aria-controls="wilayahAccordion"
+                      >
+                        <span className="text-paragraph-1 text-grey-2">
+                          Wilayah
+                        </span>
+                      </a>
+                    </h2>
+                    <div
+                      id="wilayahAccordion"
+                      className="accordion-collapse collapse "
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#wilayahAccordion"
+                    >
+                      <div className="accordion-body p-0 px-4">
+                        <ul className="mb-0 p-0">
+                          <li>
+                            {navUrl === "kecamatan" ? (
+                              <Link
+                                to="/super-admin/kecamatan"
+                                className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
+                              >
+                                Kecamatan
+                              </Link>
+                            ) : (
+                              <Link
+                                to="/super-admin/kecamatan"
+                                className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
+                              >
+                                Kecamatan
+                              </Link>
+                            )}
+                          </li>
+                          <li>
+                            {navUrl === "desa" ? (
+                              <Link
+                                to="/super-admin/desa"
+                                className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-primary-2 border-4 border-end border-primary-2"
+                              >
+                                Desa
+                              </Link>
+                            ) : (
+                              <Link
+                                to="/super-admin/desa"
+                                className="px-2 py-2 d-flex align-items-center text-paragraph-1 text-grey-2"
+                              >
+                                Desa
+                              </Link>
+                            )}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div className="ms-auto d-flex align-items-center py-lg-0">
               <Link to="#" className="d-none d-lg-block">
                 <Icon
                   icon="codicon:bell"
@@ -71,16 +265,16 @@ const AdminDashboard = (props) => {
                 style={{ height: "24px", borderRight: "1px solid #949494 " }}
               ></div>
               <div className="w-100 d-flex justify-content-between align-items-center w-lg-auto">
-                <div className="order-2 px-3 py-2 text-primary-2 bg-primary-6 rounded-3 order-lg-1">
-                  Super Admin
+                <div className="order-2 px-3 py-2 text-body-4 text-primary-2 bg-primary-6 rounded-3 order-lg-1">
+                  {user.role}
                 </div>
                 <div className="dropdown order-1 order-lg-2">
                   <button
                     className="dropdown-toggle d-flex align-items-center bg-transparent border-0 "
                     data-bs-toggle="dropdown"
                   >
-                    <p className="me-0 mx-2 mb-0 text-body-3 text-grey-1 me-lg-2">
-                      Bonyfasius
+                    <p className="mx-0 mb-0 text-body-3 text-grey-1 mx-lg-2">
+                      {user.name}
                     </p>
                     <Icon
                       icon="carbon:user-avatar-filled-alt"
@@ -91,22 +285,6 @@ const AdminDashboard = (props) => {
                     />
                   </button>
                   <ul className="dropdown-menu">
-                    <li>
-                      <Link
-                        className="dropdown-item py-2 d-flex align-items-center"
-                        to="/dokumen"
-                      >
-                        <Icon
-                          icon="ep:document"
-                          width={24}
-                          height={24}
-                          color="#000000"
-                        />
-                        <span className="ms-2 text-body-4 text-grey-1">
-                          Dokumen saya
-                        </span>
-                      </Link>
-                    </li>
                     <li>
                       <Link
                         role="button"

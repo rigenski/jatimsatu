@@ -24,15 +24,110 @@ import {
   getAllKependudukan,
 } from "../../../store/kependudukan/kependudukanAction";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment/moment";
+import { getDesa } from "../../../store/region/regionAction";
+
+const searchFilters = [
+  {
+    id: "formType.name",
+    name: "Nama",
+  },
+  {
+    id: "description",
+    name: "Keterangan",
+  },
+];
+
+const dokumenTypes = [
+  {
+    id: "0cd3c8fd-ce1d-4736-97d2-ad243974c417",
+    name: "SK Duda/Janda",
+  },
+  {
+    id: "1f3a348d-af77-424a-a2a2-636b47382599",
+    name: "Perubahan Status Pendidikan",
+  },
+  {
+    id: "35b57cc0-56e9-435c-9508-b4102d6ad5f1",
+    name: "SK Cerai",
+  },
+  {
+    id: "3e4a7a04-c680-4639-a3ee-a7d6be5bf673",
+    name: "SK Pindah/datang",
+  },
+  {
+    id: "4278c144-8951-40c6-93d7-80736e509baf",
+    name: "Perubahan Status Kependudukan",
+  },
+  {
+    id: "56ebfd26-63c5-4fea-893c-176473c38968",
+    name: "SK Meninggal",
+  },
+  {
+    id: "88bff511-5786-4a34-ad46-b7dbed19fd96",
+    name: "Perubahan Status Pekerjaan",
+  },
+  {
+    id: "8dba0dda-9fd4-4cfe-9038-91620918c0d2",
+    name: "Kartu Keluarga",
+  },
+  {
+    id: "91a35f21-bf13-45d2-96da-0a76089f8f71",
+    name: "Surat Keterangan Domisili",
+  },
+  {
+    id: "969ba0c8-3e65-4d3b-8bf6-dd998c4230cb",
+    name: "SK Lahir",
+  },
+  {
+    id: "9b6d0e7e-0bd7-4504-9483-a4e55ccf60ec",
+    name: "Daftar KTP",
+  },
+  {
+    id: "9ea5d289-42d8-4c52-a51a-3153a3aad4ea",
+    name: "SK Menikah",
+  },
+  {
+    id: "a70dbb0e-ac27-4caf-b36b-6d28e23a9395",
+    name: "Surat Jalan",
+  },
+];
+
+const statusTypes = [
+  {
+    id: "Disetujui",
+    name: "Disetujui",
+  },
+  {
+    id: "Ditotak",
+    name: "Ditotak",
+  },
+];
 
 const SuperAdminKependudukan = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const cursor = queryParams.get("cursor");
+  const cursorDirection = queryParams.get("cursorDirection");
 
   const { kependudukanAll } = useSelector((state) => state.kependudukan);
+  const { desaAll } = useSelector((state) => state.region);
 
+  const [dataDetail, setDataDetail] = useState(null);
   const [searchValue, setSearchValue] = useState("");
+
+  const [desaId, setDesaId] = useState(null);
+  const [searchFilterId, setSearchFilterId] = useState(searchFilters[0].id);
+  const [dokumenTypeIds, setDokumenTypeIds] = useState(
+    new Array(dokumenTypes.length).fill(false)
+  );
+  const [statusTypeIds, setStatusTypeIds] = useState(
+    new Array(statusTypes.length).fill(false)
+  );
+  const [dateRange, setDateRange] = useState([null, null]);
 
   const nodes = kependudukanAll;
 
@@ -48,7 +143,11 @@ const SuperAdminKependudukan = () => {
   ]);
 
   const handleGetAllKependudukan = async (data) => {
-    await dispatch(getAllKependudukan(data));
+    await dispatch(getAllKependudukan(data)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setDataDetail(res.payload.content);
+      }
+    });
   };
 
   const handleDeleteManyKependudukan = async (data) => {
@@ -76,18 +175,58 @@ const SuperAdminKependudukan = () => {
     });
   };
 
+  const handleChangeDokumenTypeIds = (position) => {
+    const checkedUpdated = dokumenTypeIds.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setDokumenTypeIds(checkedUpdated);
+  };
+
+  const handleChangeStatusTypeIds = (position) => {
+    const checkedUpdated = statusTypeIds.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setStatusTypeIds(checkedUpdated);
+  };
+
+  const handleGetAllDesa = async (data) => {
+    await dispatch(getDesa(data));
+  };
+
   useEffect(() => {
     const data = {
-      searchKey: "name",
+      searchKey: searchFilterId,
       searchValue: searchValue,
       startRange: null,
       endRange: null,
-      rows: null,
-      cursor: null,
+      cursor: cursor,
+      cursorDirection: cursorDirection,
+      filters: desaId
+        ? JSON.stringify({
+            desaId: { values: [desaId] },
+          })
+        : null,
     };
 
     handleGetAllKependudukan(data);
-  }, [searchValue]);
+  }, [searchValue, cursor, cursorDirection, searchFilterId, desaId]);
+
+  useEffect(() => {
+    const data = {
+      searchKey: null,
+      searchValue: null,
+      cursor: null,
+      cursorDirection: null,
+    };
+
+    handleGetAllDesa(data);
+  }, []);
+
+  useEffect(() => {
+    console.log(dateRange);
+  }, [dateRange]);
 
   return (
     <>
@@ -108,25 +247,22 @@ const SuperAdminKependudukan = () => {
                 color="#474747"
                 className="position-absolute"
               />
-              <select className="form-select ps-5 w-auto" id="desa">
-                <option>Blitar</option>
-                <option>Malang</option>
+              <select
+                className="form-select ps-5 w-auto max-w-normal"
+                onChange={(e) => {
+                  setDesaId(e.target.value !== "" ? e.target.value : null);
+                }}
+              >
+                <option value="">Semua Desa</option>
+                {desaAll.map((item, index) => {
+                  return (
+                    <option value={item.id} key={index}>
+                      {item.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
-            <button
-              className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
-              data-bs-toggle="modal"
-              data-bs-target="#addModal"
-            >
-              <Icon
-                icon="akar-icons:circle-plus"
-                width={24}
-                height={24}
-                color="#FFFFFF"
-                className="me-2"
-              />
-              Tambah
-            </button>
           </div>
         </div>
         <div className="card w-100">
@@ -187,24 +323,42 @@ const SuperAdminKependudukan = () => {
                   />
                   Filter
                 </button>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cari"
-                    placeholder="Cari dokumen"
-                    style={{ paddingLeft: "48px" }}
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                  />
-                  <Icon
-                    icon="charm:search"
-                    width={24}
-                    height={24}
-                    color="#000000"
-                    className="position-absolute ms-3"
-                    style={{ top: "50%", transform: "translateY(-50%)" }}
-                  />
+                <div className="d-flex align-items-center">
+                  <select
+                    className="form-select w-auto max-w-normal"
+                    onChange={(e) => {
+                      setSearchFilterId(
+                        e.target.value !== "" ? e.target.value : null
+                      );
+                    }}
+                  >
+                    {searchFilters.map((item, index) => {
+                      return (
+                        <option value={item.id} key={index}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="position-relative">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="cari"
+                      placeholder="Cari dokumen"
+                      style={{ paddingLeft: "48px" }}
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                    <Icon
+                      icon="charm:search"
+                      width={24}
+                      height={24}
+                      color="#000000"
+                      className="position-absolute ms-3"
+                      style={{ top: "50%", transform: "translateY(-50%)" }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -299,22 +453,60 @@ const SuperAdminKependudukan = () => {
               </Table>
             </div>
             <div className="d-flex justify-content-center">
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-left-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-right-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
+              {dataDetail?.previousCursor ? (
+                <button
+                  className="bg-transparent border-0"
+                  disabled={dataDetail?.previousCursor ? false : true}
+                  onClick={() =>
+                    navigate(
+                      `/super-admin/kependudukan?cursor=${dataDetail?.previousCursor}&cursorDirection=previous`
+                    )
+                  }
+                >
+                  <Icon
+                    icon="dashicons:arrow-left-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              ) : (
+                <button className="bg-transparent border-0" disabled>
+                  <Icon
+                    icon="dashicons:arrow-left-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              )}
+              {dataDetail?.nextCursor ? (
+                <button
+                  className="bg-transparent border-0"
+                  disabled={dataDetail?.nextCursor ? false : true}
+                  onClick={() =>
+                    navigate(
+                      `/super-admin/kependudukan?cursor=${dataDetail?.nextCursor}&cursorDirection=next`
+                    )
+                  }
+                >
+                  <Icon
+                    icon="dashicons:arrow-right-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              ) : (
+                <button className="bg-transparent border-0" disabled>
+                  <Icon
+                    icon="dashicons:arrow-right-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -375,198 +567,26 @@ const SuperAdminKependudukan = () => {
               <div className="mb-2">
                 <p className="mb-2 text-paragraph-1 text-grey-1">Dokumen</p>
                 <div className="row ">
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Daftar KTP
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Kartu Keluarga
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Surat Jalan
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Lahir
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Meninggal
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Pindah/datang
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Duda/Janda
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Lahir
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Menikah
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Cerai
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Perubahan Status Pendidikan
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Perubahan Status Pekerjaan
-                      </label>
-                    </div>
-                  </div>
+                  {dokumenTypes.map((item, index) => {
+                    return (
+                      <div className="col-12 col-sm-6" key={index}>
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="dokumen-type"
+                            onChange={() => handleChangeDokumenTypeIds(index)}
+                          />
+                          <label
+                            className="form-check-label ms-1 text-paragraph-2 "
+                            htmlFor="daftar-ktp"
+                          >
+                            {item.name}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="mb-3 border-bottom border-grey-4"></div>
@@ -578,6 +598,9 @@ const SuperAdminKependudukan = () => {
                       type="date"
                       className="form-control mb-2"
                       id="tanggal-awal"
+                      onChange={(e) =>
+                        setDateRange([e.target.value, dateRange[1]])
+                      }
                     />
                   </div>
                   <div className="col-12 col-sm-6">
@@ -585,8 +608,38 @@ const SuperAdminKependudukan = () => {
                       type="date"
                       className="form-control mb-2"
                       id="tanggal-akhir"
+                      onChange={(e) =>
+                        setDateRange([dateRange[0], e.target.value])
+                      }
                     />
                   </div>
+                </div>
+              </div>
+              <div className="mb-3 border-bottom border-grey-4"></div>
+              <div className="mb-2">
+                <p className="mb-2 text-paragraph-1 text-grey-1">Status</p>
+                <div className="row">
+                  {statusTypes.map((item, index) => {
+                    return (
+                      <div className="col-12 col-sm-6" key={index}>
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="status-type"
+                            value={item.id}
+                            onChange={() => handleChangeStatusTypeIds(index)}
+                          />
+                          <label
+                            className="form-check-label ms-1 text-paragraph-2 "
+                            htmlFor="daftar-ktp"
+                          >
+                            {item.name}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="mb-3 border-bottom border-grey-4"></div>
@@ -594,79 +647,6 @@ const SuperAdminKependudukan = () => {
                 <button className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1">
                   Terapkan
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="modal fade"
-        id="addModal"
-        tabIndex="-1"
-        aria-labelledby="addModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content p-4">
-            <div className="modal-body">
-              <h3 className="mb-2 text-body-3 text-grey-1 text-center">
-                Tambah dokumen
-              </h3>
-              <p className="mb-4 text-paragraph-4 text-grey-1 text-center">
-                Apakah anda yakin untuk hapus dokumen ini?
-              </p>
-              <div className="mb-4">
-                <div className="mb-3">
-                  <label
-                    htmlFor="nik"
-                    className="form-label text-body-3 text-grey-1"
-                  >
-                    NIK <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="nik"
-                    placeholder="masukkan NIK terdaftar"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label
-                    htmlFor="jenis"
-                    className="form-label text-body-3 text-grey-1"
-                  >
-                    Jenis Dokumen <span className="text-danger">*</span>
-                  </label>
-                  <select className="form-select" id="jenis">
-                    <option>Pilih Jenis Dokumen</option>
-                    <option>Blitar</option>
-                    <option>Malang</option>
-                  </select>
-                </div>
-              </div>
-              <div className="d-flex justify-content-center align-items-center">
-                <div className="d-flex">
-                  <button
-                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
-                    data-bs-dismiss="modal"
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteModal"
-                  >
-                    <Icon
-                      icon="akar-icons:circle-plus"
-                      width={24}
-                      height={24}
-                      color="#FFFFFF"
-                      className="me-2"
-                    />
-                    Tambah
-                  </button>
-                </div>
               </div>
             </div>
           </div>

@@ -21,15 +21,21 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSosial, getAllSosial } from "../../../store/sosial/sosialAction";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 const SuperAdminSosial = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const cursor = queryParams.get("cursor");
+  const cursorDirection = queryParams.get("cursorDirection");
 
   const { sosialAll } = useSelector((state) => state.sosial);
 
   const [searchValue, setSearchValue] = useState("");
+  const [dataDetail, setDataDetail] = useState(null);
 
   const nodes = sosialAll;
 
@@ -45,7 +51,11 @@ const SuperAdminSosial = () => {
   ]);
 
   const handleGetAllSosial = async (data) => {
-    await dispatch(getAllSosial(data));
+    await dispatch(getAllSosial(data)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setDataDetail(res.payload.content);
+      }
+    });
   };
 
   const handleDeleteManySosial = async (data) => {
@@ -62,7 +72,6 @@ const SuperAdminSosial = () => {
           searchValue: searchValue,
           startRange: null,
           endRange: null,
-          rows: null,
           cursor: null,
         };
 
@@ -79,12 +88,12 @@ const SuperAdminSosial = () => {
       searchValue: searchValue,
       startRange: null,
       endRange: null,
-      rows: null,
-      cursor: null,
+      cursor: cursor,
+      cursorDirection: cursorDirection,
     };
 
     handleGetAllSosial(data);
-  }, [searchValue]);
+  }, [searchValue, cursor, cursorDirection]);
 
   return (
     <>
@@ -281,7 +290,7 @@ const SuperAdminSosial = () => {
                           <Cell className="px-2 py-3 text-grey-1">
                             <div>
                               <Link
-                                to={`/super-admin/kependudukan/${item.id}`}
+                                to={`/super-admin/sosial/${item.id}`}
                                 className="btn me-2 px-3 py-1 text-white text-nowrap bg-primary-2 rounded-1"
                               >
                                 Lihat
@@ -296,22 +305,60 @@ const SuperAdminSosial = () => {
               </Table>
             </div>
             <div className="d-flex justify-content-center">
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-left-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
-              <button className="bg-transparent border-0">
-                <Icon
-                  icon="dashicons:arrow-right-alt2"
-                  width={24}
-                  height={24}
-                  color="#474747"
-                />
-              </button>
+              {dataDetail?.previousCursor ? (
+                <button
+                  className="bg-transparent border-0"
+                  disabled={dataDetail?.previousCursor ? false : true}
+                  onClick={() =>
+                    navigate(
+                      `/super-admin/sosial?cursor=${dataDetail?.previousCursor}&cursorDirection=previous`
+                    )
+                  }
+                >
+                  <Icon
+                    icon="dashicons:arrow-left-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              ) : (
+                <button className="bg-transparent border-0" disabled>
+                  <Icon
+                    icon="dashicons:arrow-left-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              )}
+              {dataDetail?.nextCursor ? (
+                <button
+                  className="bg-transparent border-0"
+                  disabled={dataDetail?.nextCursor ? false : true}
+                  onClick={() =>
+                    navigate(
+                      `/super-admin/sosial?cursor=${dataDetail?.nextCursor}&cursorDirection=next`
+                    )
+                  }
+                >
+                  <Icon
+                    icon="dashicons:arrow-right-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              ) : (
+                <button className="bg-transparent border-0" disabled>
+                  <Icon
+                    icon="dashicons:arrow-right-alt2"
+                    width={24}
+                    height={24}
+                    color="#474747"
+                  />
+                </button>
+              )}
             </div>
           </div>
         </div>

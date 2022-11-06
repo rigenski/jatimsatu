@@ -70,7 +70,7 @@ const AdminDashboard = (props) => {
                 style={{ height: "24px", borderRight: "1px solid #949494 " }}
               ></div>
               <div className="w-100 d-flex justify-content-between align-items-center w-lg-auto">
-                <div className="order-2 px-3 py-2 text-primary-2 bg-primary-6 rounded-3 order-lg-1">
+                <div className="order-2 px-3 py-2 text-body-4  text-primary-2 bg-primary-6 rounded-3 order-lg-1">
                   Super Admin
                 </div>
                 <div className="dropdown order-1 order-lg-2">
@@ -78,7 +78,7 @@ const AdminDashboard = (props) => {
                     className="dropdown-toggle d-flex align-items-center bg-transparent border-0 "
                     data-bs-toggle="dropdown"
                   >
-                    <p className="me-0 mx-2 mb-0 text-body-3 text-grey-1 me-lg-2">
+                    <p className="mx-0 mb-0 text-body-3 text-grey-1 mx-lg-2">
                       Bonyfasius
                     </p>
                     <Icon

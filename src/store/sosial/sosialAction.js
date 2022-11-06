@@ -36,7 +36,7 @@ export const getAllSosialTypes = createAsyncThunk(
 export const getAllSosial = createAsyncThunk(
   "sosial",
   async (
-    { searchKey, searchValue, startRange, endRange, rows, cursor },
+    { searchKey, searchValue, startRange, endRange, cursor, cursorDirection },
     { rejectWithValue }
   ) => {
     try {
@@ -46,8 +46,8 @@ export const getAllSosial = createAsyncThunk(
           searchValue: searchValue,
           startRange: startRange,
           endRange: endRange,
-          rows: rows,
           cursor: cursor,
+          cursorDirection: cursorDirection,
         },
       };
 
@@ -95,7 +95,25 @@ export const deleteSosial = createAsyncThunk(
   "sosial/delete",
   async ({ ids }, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`sosial?ids=${ids}`);
+      let idsData = "[";
+
+      ids.map((item, index) => {
+        idsData += `"${item}"`;
+
+        if (index + 1 < ids.length) {
+          idsData += ",";
+        }
+      });
+
+      idsData += "]";
+
+      const data = {
+        params: {
+          ids: idsData,
+        },
+      };
+
+      const response = await api.delete(`sosial`, data);
 
       return response.data;
     } catch (err) {

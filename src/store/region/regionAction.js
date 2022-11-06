@@ -29,6 +29,19 @@ export const getKabupaten = createAsyncThunk(
   }
 );
 
+export const getKecamatanByKabupaten = createAsyncThunk(
+  "kabupaten/kecamatan",
+  async ({ kabupatenId }, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`kabupaten/${kabupatenId}/kecamatan`);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 export const getKabupatenById = createAsyncThunk(
   "kabupaten/detail",
   async ({ id }, { rejectWithValue }) => {
@@ -45,12 +58,17 @@ export const getKabupatenById = createAsyncThunk(
 // kecamatan
 export const getKecamatan = createAsyncThunk(
   "kecamatan",
-  async ({ searchKey, searchValue }, { rejectWithValue }) => {
+  async (
+    { searchKey, searchValue, cursor, cursorDirection },
+    { rejectWithValue }
+  ) => {
     try {
       const data = {
         params: {
           searchKey: searchKey,
           searchValue: searchValue,
+          cursor: cursor,
+          cursorDirection: cursorDirection,
         },
       };
 
@@ -148,12 +166,17 @@ export const deleteManyKecamatan = createAsyncThunk(
 // desa
 export const getDesa = createAsyncThunk(
   "desa",
-  async ({ searchKey, searchValue }, { rejectWithValue }) => {
+  async (
+    { searchKey, searchValue, cursor, cursorDirection },
+    { rejectWithValue }
+  ) => {
     try {
       const data = {
         params: {
           searchKey: searchKey,
           searchValue: searchValue,
+          cursor: cursor,
+          cursorDirection: cursorDirection,
         },
       };
 
@@ -242,9 +265,21 @@ export const deleteManyDesa = createAsyncThunk(
   "desa/delete/many",
   async ({ ids }, { rejectWithValue }) => {
     try {
+      let idsData = "[";
+
+      ids.map((item, index) => {
+        idsData += `"${item}"`;
+
+        if (index + 1 < ids.length) {
+          idsData += ",";
+        }
+      });
+
+      idsData += "]";
+
       const data = {
         params: {
-          ids: ids,
+          ids: idsData,
         },
       };
 

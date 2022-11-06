@@ -130,7 +130,7 @@ const Signin = () => {
                         </label>
                         <input
                           type="password"
-                          className="form-control text-body-4 text-grey-4"
+                          className="form-control"
                           id="password"
                           placeholder="Masukkan password anda disini..."
                           required

@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import {
   getDesaByKecamatan,
   getKabupaten,
-  getKecamatan,
+  getKecamatanByKabupaten,
   getProvinsi,
 } from "../../../store/region/regionAction";
 import { storage } from "src/config/firebase/firebase";
@@ -33,12 +33,14 @@ const pekerjaanAll = [
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, getValues } = useForm();
+  const { register, handleSubmit, getValues, resetField } = useForm();
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(1);
 
+  const [kabupatenId, setKabupatenId] = useState(null);
   const [kecamatanId, setKecamatanId] = useState(null);
+
   const [KK, setKK] = useState(null);
   const [KTP, setKTP] = useState(null);
 
@@ -104,13 +106,12 @@ const Signup = () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetAllKecamatan = async () => {
+  const handleGetKecamatanByKabupaten = async () => {
     const data = {
-      searchKey: null,
-      searchValue: null,
+      kabupatenId: kabupatenId,
     };
 
-    await dispatch(getKecamatan(data));
+    await dispatch(getKecamatanByKabupaten(data));
   };
 
   const handleGetDesaByKecamatan = async () => {
@@ -124,11 +125,20 @@ const Signup = () => {
   useEffect(() => {
     handleGetAllProvinsi();
     handleGetAllKabupaten();
-    handleGetAllKecamatan();
   }, []);
 
   useEffect(() => {
+    handleGetKecamatanByKabupaten();
+
+    setKecamatanId(null);
+    resetField("kecamatanId");
+    resetField("desaId");
+  }, [kabupatenId]);
+
+  useEffect(() => {
     handleGetDesaByKecamatan();
+
+    resetField("desaId");
   }, [kecamatanId]);
 
   if (status === 1) {
@@ -351,23 +361,11 @@ const Signup = () => {
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {provinsiAll.map((item, index) => {
-                                  if (getValues("kabupatenId") === item.id) {
-                                    return (
-                                      <option
-                                        value={item.id}
-                                        key={index}
-                                        selected
-                                      >
-                                        {item.name}
-                                      </option>
-                                    );
-                                  } else {
-                                    return (
-                                      <option value={item.id} key={index}>
-                                        {item.name}
-                                      </option>
-                                    );
-                                  }
+                                  return (
+                                    <option value={item.id} key={index}>
+                                      {item.name}
+                                    </option>
+                                  );
                                 })}
                               </select>
                             </div>
@@ -385,26 +383,15 @@ const Signup = () => {
                                 id="kabupaten"
                                 required
                                 {...register("kabupatenId")}
+                                onChange={(e) => setKabupatenId(e.target.value)}
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {kabupatenAll.map((item, index) => {
-                                  if (getValues("kabupatenId") === item.id) {
-                                    return (
-                                      <option
-                                        value={item.id}
-                                        key={index}
-                                        selected
-                                      >
-                                        {item.name}
-                                      </option>
-                                    );
-                                  } else {
-                                    return (
-                                      <option value={item.id} key={index}>
-                                        {item.name}
-                                      </option>
-                                    );
-                                  }
+                                  return (
+                                    <option value={item.id} key={index}>
+                                      {item.name}
+                                    </option>
+                                  );
                                 })}
                               </select>
                             </div>
@@ -422,29 +409,15 @@ const Signup = () => {
                                 id="kecamatan"
                                 required
                                 {...register("kecamatanId")}
-                                onChange={(e) => {
-                                  setKecamatanId(e.target.value);
-                                }}
+                                onChange={(e) => setKecamatanId(e.target.value)}
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {kecamatanAll.map((item, index) => {
-                                  if (getValues("kecamatanId") === item.id) {
-                                    return (
-                                      <option
-                                        value={item.id}
-                                        key={index}
-                                        selected
-                                      >
-                                        {item.name}
-                                      </option>
-                                    );
-                                  } else {
-                                    return (
-                                      <option value={item.id} key={index}>
-                                        {item.name}
-                                      </option>
-                                    );
-                                  }
+                                  return (
+                                    <option value={item.id} key={index}>
+                                      {item.name}
+                                    </option>
+                                  );
                                 })}
                               </select>
                             </div>
@@ -465,23 +438,11 @@ const Signup = () => {
                               >
                                 <option value="">---pilih salah satu---</option>
                                 {desaAll.map((item, index) => {
-                                  if (getValues("desaId") === item.id) {
-                                    return (
-                                      <option
-                                        value={item.id}
-                                        key={index}
-                                        selected
-                                      >
-                                        {item.name}
-                                      </option>
-                                    );
-                                  } else {
-                                    return (
-                                      <option value={item.id} key={index}>
-                                        {item.name}
-                                      </option>
-                                    );
-                                  }
+                                  return (
+                                    <option value={item.id} key={index}>
+                                      {item.name}
+                                    </option>
+                                  );
                                 })}
                               </select>
                             </div>

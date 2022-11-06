@@ -23,6 +23,48 @@ import { useEffect } from "react";
 import { deleteManyUser, getAllUser } from "../../../store/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { getDesa } from "../../../store/region/regionAction";
+
+const searchFilters = [
+  {
+    id: "name",
+    name: "Username",
+  },
+  {
+    id: "phoneNumber",
+    name: "No. HP",
+  },
+];
+
+const userTypes = [
+  {
+    id: "PENDUDUK",
+    name: "User",
+  },
+  {
+    id: "ADMIN",
+    name: "Admin Desa",
+  },
+  {
+    id: "DINAS_KEPENDUDUKAN",
+    name: "Dinas Kependudukan",
+  },
+  {
+    id: "DINAS_SOSIAL",
+    name: "Dinas Sosial",
+  },
+];
+
+const statusTypes = [
+  {
+    id: true,
+    name: "Aktif",
+  },
+  {
+    id: false,
+    name: "Tidak Aktif",
+  },
+];
 
 const SuperAdminUser = () => {
   const dispatch = useDispatch();
@@ -33,9 +75,19 @@ const SuperAdminUser = () => {
   const cursorDirection = queryParams.get("cursorDirection");
 
   const { userAll } = useSelector((state) => state.user);
+  const { desaAll } = useSelector((state) => state.region);
 
   const [dataDetail, setDataDetail] = useState(null);
   const [searchValue, setSearchValue] = useState("");
+
+  const [desaId, setDesaId] = useState(null);
+  const [searchFilterId, setSearchFilterId] = useState(searchFilters[0].id);
+  const [userTypeIds, setUserTypeIds] = useState(
+    new Array(userTypes.length).fill(false)
+  );
+  const [statusTypeIds, setStatusTypeIds] = useState(
+    new Array(statusTypes.length).fill(false)
+  );
 
   const nodes = userAll;
 
@@ -81,16 +133,52 @@ const SuperAdminUser = () => {
     });
   };
 
+  const handleChangeUserTypeIds = (position) => {
+    const checkedUpdated = userTypeIds.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setUserTypeIds(checkedUpdated);
+  };
+
+  const handleChangeStatusTypeIds = (position) => {
+    const checkedUpdated = statusTypeIds.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setStatusTypeIds(checkedUpdated);
+  };
+
+  const handleGetAllDesa = async (data) => {
+    await dispatch(getDesa(data));
+  };
+
   useEffect(() => {
     const data = {
-      searchKey: "name",
+      searchKey: searchFilterId,
       searchValue: searchValue,
       cursor: cursor,
       cursorDirection: cursorDirection,
+      filters: desaId
+        ? JSON.stringify({
+            desaId: { values: [desaId] },
+          })
+        : null,
     };
 
     handleGetAllUser(data);
-  }, [searchValue, cursor, cursorDirection]);
+  }, [searchValue, cursor, cursorDirection, searchFilterId, desaId]);
+
+  useEffect(() => {
+    const data = {
+      searchKey: null,
+      searchValue: null,
+      cursor: null,
+      cursorDirection: null,
+    };
+
+    handleGetAllDesa(data);
+  }, []);
 
   return (
     <>
@@ -111,9 +199,20 @@ const SuperAdminUser = () => {
                 color="#474747"
                 className="position-absolute"
               />
-              <select className="form-select ps-5 w-auto" id="desa">
-                <option>Blitar</option>
-                <option>Malang</option>
+              <select
+                className="form-select ps-5 w-auto max-w-normal"
+                onChange={(e) => {
+                  setDesaId(e.target.value !== "" ? e.target.value : null);
+                }}
+              >
+                <option value="">Semua Desa</option>
+                {desaAll.map((item, index) => {
+                  return (
+                    <option value={item.id} key={index}>
+                      {item.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <Link
@@ -173,9 +272,9 @@ const SuperAdminUser = () => {
                   </button>
                 )}
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-start flex-column flex-md-row align-items-md-center">
                 <button
-                  className="btn me-3 w-auto px-2 d-flex justify-content-center align-items-center text-button bg-white text-center border-1 border-grey-5 rounded-1"
+                  className="btn me-3 mb-2 w-auto px-2 d-flex justify-content-center align-items-center text-button bg-white text-center border-1 border-grey-5 rounded-1 mb-md-0"
                   data-bs-toggle="modal"
                   data-bs-target="#filterModal"
                 >
@@ -188,24 +287,42 @@ const SuperAdminUser = () => {
                   />
                   Filter
                 </button>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cari"
-                    placeholder="Cari user"
-                    style={{ paddingLeft: "48px" }}
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                  />
-                  <Icon
-                    icon="charm:search"
-                    width={24}
-                    height={24}
-                    color="#000000"
-                    className="position-absolute ms-3"
-                    style={{ top: "50%", transform: "translateY(-50%)" }}
-                  />
+                <div className="d-flex align-items-center">
+                  <select
+                    className="form-select w-auto max-w-normal"
+                    onChange={(e) => {
+                      setSearchFilterId(
+                        e.target.value !== "" ? e.target.value : null
+                      );
+                    }}
+                  >
+                    {searchFilters.map((item, index) => {
+                      return (
+                        <option value={item.id} key={index}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="position-relative">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="cari"
+                      placeholder="Cari user"
+                      style={{ paddingLeft: "48px" }}
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                    <Icon
+                      icon="charm:search"
+                      width={24}
+                      height={24}
+                      color="#000000"
+                      className="position-absolute ms-3"
+                      style={{ top: "50%", transform: "translateY(-50%)" }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -354,220 +471,55 @@ const SuperAdminUser = () => {
           <div className="modal-content">
             <div className="modal-body">
               <div className="mb-2">
-                <p className="mb-2 text-paragraph-1 text-grey-1">Dokumen</p>
-                <div className="row ">
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Daftar KTP
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Kartu Keluarga
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Surat Jalan
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Lahir
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Meninggal
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Pindah/datang
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Duda/Janda
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Lahir
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Menikah
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Cerai
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Perubahan Status Pendidikan
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Perubahan Status Pekerjaan
-                      </label>
-                    </div>
-                  </div>
+                <p className="mb-2 text-paragraph-1 text-grey-1">Tipe User</p>
+                <div className="row">
+                  {userTypes.map((item, index) => {
+                    return (
+                      <div className="col-12 col-sm-6" key={index}>
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="user-type"
+                            onChange={() => handleChangeUserTypeIds(index)}
+                          />
+                          <label
+                            className="form-check-label ms-1 text-paragraph-2 "
+                            htmlFor="daftar-ktp"
+                          >
+                            {item.name}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="mb-3 border-bottom border-grey-4"></div>
               <div className="mb-2">
-                <p className="mb-2 text-paragraph-1 text-grey-1">Tanggal</p>
+                <p className="mb-2 text-paragraph-1 text-grey-1">Status</p>
                 <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <input
-                      type="date"
-                      className="form-control mb-2"
-                      id="tanggal-awal"
-                    />
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <input
-                      type="date"
-                      className="form-control mb-2"
-                      id="tanggal-akhir"
-                    />
-                  </div>
+                  {statusTypes.map((item, index) => {
+                    return (
+                      <div className="col-12 col-sm-6" key={index}>
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="status-type"
+                            value={item.id}
+                            onChange={() => handleChangeStatusTypeIds(index)}
+                          />
+                          <label
+                            className="form-check-label ms-1 text-paragraph-2 "
+                            htmlFor="daftar-ktp"
+                          >
+                            {item.name}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="mb-3 border-bottom border-grey-4"></div>

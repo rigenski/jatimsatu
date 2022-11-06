@@ -3,18 +3,19 @@ import React from "react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 import {
   getDesaById,
   getKabupatenById,
   getKecamatanById,
 } from "../../../store/region/regionAction";
-import { deleteUser, getUser } from "../../../store/user/userAction";
+import { deleteManyUser, getUser } from "../../../store/user/userAction";
 
 const SuperAdminUserDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
 
   const { userDetail } = useSelector((state) => state.user);
   const { kabupatenDetail, kecamatanDetail, desaDetail } = useSelector(
@@ -39,10 +40,10 @@ const SuperAdminUserDetail = () => {
     await dispatch(getDesaById(data));
   };
 
-  const handleDeleteUser = async (data) => {
+  const handleDeleteManyUser = async (data) => {
     const loader = toast.loading("Mohon Tunggu...");
 
-    await dispatch(deleteUser(data)).then((res) => {
+    await dispatch(deleteManyUser(data)).then((res) => {
       toast.dismiss(loader);
 
       if (res.meta.requestStatus === "fulfilled") {
@@ -403,7 +404,7 @@ const SuperAdminUserDetail = () => {
                   <button
                     className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
                     data-bs-dismiss="modal"
-                    onClick={() => handleDeleteUser({ id: userDetail?.id })}
+                    onClick={() => handleDeleteManyUser({ ids: [id] })}
                   >
                     <Icon
                       icon="akar-icons:trash-can"

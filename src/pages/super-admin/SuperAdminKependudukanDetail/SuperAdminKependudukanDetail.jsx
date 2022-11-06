@@ -1,14 +1,19 @@
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
-import { getKependudukanById } from "../../../store/kependudukan/kependudukanAction";
+import {
+  deleteKependudukan,
+  getKependudukanById,
+} from "../../../store/kependudukan/kependudukanAction";
 
 const SuperAdminKependudukanDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
 
   const { id } = params;
 
@@ -19,6 +24,28 @@ const SuperAdminKependudukanDetail = () => {
   const handleGetKependudukanById = async (data) => {
     await dispatch(getKependudukanById(data));
   };
+
+  const handleDeleteManyKependudukan = async (data) => {
+    const loader = toast.loading("Mohon Tunggu...");
+
+    await dispatch(deleteKependudukan(data)).then((res) => {
+      toast.dismiss(loader);
+
+      if (res.meta.requestStatus === "fulfilled") {
+        toast.success(res.payload.message);
+
+        navigate("/super-admin/kependudukan");
+      } else {
+        toast.error(res.payload.response.data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (kependudukanDetail) {
+      console.log(Object.entries(kependudukanDetail.documents));
+    }
+  }, [kependudukanDetail]);
 
   useEffect(() => {
     const data = {
@@ -38,7 +65,7 @@ const SuperAdminKependudukanDetail = () => {
               Kependudukan / Detail dokumen
             </p>
           </div>
-          <div className="p-3 text-white bg-black">
+          {/* <div className="p-3 text-white bg-black">
             Dokumen berhasil disimpan
             <Icon
               icon="akar-icons:circle-x"
@@ -47,7 +74,7 @@ const SuperAdminKependudukanDetail = () => {
               color="#FFFFFF"
               className="ms-2"
             />
-          </div>
+          </div> */}
         </div>
         <div className="card mb-4 w-100">
           <div className="card-body p-lg-4">
@@ -61,7 +88,7 @@ const SuperAdminKependudukanDetail = () => {
                 </p>
               </div>
               <div className="d-flex">
-                <Link
+                {/* <Link
                   to={`/super-admin/kependudukan/${id}/edit`}
                   className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1"
                 >
@@ -73,7 +100,7 @@ const SuperAdminKependudukanDetail = () => {
                     className="me-2"
                   />
                   Edit
-                </Link>
+                </Link> */}
                 <button
                   className="btn w-auto px-2 text-button text-white bg-danger text-center border-0 rounded-1"
                   data-bs-toggle="modal"
@@ -362,7 +389,13 @@ const SuperAdminKependudukanDetail = () => {
                     >
                       Batal
                     </button>
-                    <button className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1">
+                    <button
+                      className="btn w-auto px-2 text-white bg-danger text-center border-0 rounded-1"
+                      data-bs-dismiss="modal"
+                      onClick={() =>
+                        handleDeleteManyKependudukan({ ids: [id] })
+                      }
+                    >
                       <Icon
                         icon="akar-icons:trash-can"
                         width={24}

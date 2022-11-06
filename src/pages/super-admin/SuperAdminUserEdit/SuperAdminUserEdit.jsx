@@ -9,6 +9,7 @@ import {
   getDesaByKecamatan,
   getKabupaten,
   getKecamatan,
+  getKecamatanByKabupaten,
 } from "../../../store/region/regionAction";
 import { getUser, updateUser } from "../../../store/user/userAction";
 import { storage } from "src/config/firebase/firebase";
@@ -38,7 +39,7 @@ const SuperAdminUserEdit = () => {
     (state) => state.region
   );
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, resetField } = useForm({
     defaultValues: {
       kabupatenId: userDetail?.kabupatenId,
       kecamatanId: userDetail?.kecamatanId,
@@ -48,7 +49,10 @@ const SuperAdminUserEdit = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [kabupatenId, setKabupatenId] = useState(null);
   const [kecamatanId, setKecamatanId] = useState(null);
+  const [desaId, setDesaId] = useState(null);
+
   const [KK, setKK] = useState(null);
   const [KTP, setKTP] = useState(null);
 
@@ -62,13 +66,12 @@ const SuperAdminUserEdit = () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetAllKecamatan = async () => {
+  const handleGetKecamatanByKabupaten = async () => {
     const data = {
-      searchKey: null,
-      searchValue: null,
+      kabupatenId: kabupatenId,
     };
 
-    await dispatch(getKecamatan(data));
+    await dispatch(getKecamatanByKabupaten(data));
   };
 
   const handleGetDesaByKecamatan = async () => {
@@ -133,17 +136,33 @@ const SuperAdminUserEdit = () => {
 
     handleGetUser(data);
     handleGetAllKabupaten();
-    handleGetAllKecamatan();
   }, [id]);
 
   useEffect(() => {
     if (userDetail) {
+      setKabupatenId(userDetail.kabupatenId);
       setKecamatanId(userDetail.kecamatanId);
+      setDesaId(userDetail.desaId);
     }
   }, [userDetail]);
 
   useEffect(() => {
+    handleGetKecamatanByKabupaten();
+
+    if (userDetail) {
+      setKecamatanId(null);
+      setDesaId(null);
+      resetField("kecamatanId");
+      resetField("desaId");
+    }
+  }, [kabupatenId]);
+
+  useEffect(() => {
     handleGetDesaByKecamatan();
+
+    if (userDetail) {
+      resetField("desaId");
+    }
   }, [kecamatanId]);
 
   return (
@@ -367,10 +386,13 @@ const SuperAdminUserEdit = () => {
                       id="kabupaten"
                       required
                       {...register("kabupatenId")}
+                      onChange={(e) => {
+                        setKabupatenId(e.target.value);
+                      }}
                     >
                       <option value="">---pilih salah satu---</option>
                       {kabupatenAll.map((item, index) => {
-                        if (userDetail?.kabupatenId === item.id) {
+                        if (kabupatenId === item.id) {
                           return (
                             <option value={item.id} key={index} selected>
                               {item.name}
@@ -406,7 +428,7 @@ const SuperAdminUserEdit = () => {
                     >
                       <option value="">---pilih salah satu---</option>
                       {kecamatanAll.map((item, index) => {
-                        if (userDetail?.kecamatanId === item.id) {
+                        if (kecamatanId === item.id) {
                           return (
                             <option value={item.id} key={index} selected>
                               {item.name}
@@ -436,10 +458,13 @@ const SuperAdminUserEdit = () => {
                       id="desa"
                       required
                       {...register("desaId")}
+                      onChange={(e) => {
+                        setDesaId(e.target.value);
+                      }}
                     >
                       <option value="">---pilih salah satu---</option>
                       {desaAll.map((item, index) => {
-                        if (userDetail?.desaId === item.id) {
+                        if (desaId === item.id) {
                           return (
                             <option value={item.id} key={index} selected>
                               {item.name}

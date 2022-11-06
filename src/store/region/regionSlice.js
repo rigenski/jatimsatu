@@ -7,6 +7,7 @@ import {
   getKabupatenById,
   getKecamatan,
   getKecamatanById,
+  getKecamatanByKabupaten,
   getProvinsi,
 } from "./regionAction";
 
@@ -45,6 +46,9 @@ const regionSlice = createSlice({
     },
     [getKecamatan.fulfilled]: (state, { payload }) => {
       state.kecamatanAll = payload.content.kecamatan;
+    },
+    [getKecamatanByKabupaten.fulfilled]: (state, { payload }) => {
+      state.kecamatanAll = payload.content;
     },
     [getDesa.fulfilled]: (state, { payload }) => {
       state.desaAll = payload.content.desa;
