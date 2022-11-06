@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDashboard";
 import {
-  createDesa,
   getDesaById,
   getKabupaten,
   getKecamatan,
+  getKecamatanByKabupaten,
   getProvinsi,
   updateDesa,
 } from "../../../store/region/regionAction";
@@ -22,7 +22,7 @@ const SuperAdminDesaEdit = () => {
     (state) => state.region
   );
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, resetField } = useForm({
     provinsiId: desaDetail?.provinsiId,
     kabupatenId: desaDetail?.kabupatenId,
     kecamatanId: desaDetail?.kecamatanId,
@@ -30,6 +30,9 @@ const SuperAdminDesaEdit = () => {
   });
 
   const [loading, setLoading] = useState(false);
+
+  const [kabupatenId, setKabupatenId] = useState(null);
+  const [kecamatanId, setKecamatanId] = useState(null);
 
   const { id } = params;
 
@@ -41,15 +44,12 @@ const SuperAdminDesaEdit = () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetAllKecamatan = async () => {
+  const handleGetKecamatanByKabupaten = async () => {
     const data = {
-      searchKey: null,
-      searchValue: null,
-      cursor: null,
-      cursorDirection: null,
+      kabupatenId: kabupatenId,
     };
 
-    await dispatch(getKecamatan(data));
+    await dispatch(getKecamatanByKabupaten(data));
   };
 
   const handleGetDesaById = async (data) => {
@@ -86,8 +86,23 @@ const SuperAdminDesaEdit = () => {
     handleGetDesaById(data);
     handleGetAllProvinsi();
     handleGetAllKabupaten();
-    handleGetAllKecamatan();
   }, [id]);
+
+  useEffect(() => {
+    if (desaDetail) {
+      setKabupatenId(desaDetail.kabupatenId);
+      setKecamatanId(desaDetail.kecamatanId);
+    }
+  }, [desaDetail]);
+
+  useEffect(() => {
+    handleGetKecamatanByKabupaten();
+
+    // if (desaDetail) {
+    //   setKecamatanId(null);
+    //   resetField("kecamatanId");
+    // }
+  }, [kabupatenId]);
 
   return (
     <>
@@ -179,10 +194,11 @@ const SuperAdminDesaEdit = () => {
                       id="kabupaten"
                       required
                       {...register("kabupatenId")}
+                      onChange={(e) => setKabupatenId(e.target.value)}
                     >
                       <option value="">---pilih salah satu---</option>
                       {kabupatenAll.map((item, index) => {
-                        if (desaDetail?.kabupatenId === item.id) {
+                        if (kabupatenId === item.id) {
                           return (
                             <option value={item.id} key={index} selected>
                               {item.name}
@@ -211,10 +227,13 @@ const SuperAdminDesaEdit = () => {
                         id="kecamatan"
                         required
                         {...register("kecamatanId")}
+                        onChange={(e) => {
+                          setKecamatanId(e.target.value);
+                        }}
                       >
                         <option value="">---pilih salah satu---</option>
                         {kecamatanAll.map((item, index) => {
-                          if (desaDetail?.kecamatanId === item.id) {
+                          if (kecamatanId === item.id) {
                             return (
                               <option value={item.id} key={index} selected>
                                 {item.name}

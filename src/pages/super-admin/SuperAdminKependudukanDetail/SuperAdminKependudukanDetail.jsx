@@ -45,7 +45,15 @@ const SuperAdminKependudukanDetail = () => {
   const handleDownloadFile = async (data) => {
     const storage = getStorage();
     getDownloadURL(ref(storage, `documents/${data}`)).then((url) => {
-      console.log("download success");
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = "blob";
+      xhr.onload = (event) => {
+        const blob = xhr.response;
+      };
+      xhr.open("GET", url);
+      xhr.send();
+
+      window.open(url, "_blank");
     });
   };
 
@@ -73,7 +81,7 @@ const SuperAdminKependudukanDetail = () => {
             <div className="mb-2 pb-4 d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
               <div className="mb-3 mb-lg-0">
                 <h5 className="mb-1 text-heading-5 text-grey-1">
-                  Pengajuan Surat Keterangan Daftar KTP
+                  Surat Pengajuan {kependudukanDetail?.formType?.name}
                 </h5>
                 <p className="mb-0 text-paragraph-2 text-grey-3">
                   Kependudukan / Detail Dokumen
@@ -299,7 +307,7 @@ const SuperAdminKependudukanDetail = () => {
                   kependudukanDetail ? kependudukanDetail.documents : {}
                 ).map((item, index) => {
                   return (
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-md-6" key={index}>
                       <div className="mb-3 d-flex flex-column">
                         <label
                           htmlFor="kk"

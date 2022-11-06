@@ -36,7 +36,15 @@ export const getAllSosialTypes = createAsyncThunk(
 export const getAllSosial = createAsyncThunk(
   "sosial",
   async (
-    { searchKey, searchValue, startRange, endRange, cursor, cursorDirection },
+    {
+      searchKey,
+      searchValue,
+      startRange,
+      endRange,
+      cursor,
+      cursorDirection,
+      filters,
+    },
     { rejectWithValue }
   ) => {
     try {
@@ -48,6 +56,7 @@ export const getAllSosial = createAsyncThunk(
           endRange: endRange,
           cursor: cursor,
           cursorDirection: cursorDirection,
+          filters: filters,
         },
       };
 

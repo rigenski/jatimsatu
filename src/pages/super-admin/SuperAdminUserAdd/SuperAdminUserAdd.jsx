@@ -7,7 +7,6 @@ import SuperAdminDashboard from "src/components/SuperAdminDashboard/SuperAdminDa
 import {
   getDesaByKecamatan,
   getKabupaten,
-  getKecamatan,
   getKecamatanByKabupaten,
   getProvinsi,
 } from "../../../store/region/regionAction";
@@ -123,15 +122,15 @@ const SuperAdminUserAdd = () => {
   useEffect(() => {
     handleGetKecamatanByKabupaten();
 
-    setKecamatanId(null);
-    resetField("kecamatanId");
-    resetField("desaId");
+    // setKecamatanId(null);
+    // resetField("kecamatanId");
+    // resetField("desaId");
   }, [kabupatenId]);
 
   useEffect(() => {
     handleGetDesaByKecamatan();
 
-    resetField("desaId");
+    // resetField("desaId");
   }, [kecamatanId]);
 
   return (

@@ -21,9 +21,11 @@ const SuperAdminKecamatanEdit = () => {
   );
 
   const { register, handleSubmit } = useForm({
-    provinsiId: kecamatanDetail?.provinsiId,
-    kabupatenId: kecamatanDetail?.kabupatenId,
-    name: kecamatanDetail?.name,
+    defaultValues: {
+      provinsiId: kecamatanDetail?.provinsiId,
+      kabupatenId: kecamatanDetail?.kabupatenId,
+      name: kecamatanDetail?.name,
+    },
   });
 
   const [loading, setLoading] = useState(false);
@@ -46,6 +48,8 @@ const SuperAdminKecamatanEdit = () => {
     setLoading(true);
 
     const loader = toast.loading("Mohon Tunggu...");
+
+    data.id = id;
 
     await dispatch(updateKecamatan(data)).then((res) => {
       toast.dismiss(loader);

@@ -8,17 +8,20 @@ import {
   createDesa,
   getKabupaten,
   getKecamatan,
+  getKecamatanByKabupaten,
   getProvinsi,
 } from "../../../store/region/regionAction";
 
 const SuperAdminDesaAdd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, resetField } = useForm();
 
   const { provinsiAll, kabupatenAll, kecamatanAll } = useSelector(
     (state) => state.region
   );
+
+  const [kabupatenId, setKabupatenId] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -30,15 +33,12 @@ const SuperAdminDesaAdd = () => {
     await dispatch(getKabupaten());
   };
 
-  const handleGetAllKecamatan = async () => {
+  const handleGetKecamatanByKabupaten = async () => {
     const data = {
-      searchKey: null,
-      searchValue: null,
-      cursor: null,
-      cursorDirection: null,
+      kabupatenId: kabupatenId,
     };
 
-    await dispatch(getKecamatan(data));
+    await dispatch(getKecamatanByKabupaten(data));
   };
 
   const handleAddDesa = async (data) => {
@@ -66,8 +66,13 @@ const SuperAdminDesaAdd = () => {
   useEffect(() => {
     handleGetAllProvinsi();
     handleGetAllKabupaten();
-    handleGetAllKecamatan();
   }, []);
+
+  useEffect(() => {
+    handleGetKecamatanByKabupaten();
+
+    // resetField("kecamatanId");
+  }, [kabupatenId]);
 
   return (
     <>
@@ -151,6 +156,7 @@ const SuperAdminDesaAdd = () => {
                       id="kabupaten"
                       required
                       {...register("kabupatenId")}
+                      onChange={(e) => setKabupatenId(e.target.value)}
                     >
                       <option value="">---pilih salah satu---</option>
                       {kabupatenAll.map((item, index) => {

@@ -51,26 +51,24 @@ const PerubahanStatus = () => {
 
     if (KK) {
       const KKSelected = KK.files[0];
+      documents.KK = `${uuid()}-${KKSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KK}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
       });
-
-      documents.KK = `${uuid()}-${KKSelected.name}`;
     }
 
     if (KTP) {
       const KTPSelected = KTP.files[0];
+      documents.KTP = `${uuid()}-${KTPSelected.name}`;
 
       const storageRef = ref(storage, `documents/${KTPSelected.name}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";
       });
-
-      documents.KTP = `${uuid()}-${KTPSelected.name}`;
     }
 
     Object.assign(data, formRegister);

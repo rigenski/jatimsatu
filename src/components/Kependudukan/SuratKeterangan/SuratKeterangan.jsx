@@ -60,152 +60,138 @@ const SuratKeterangan = () => {
 
     if (KK) {
       const KKSelected = KK.files[0];
+      documents.KK = `${uuid()}-${KKSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KK}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
       });
-
-      documents.KK = `${uuid()}-${KKSelected.name}`;
     }
 
     if (KTP) {
       const KTPSelected = KTP.files[0];
+      documents.KTP = `${uuid()}-${KTPSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KTPSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KTP}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";
       });
-
-      documents.KTP = `${uuid()}-${KTPSelected.name}`;
     }
 
     if (suratRekomendasiRTRW) {
       const suratRekomendasiRTRWSelected = suratRekomendasiRTRW.files[0];
+      documents.suratRekomendasiRTRW = `${uuid()}-${
+        suratRekomendasiRTRWSelected.name
+      }`;
 
       const storageRef = ref(
         storage,
-        `documents/${suratRekomendasiRTRWSelected.name}`
+        `documents/${documents.suratRekomendasiRTRW}`
       );
 
       uploadBytes(storageRef, suratRekomendasiRTRWSelected).then(() => {
         suratRekomendasiRTRWSelected.value = "";
       });
-
-      documents.suratRekomendasiRTRW = `${uuid()}-${
-        suratRekomendasiRTRWSelected.name
-      }`;
     }
 
     if (KKOrtu) {
       const KKOrtuSelected = KKOrtu.files[0];
+      documents.KKOrtu = `${uuid()}-${KKOrtuSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKOrtuSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KKOrtu}`);
 
       uploadBytes(storageRef, KKOrtuSelected).then(() => {
         KKOrtuSelected.value = "";
       });
-
-      documents.KKOrtu = `${uuid()}-${KKOrtuSelected.name}`;
     }
 
     if (SKKelahiranBayi) {
       const SKKelahiranBayiSelected = SKKelahiranBayi.files[0];
+      documents.SKKelahiranBayi = `${uuid()}-${SKKelahiranBayiSelected.name}`;
 
-      const storageRef = ref(
-        storage,
-        `documents/${SKKelahiranBayiSelected.name}`
-      );
+      const storageRef = ref(storage, `documents/${documents.SKKelahiranBayi}`);
 
       uploadBytes(storageRef, SKKelahiranBayiSelected).then(() => {
         SKKelahiranBayiSelected.value = "";
       });
-
-      documents.SKKelahiranBayi = `${uuid()}-${SKKelahiranBayiSelected.name}`;
     }
 
     if (bukuNikah) {
       const bukuNikahSelected = bukuNikah.files[0];
+      documents.bukuNikah = `${uuid()}-${bukuNikahSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${bukuNikahSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.bukuNikah}`);
 
       uploadBytes(storageRef, bukuNikahSelected).then(() => {
         bukuNikahSelected.value = "";
       });
-
-      documents.bukuNikah = `${uuid()}-${bukuNikahSelected.name}`;
     }
 
     if (ijazahOrtu) {
       const ijazahOrtuSelected = ijazahOrtu.files[0];
+      documents.ijazahOrtu = `${uuid()}-${ijazahOrtuSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${ijazahOrtuSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.ijazahOrtu}`);
 
       uploadBytes(storageRef, ijazahOrtuSelected).then(() => {
         ijazahOrtuSelected.value = "";
       });
-
-      documents.ijazahOrtu = `${uuid()}-${ijazahOrtuSelected.name}`;
     }
 
     if (SKKematianRS) {
       const SKKematianRSSelected = SKKematianRS.files[0];
+      documents.SKKematianRS = `${uuid()}-${SKKematianRSSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${SKKematianRSSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.SKKematianRS}`);
 
       uploadBytes(storageRef, SKKematianRSSelected).then(() => {
         SKKematianRSSelected.value = "";
       });
-
-      documents.SKKematianRS = `${uuid()}-${SKKematianRSSelected.name}`;
     }
 
     if (SKRT) {
       const SKRTSelected = SKRT.files[0];
+      documents.SKRT = `${uuid()}-${SKRTSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${SKRTSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.SKRT}`);
 
       uploadBytes(storageRef, SKRTSelected).then(() => {
         SKRTSelected.value = "";
       });
-
-      documents.SKRT = `${uuid()}-${SKRTSelected.name}`;
     }
 
     if (SKKematianPasangan) {
       const SKKematianPasanganSelected = SKKematianPasangan.files[0];
+      documents.SKKematianPasangan = `${uuid()}-${
+        SKKematianPasanganSelected.name
+      }`;
 
       const storageRef = ref(
         storage,
-        `documents/${SKKematianPasanganSelected.name}`
+        `documents/${documents.SKKematianPasangan}`
       );
 
       uploadBytes(storageRef, SKKematianPasanganSelected).then(() => {
         SKKematianPasanganSelected.value = "";
       });
-
-      documents.SKKematianPasangan = `${uuid()}-${
-        SKKematianPasanganSelected.name
-      }`;
     }
 
     if (SKCeraiPengadilan) {
       const SKCeraiPengadilanSelected = SKCeraiPengadilan.files[0];
+      documents.SKCeraiPengadilan = `${uuid()}-${
+        SKCeraiPengadilanSelected.name
+      }`;
 
       const storageRef = ref(
         storage,
-        `documents/${SKCeraiPengadilanSelected.name}`
+        `documents/${documents.SKCeraiPengadilan}`
       );
 
       uploadBytes(storageRef, SKCeraiPengadilanSelected).then(() => {
         SKCeraiPengadilanSelected.value = "";
       });
-
-      documents.SKCeraiPengadilan = `${uuid()}-${
-        SKCeraiPengadilanSelected.name
-      }`;
     }
 
     Object.assign(data, formRegister);

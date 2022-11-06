@@ -130,15 +130,15 @@ const Signup = () => {
   useEffect(() => {
     handleGetKecamatanByKabupaten();
 
-    setKecamatanId(null);
-    resetField("kecamatanId");
-    resetField("desaId");
+    // setKecamatanId(null);
+    // resetField("kecamatanId");
+    // resetField("desaId");
   }, [kabupatenId]);
 
   useEffect(() => {
     handleGetDesaByKecamatan();
 
-    resetField("desaId");
+    // resetField("desaId");
   }, [kecamatanId]);
 
   if (status === 1) {

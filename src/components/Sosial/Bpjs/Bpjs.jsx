@@ -37,7 +37,6 @@ const Bpjs = () => {
 
   const [KK, setKK] = useState(null);
   const [KTP, setKTP] = useState(null);
-  const [suratRekomendasiRTRW, setSuratRekomendasiRTRW] = useState(null);
 
   const handleCreateSosialForm = async (data) => {
     setLoading(true);
@@ -48,43 +47,24 @@ const Bpjs = () => {
 
     if (KK) {
       const KKSelected = KK.files[0];
+      documents.KK = `${uuid()}-${KKSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KK}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
       });
-
-      documents.KK = `${uuid()}-${KKSelected.name}`;
     }
 
     if (KTP) {
       const KTPSelected = KTP.files[0];
+      documents.KTP = `${uuid()}-${KTPSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KTPSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KTP}`);
 
       uploadBytes(storageRef, KTPSelected).then(() => {
         KTPSelected.value = "";
       });
-
-      documents.KTP = `${uuid()}-${KTPSelected.name}`;
-    }
-
-    if (suratRekomendasiRTRW) {
-      const suratRekomendasiRTRWSelected = suratRekomendasiRTRW.files[0];
-
-      const storageRef = ref(
-        storage,
-        `documents/${suratRekomendasiRTRWSelected.name}`
-      );
-
-      uploadBytes(storageRef, suratRekomendasiRTRWSelected).then(() => {
-        suratRekomendasiRTRWSelected.value = "";
-      });
-
-      documents.suratRekomendasiRTRW = `${uuid()}-${
-        suratRekomendasiRTRWSelected.name
-      }`;
     }
 
     Object.assign(data, formRegister);

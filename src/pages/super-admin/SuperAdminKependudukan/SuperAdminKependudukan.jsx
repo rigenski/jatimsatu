@@ -211,7 +211,14 @@ const SuperAdminKependudukan = () => {
     };
 
     handleGetAllKependudukan(data);
-  }, [searchValue, cursor, cursorDirection, searchFilterId, desaId]);
+  }, [
+    searchValue,
+    cursor,
+    cursorDirection,
+    searchFilterId,
+    searchFilterId,
+    desaId,
+  ]);
 
   useEffect(() => {
     const data = {
@@ -223,10 +230,6 @@ const SuperAdminKependudukan = () => {
 
     handleGetAllDesa(data);
   }, []);
-
-  useEffect(() => {
-    console.log(dateRange);
-  }, [dateRange]);
 
   return (
     <>

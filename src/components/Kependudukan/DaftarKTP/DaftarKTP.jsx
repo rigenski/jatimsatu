@@ -48,38 +48,35 @@ const DaftarKTP = () => {
 
     if (KK) {
       const KKSelected = KK.files[0];
+      documents.KK = `${uuid()}-${KKSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KK}`);
 
       uploadBytes(storageRef, KKSelected).then(() => {
         KKSelected.value = "";
       });
-
-      documents.KK = `${uuid()}-${KKSelected.name}`;
     }
 
     if (aktaLahir) {
       const aktaLahirSelected = aktaLahir.files[0];
+      documents.aktaLahir = `${uuid()}-${aktaLahirSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${aktaLahirSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.aktaLahir}`);
 
       uploadBytes(storageRef, aktaLahirSelected).then(() => {
         aktaLahirSelected.value = "";
       });
-
-      documents.aktaLahir = `${uuid()}-${aktaLahirSelected.name}`;
     }
 
     if (SKHilang) {
       const SKHilangSelected = SKHilang.files[0];
+      documents.SKHilang = `${uuid()}-${SKHilangSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${SKHilangSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.SKHilang}`);
 
       uploadBytes(storageRef, SKHilangSelected).then(() => {
         SKHilangSelected.value = "";
       });
-
-      documents.SKHilang = `${uuid()}-${SKHilangSelected.name}`;
     }
 
     Object.assign(data, formRegister);

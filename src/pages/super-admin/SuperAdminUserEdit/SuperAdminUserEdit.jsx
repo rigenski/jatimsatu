@@ -149,20 +149,20 @@ const SuperAdminUserEdit = () => {
   useEffect(() => {
     handleGetKecamatanByKabupaten();
 
-    if (userDetail) {
-      setKecamatanId(null);
-      setDesaId(null);
-      resetField("kecamatanId");
-      resetField("desaId");
-    }
+    // if (userDetail) {
+    //   setKecamatanId(null);
+    //   setDesaId(null);
+    //   resetField("kecamatanId");
+    //   resetField("desaId");
+    // }
   }, [kabupatenId]);
 
   useEffect(() => {
     handleGetDesaByKecamatan();
 
-    if (userDetail) {
-      resetField("desaId");
-    }
+    // if (userDetail) {
+    //   resetField("desaId");
+    // }
   }, [kecamatanId]);
 
   return (

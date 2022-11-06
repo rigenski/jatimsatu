@@ -23,6 +23,64 @@ import { deleteSosial, getAllSosial } from "../../../store/sosial/sosialAction";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { getDesa } from "../../../store/region/regionAction";
+
+const searchFilters = [
+  {
+    id: "formType.name",
+    name: "Nama",
+  },
+  {
+    id: "description",
+    name: "Keterangan",
+  },
+];
+
+const statusTypes = [
+  {
+    id: "Disetujui",
+    name: "Disetujui",
+  },
+  {
+    id: "Ditotak",
+    name: "Ditotak",
+  },
+];
+
+const dokumenTypes = [
+  {
+    id: "18d52b6d-13b5-4740-9ef0-8a86a8b95b4f",
+    name: "Penyaluran Subsidi",
+  },
+  {
+    id: "8be219d0-1c48-4b7f-bb9e-7aa44c34d613",
+    name: "KIS",
+  },
+  {
+    id: "96729ef5-b9e6-4832-8ff0-706cb7ca6bb9",
+    name: "KIP",
+  },
+  {
+    id: "a68bc1f0-bba6-4b26-b266-e97d96352c0e",
+    name: "Bantuan Bencana",
+  },
+  {
+    id: "d748d204-0788-48b6-8434-ce42059c9bdd",
+    name: "Bantuan Sosial",
+  },
+  {
+    id: "ddbf5fa7-ad35-4a08-9b9a-a3d84fbb0c53",
+    name: "BPJS",
+  },
+  {
+    id: "e0b0f9b0-42a2-4a81-8f3d-cec80b685dde",
+    name: "BLT",
+  },
+  {
+    id: "fe958ce8-b11b-4c9b-abd2-23fd4fd7a7aa",
+    name: "Kartu Prakerja",
+  },
+];
 
 const SuperAdminSosial = () => {
   const dispatch = useDispatch();
@@ -33,9 +91,20 @@ const SuperAdminSosial = () => {
   const cursorDirection = queryParams.get("cursorDirection");
 
   const { sosialAll } = useSelector((state) => state.sosial);
+  const { desaAll } = useSelector((state) => state.region);
 
   const [searchValue, setSearchValue] = useState("");
   const [dataDetail, setDataDetail] = useState(null);
+
+  const [desaId, setDesaId] = useState(null);
+  const [searchFilterId, setSearchFilterId] = useState(searchFilters[0].id);
+  const [dokumenTypeIds, setDokumenTypeIds] = useState(
+    new Array(dokumenTypes.length).fill(false)
+  );
+  const [statusTypeIds, setStatusTypeIds] = useState(
+    new Array(statusTypes.length).fill(false)
+  );
+  const [dateRange, setDateRange] = useState([null, null]);
 
   const nodes = sosialAll;
 
@@ -82,18 +151,54 @@ const SuperAdminSosial = () => {
     });
   };
 
+  const handleChangeDokumenTypeIds = (position) => {
+    const checkedUpdated = dokumenTypeIds.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setDokumenTypeIds(checkedUpdated);
+  };
+
+  const handleChangeStatusTypeIds = (position) => {
+    const checkedUpdated = statusTypeIds.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setStatusTypeIds(checkedUpdated);
+  };
+
+  const handleGetAllDesa = async (data) => {
+    await dispatch(getDesa(data));
+  };
+
   useEffect(() => {
     const data = {
-      searchKey: "name",
+      searchKey: searchFilterId,
       searchValue: searchValue,
       startRange: null,
       endRange: null,
       cursor: cursor,
       cursorDirection: cursorDirection,
+      filters: desaId
+        ? JSON.stringify({
+            desaId: { values: [desaId] },
+          })
+        : null,
     };
 
     handleGetAllSosial(data);
-  }, [searchValue, cursor, cursorDirection]);
+  }, [searchValue, cursor, cursorDirection, searchFilterId, desaId]);
+
+  useEffect(() => {
+    const data = {
+      searchKey: null,
+      searchValue: null,
+      cursor: null,
+      cursorDirection: null,
+    };
+
+    handleGetAllDesa(data);
+  }, []);
 
   return (
     <>
@@ -114,25 +219,22 @@ const SuperAdminSosial = () => {
                 color="#474747"
                 className="position-absolute"
               />
-              <select className="form-select ps-5 w-auto" id="desa">
-                <option>Blitar</option>
-                <option>Malang</option>
+              <select
+                className="form-select ps-5 w-auto max-w-normal"
+                onChange={(e) => {
+                  setDesaId(e.target.value !== "" ? e.target.value : null);
+                }}
+              >
+                <option value="">Semua Desa</option>
+                {desaAll.map((item, index) => {
+                  return (
+                    <option value={item.id} key={index}>
+                      {item.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
-            <button
-              className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded-1"
-              data-bs-toggle="modal"
-              data-bs-target="#addModal"
-            >
-              <Icon
-                icon="akar-icons:circle-plus"
-                width={24}
-                height={24}
-                color="#FFFFFF"
-                className="me-2"
-              />
-              Tambah
-            </button>
           </div>
         </div>
         <div className="card w-100">
@@ -193,24 +295,42 @@ const SuperAdminSosial = () => {
                   />
                   Filter
                 </button>
-                <div className="position-relative">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cari"
-                    placeholder="Cari dokumen"
-                    style={{ paddingLeft: "48px" }}
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                  />
-                  <Icon
-                    icon="charm:search"
-                    width={24}
-                    height={24}
-                    color="#000000"
-                    className="position-absolute ms-3"
-                    style={{ top: "50%", transform: "translateY(-50%)" }}
-                  />
+                <div className="d-flex align-items-center">
+                  <select
+                    className="form-select w-auto max-w-normal"
+                    onChange={(e) => {
+                      setSearchFilterId(
+                        e.target.value !== "" ? e.target.value : null
+                      );
+                    }}
+                  >
+                    {searchFilters.map((item, index) => {
+                      return (
+                        <option value={item.id} key={index}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="position-relative">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="cari"
+                      placeholder="Cari dokumen"
+                      style={{ paddingLeft: "48px" }}
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                    <Icon
+                      icon="charm:search"
+                      width={24}
+                      height={24}
+                      color="#000000"
+                      className="position-absolute ms-3"
+                      style={{ top: "50%", transform: "translateY(-50%)" }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -419,198 +539,26 @@ const SuperAdminSosial = () => {
               <div className="mb-2">
                 <p className="mb-2 text-paragraph-1 text-grey-1">Dokumen</p>
                 <div className="row ">
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Daftar KTP
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Kartu Keluarga
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Surat Jalan
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Lahir
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Meninggal
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Pindah/datang
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Duda/Janda
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Lahir
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Menikah
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        SK Cerai
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Perubahan Status Pendidikan
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-check mb-2">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="daftar-ktp"
-                      />
-                      <label
-                        className="form-check-label ms-1 text-paragraph-2 "
-                        htmlFor="daftar-ktp"
-                      >
-                        Perubahan Status Pekerjaan
-                      </label>
-                    </div>
-                  </div>
+                  {dokumenTypes.map((item, index) => {
+                    return (
+                      <div className="col-12 col-sm-6" key={index}>
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="dokumen-type"
+                            onChange={() => handleChangeDokumenTypeIds(index)}
+                          />
+                          <label
+                            className="form-check-label ms-1 text-paragraph-2 "
+                            htmlFor="daftar-ktp"
+                          >
+                            {item.name}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="mb-3 border-bottom border-grey-4"></div>
@@ -622,6 +570,9 @@ const SuperAdminSosial = () => {
                       type="date"
                       className="form-control mb-2"
                       id="tanggal-awal"
+                      onChange={(e) =>
+                        setDateRange([e.target.value, dateRange[1]])
+                      }
                     />
                   </div>
                   <div className="col-12 col-sm-6">
@@ -629,8 +580,38 @@ const SuperAdminSosial = () => {
                       type="date"
                       className="form-control mb-2"
                       id="tanggal-akhir"
+                      onChange={(e) =>
+                        setDateRange([dateRange[0], e.target.value])
+                      }
                     />
                   </div>
+                </div>
+              </div>
+              <div className="mb-3 border-bottom border-grey-4"></div>
+              <div className="mb-2">
+                <p className="mb-2 text-paragraph-1 text-grey-1">Status</p>
+                <div className="row">
+                  {statusTypes.map((item, index) => {
+                    return (
+                      <div className="col-12 col-sm-6" key={index}>
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="status-type"
+                            value={item.id}
+                            onChange={() => handleChangeStatusTypeIds(index)}
+                          />
+                          <label
+                            className="form-check-label ms-1 text-paragraph-2 "
+                            htmlFor="daftar-ktp"
+                          >
+                            {item.name}
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="mb-3 border-bottom border-grey-4"></div>
@@ -638,79 +619,6 @@ const SuperAdminSosial = () => {
                 <button className="btn me-3 w-auto px-2 text-button text-white bg-primary-2  text-center border-0 rounded-1">
                   Terapkan
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="modal fade"
-        id="addModal"
-        tabIndex="-1"
-        aria-labelledby="addModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content p-4">
-            <div className="modal-body">
-              <h3 className="mb-2 text-body-3 text-grey-1 text-center">
-                Tambah dokumen
-              </h3>
-              <p className="mb-4 text-paragraph-4 text-grey-1 text-center">
-                Apakah anda yakin untuk hapus dokumen ini?
-              </p>
-              <div className="mb-4">
-                <div className="mb-3">
-                  <label
-                    htmlFor="nik"
-                    className="form-label text-body-3 text-grey-1"
-                  >
-                    NIK <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="nik"
-                    placeholder="masukkan NIK terdaftar"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label
-                    htmlFor="jenis"
-                    className="form-label text-body-3 text-grey-1"
-                  >
-                    Jenis Dokumen <span className="text-danger">*</span>
-                  </label>
-                  <select className="form-select" id="jenis">
-                    <option>Pilih Jenis Dokumen</option>
-                    <option>Blitar</option>
-                    <option>Malang</option>
-                  </select>
-                </div>
-              </div>
-              <div className="d-flex justify-content-center align-items-center">
-                <div className="d-flex">
-                  <button
-                    className="btn me-3 w-auto px-2 text-button bg-white  text-center border-1 border-grey-1 rounded-1"
-                    data-bs-dismiss="modal"
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn w-auto px-2 text-button text-white bg-primary-2 text-center border-0 rounded"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteModal"
-                  >
-                    <Icon
-                      icon="akar-icons:circle-plus"
-                      width={24}
-                      height={24}
-                      color="#FFFFFF"
-                      className="me-2"
-                    />
-                    Tambah
-                  </button>
-                </div>
               </div>
             </div>
           </div>

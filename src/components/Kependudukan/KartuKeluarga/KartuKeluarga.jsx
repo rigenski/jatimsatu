@@ -50,62 +50,57 @@ const KartuKeluarga = () => {
 
     if (KKSuami) {
       const KKSuamiSelected = KKSuami.files[0];
+      documents.KKSuami = `${uuid()}-${KKSuamiSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKSuamiSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KKSuami}`);
 
       uploadBytes(storageRef, KKSuamiSelected).then(() => {
         KKSuamiSelected.value = "";
       });
-
-      documents.KKSuami = `${uuid()}-${KKSuamiSelected.name}`;
     }
 
     if (KKIstri) {
       const KKIstriSelected = KKIstri.files[0];
+      documents.KKIstri = `${uuid()}-${KKIstriSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KKIstriSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KKIstri}`);
 
       uploadBytes(storageRef, KKIstriSelected).then(() => {
         KKIstriSelected.value = "";
       });
-
-      documents.KKIstri = `${uuid()}-${KKIstriSelected.name}`;
     }
 
     if (KTPSuami) {
       const KTPSuamiSelected = KTPSuami.files[0];
+      documents.KTPSuami = `${uuid()}-${KTPSuamiSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KTPSuamiSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KTPSuami}`);
 
       uploadBytes(storageRef, KTPSuamiSelected).then(() => {
         KTPSuamiSelected.value = "";
       });
-
-      documents.KTPSuami = `${uuid()}-${KTPSuamiSelected.name}`;
     }
 
     if (KTPIstri) {
       const KTPIstriSelected = KTPIstri.files[0];
+      documents.KTPIstri = `${uuid()}-${KTPIstriSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${KTPIstriSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.KTPIstri}`);
 
       uploadBytes(storageRef, KTPIstriSelected).then(() => {
         KTPIstriSelected.value = "";
       });
-
-      documents.KTPIstri = `${uuid()}-${KTPIstriSelected.name}`;
     }
 
     if (bukuNikah) {
       const bukuNikahSelected = bukuNikah.files[0];
+      documents.bukuNikah = `${uuid()}-${bukuNikahSelected.name}`;
 
-      const storageRef = ref(storage, `documents/${bukuNikahSelected.name}`);
+      const storageRef = ref(storage, `documents/${documents.bukuNikah}`);
 
       uploadBytes(storageRef, bukuNikahSelected).then(() => {
         bukuNikahSelected.value = "";
       });
-
-      documents.bukuNikah = `${uuid()}-${bukuNikahSelected.name}`;
     }
 
     Object.assign(data, formRegister);
